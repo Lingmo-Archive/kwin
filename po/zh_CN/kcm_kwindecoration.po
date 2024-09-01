@@ -1,20 +1,9 @@
-# translation of kcmkwindecoration.po to zh_CN
-# Copyright (C) 2003 Free Software Foundation, Inc.
-#
-# Li Zongliang <li-zongliang@21cn.com>, 2001.
-# Xiong Jiang <jxiong@offtopic.org>, 2003.
-# Funda Wang <fundawang@linux.net.cn>, 2004.
-# Lie Ex <lilith.ex@gmail.com>, 2009-2010.
-# Ni Hui <shuizhuyuanluo@126.com>, 2012, 2013.
-# Weng Xuetian <wengxt@gmail.com>, 2012, 2014, 2015.
-# Feng Chao <chaofeng111@gmail.com>, 2014.
-# Xuetian Weng <xweng@cs.stonybrook.edu>, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-11-17 08:20+0100\n"
-"PO-Revision-Date: 2021-01-03 09:06\n"
+"POT-Creation-Date: 2023-01-26 02:32+0000\n"
+"PO-Revision-Date: 2024-02-29 13:00\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -31,195 +20,266 @@ msgstr ""
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "KDE 中国, Guo Yunhe, Tyson Tan"
+msgstr "KDE 中国, csslayer, Guo Yunhe, Tyson Tan"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "kde-china@kde.org, i@guoyunhe.me, tysontan@tysontan.com"
+msgstr "kde-china@kde.org, csslayer@kde.org, i@guoyunhe.me, tds00@qq.com"
 
-#: declarative-plugin/buttonsmodel.cpp:54
+#: declarative-plugin/buttonsmodel.cpp:53
 #, kde-format
-msgid "Menu"
-msgstr "菜单"
+msgid "More actions for this window"
+msgstr "此窗口的更多操作"
 
-#: declarative-plugin/buttonsmodel.cpp:56
+#: declarative-plugin/buttonsmodel.cpp:55
 #, kde-format
 msgid "Application menu"
 msgstr "应用程序菜单"
 
-#: declarative-plugin/buttonsmodel.cpp:58
+#: declarative-plugin/buttonsmodel.cpp:57
 #, kde-format
 msgid "On all desktops"
 msgstr "在全部桌面"
 
-#: declarative-plugin/buttonsmodel.cpp:60
+#: declarative-plugin/buttonsmodel.cpp:59
 #, kde-format
 msgid "Minimize"
 msgstr "最小化"
 
-#: declarative-plugin/buttonsmodel.cpp:62
+#: declarative-plugin/buttonsmodel.cpp:61
 #, kde-format
 msgid "Maximize"
 msgstr "最大化"
 
-#: declarative-plugin/buttonsmodel.cpp:64
+#: declarative-plugin/buttonsmodel.cpp:63
 #, kde-format
 msgid "Close"
 msgstr "关闭"
 
-#: declarative-plugin/buttonsmodel.cpp:66
+#: declarative-plugin/buttonsmodel.cpp:65
 #, kde-format
 msgid "Context help"
-msgstr "上下文帮助"
+msgstr "帮助提示"
 
-#: declarative-plugin/buttonsmodel.cpp:68
+#: declarative-plugin/buttonsmodel.cpp:67
 #, kde-format
 msgid "Shade"
-msgstr "卷起"
+msgstr "折叠"
 
-#: declarative-plugin/buttonsmodel.cpp:70
+#: declarative-plugin/buttonsmodel.cpp:69
 #, kde-format
-msgid "Keep below"
-msgstr "保持在下方"
+msgid "Keep below other windows"
+msgstr "保持在其他窗口之下"
 
-#: declarative-plugin/buttonsmodel.cpp:72
+#: declarative-plugin/buttonsmodel.cpp:71
 #, kde-format
-msgid "Keep above"
-msgstr "保持在上方"
+msgid "Keep above other windows"
+msgstr "保持在其他窗口之上"
 
-#: kcm.cpp:50
+#: kcm.cpp:49
 #, kde-format
 msgid "Window Decorations"
 msgstr "窗口装饰"
 
-#: kcm.cpp:54
+#: kcm.cpp:53
 #, kde-format
 msgid "Valerio Pilo"
 msgstr "Valerio Pilo"
 
-#: kcm.cpp:55
+#: kcm.cpp:54
 #, kde-format
 msgid "Author"
 msgstr "作者"
 
-#: kcm.cpp:104
+#: kcm.cpp:183
 #, kde-format
-msgid "Download New Window Decorations"
-msgstr "下载新窗口装饰"
+msgctxt "%1 is the name of a border size"
+msgid "Theme's default (%1)"
+msgstr "主题默认值 (%1)"
 
-#: package/contents/ui/Buttons.qml:73
+#: kwin-applywindowdecoration.cpp:32
+#, kde-format
+msgid ""
+"This tool allows you to set the window decoration theme for the currently "
+"active session, without accidentally setting it to one that is either not "
+"available, or which is already set."
+msgstr ""
+"此工具用于设置当前 Plasma 会话的窗口边框主题，并避免将其设置为不可用的或已经"
+"设置的主题。"
+
+#: kwin-applywindowdecoration.cpp:33
+#, kde-format
+msgid ""
+"The name of the window decoration theme you wish to set for KWin. Passing a "
+"full path will attempt to find a theme in that directory, and then apply "
+"that if one can be deduced."
+msgstr ""
+"要设置的 KWin 的窗口边框主题名称。如果在此输入完整路径，程序将尝试在该路径的"
+"目录下查找主题并使用主题指定的名称。"
+
+#: kwin-applywindowdecoration.cpp:34
+#, kde-format
+msgid ""
+"Show all the themes available on the system (and which is the current theme)"
+msgstr "显示所有系统可用主题 (含当前主题)"
+
+#: kwin-applywindowdecoration.cpp:65
+#, kde-format
+msgid ""
+"Resolved %1 to the KWin Aurorae theme \"%2\", and will attempt to set that "
+"as your current theme."
+msgstr "解析 %1 为 KWin Aurorae 主题“%2”，将尝试设置为您的当前主题。"
+
+#: kwin-applywindowdecoration.cpp:71
+#, kde-format
+msgid ""
+"You attempted to pass a file path, but this could not be resolved to a "
+"theme, and we will have to abort, due to having no theme to set"
+msgstr ""
+"您尝试传递一个文件路径，但该路径中无法找到能解析的主题。由于没有可设置的主"
+"题，程序将中断当前操作"
+
+#: kwin-applywindowdecoration.cpp:77
+#, kde-format
+msgid ""
+"The requested theme \"%1\" is already set as the window decoration theme."
+msgstr "请求的主题“%1”已经设置为窗口装饰主题。"
+
+#: kwin-applywindowdecoration.cpp:99
+#, kde-format
+msgid "Successfully applied the cursor theme %1 to your current Plasma session"
+msgstr "成功应用光标主题 %1 到当前的 Plasma 会话。"
+
+#: kwin-applywindowdecoration.cpp:103
+#, kde-format
+msgid ""
+"Failed to save your theme settings - the reason is unknown, but this is an "
+"unrecoverable error. You may find that simply trying again will work."
+msgstr ""
+"保存主题设置失败 - 原因未知，此错误无法恢复。重新尝试保存一次或许能够解决问"
+"题。"
+
+#: kwin-applywindowdecoration.cpp:107
+#, kde-format
+msgid ""
+"Could not find theme \"%1\". The theme should be one of the following "
+"options: %2"
+msgstr "无法找到主题“%1”。主题应当是以下选项之一：%2"
+
+#: kwin-applywindowdecoration.cpp:112
+#, kde-format
+msgid "You have the following KWin window decoration themes on your system:"
+msgstr "您的系统已安装以下 KWin 窗口装饰主题"
+
+#: package/contents/ui/Buttons.qml:85
 #, kde-format
 msgid "Titlebar"
 msgstr "标题栏"
 
-#: package/contents/ui/Buttons.qml:214
+#: package/contents/ui/Buttons.qml:245
 #, kde-format
 msgid "Drop button here to remove it"
 msgstr "将按钮拖到这里移除"
 
-#: package/contents/ui/Buttons.qml:232
+#: package/contents/ui/Buttons.qml:261
 #, kde-format
 msgid "Drag buttons between here and the titlebar"
-msgstr "在此处和标题栏之间拖拽按钮"
+msgstr "在此位置和标题栏之间拖拽按钮"
 
-#: package/contents/ui/main.qml:15
+#: package/contents/ui/main.qml:18
 #, kde-format
 msgid "This module lets you configure the window decorations."
-msgstr "此模块允许您配置窗口装饰。"
+msgstr "此模块用于配置窗口装饰。"
 
-#: package/contents/ui/main.qml:49
+#: package/contents/ui/main.qml:52
 #, kde-format
 msgctxt "tab label"
 msgid "Theme"
 msgstr "主题"
 
-#: package/contents/ui/main.qml:53
+#: package/contents/ui/main.qml:56
 #, kde-format
 msgctxt "tab label"
 msgid "Titlebar Buttons"
 msgstr "标题栏按钮"
 
-#: package/contents/ui/main.qml:78
+#: package/contents/ui/main.qml:92
 #, kde-format
-msgctxt "checkbox label"
-msgid "Use theme's default window border size"
-msgstr "使用主题的默认边框大小"
+msgctxt "Selector label"
+msgid "Window border size:"
+msgstr "窗口边框大小："
 
-#: package/contents/ui/main.qml:109
+#: package/contents/ui/main.qml:110
 #, kde-format
 msgctxt "button text"
 msgid "Get New Window Decorations..."
 msgstr "获取新窗口装饰..."
 
-#: package/contents/ui/main.qml:126
+#: package/contents/ui/main.qml:139
 #, kde-format
 msgctxt "checkbox label"
 msgid "Close windows by double clicking the menu button"
 msgstr "双击菜单按钮关闭窗口"
 
-#: package/contents/ui/main.qml:139
+#: package/contents/ui/main.qml:156
 #, kde-format
 msgctxt "popup tip"
-msgid ""
-"Close by double clicking: Keep the window's Menu button pressed until it "
-"appears."
-msgstr ""
-"双击关闭：\n"
-" 如需打开菜单，按住按钮直到菜单出现。"
+msgid "Click and hold on the menu button to show the menu."
+msgstr "点击并按住菜单按钮以显示菜单。"
 
-#: package/contents/ui/main.qml:146
+#: package/contents/ui/main.qml:163
 #, kde-format
 msgctxt "checkbox label"
 msgid "Show titlebar button tooltips"
-msgstr "显示标题栏按钮提示"
+msgstr "显示标题栏按钮悬停提示"
 
-#: package/contents/ui/Themes.qml:89
+#: package/contents/ui/Themes.qml:90
 #, kde-format
 msgid "Edit %1 Theme"
 msgstr "编辑 %1 主题"
 
-#: utils.cpp:26
+#: utils.cpp:25
 #, kde-format
 msgid "No Borders"
 msgstr "无边框"
 
-#: utils.cpp:27
+#: utils.cpp:26
 #, kde-format
 msgid "No Side Borders"
 msgstr "无侧边框"
 
-#: utils.cpp:28
+#: utils.cpp:27
 #, kde-format
 msgid "Tiny"
-msgstr "微小"
+msgstr "小"
 
-#: utils.cpp:29
+#: utils.cpp:28
 #, kde-format
 msgid "Normal"
 msgstr "正常"
 
-#: utils.cpp:30
+#: utils.cpp:29
 #, kde-format
 msgid "Large"
 msgstr "大"
 
-#: utils.cpp:31
+#: utils.cpp:30
 #, kde-format
 msgid "Very Large"
-msgstr "很大"
+msgstr "特大"
+
+#: utils.cpp:31
+#, kde-format
+msgid "Huge"
+msgstr "超大"
 
 #: utils.cpp:32
 #, kde-format
-msgid "Huge"
-msgstr "巨大"
+msgid "Very Huge"
+msgstr "超特大"
 
 #: utils.cpp:33
 #, kde-format
-msgid "Very Huge"
-msgstr "超大"
-
-#: utils.cpp:34
-#, kde-format
 msgid "Oversized"
-msgstr "特大"
+msgstr "极大"

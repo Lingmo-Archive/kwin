@@ -7,16 +7,16 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "abstract_client.h"
-#include "platform.h"
-#include "x11client.h"
+
+#include "core/output.h"
+#include "core/outputbackend.h"
 #include "cursor.h"
 #include "deleted.h"
-#include "screenedge.h"
-#include "screens.h"
+#include "utils/xcbutils.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
-#include "xcbutils.h"
+#include "x11window.h"
 #include <kwineffects.h>
 
 #include <netwm.h>
@@ -41,26 +41,24 @@ private:
 
 void X11DesktopWindowTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
-    qRegisterMetaType<KWin::Deleted*>();
+    qRegisterMetaType<KWin::Window *>();
+    qRegisterMetaType<KWin::Deleted *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
     setenv("QT_QPA_PLATFORM", "wayland", true);
-    waylandServer()->initWorkspace();
 }
 
 void X11DesktopWindowTest::init()
 {
-    screens()->setCurrent(0);
+    workspace()->setActiveOutput(QPoint(640, 512));
     Cursors::self()->mouse()->setPos(QPoint(640, 512));
 }
 
@@ -70,7 +68,7 @@ void X11DesktopWindowTest::cleanup()
 
 struct XcbConnectionDeleter
 {
-    static inline void cleanup(xcb_connection_t *pointer)
+    void operator()(xcb_connection_t *pointer)
     {
         xcb_disconnect(pointer);
     }
@@ -82,16 +80,16 @@ void X11DesktopWindowTest::testDesktopWindow()
     // as an RGB (opaque) window in KWin
 
     // create an xcb window
-    QScopedPointer<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
-    QVERIFY(!xcb_connection_has_error(c.data()));
+    std::unique_ptr<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
+    QVERIFY(!xcb_connection_has_error(c.get()));
 
-    xcb_window_t w = xcb_generate_id(c.data());
+    xcb_window_t windowId = xcb_generate_id(c.get());
     const QRect windowGeometry(0, 0, 1280, 1024);
 
     // helper to find the visual
-    auto findDepth = [&c] () -> xcb_visualid_t {
+    auto findDepth = [&c]() -> xcb_visualid_t {
         // find a visual with 32 depth
-        const xcb_setup_t *setup = xcb_get_setup(c.data());
+        const xcb_setup_t *setup = xcb_get_setup(c.get());
 
         for (auto screen = xcb_setup_roots_iterator(setup); screen.rem; xcb_screen_next(&screen)) {
             for (auto depth = xcb_screen_allowed_depths_iterator(screen.data); depth.rem; xcb_depth_next(&depth)) {
@@ -109,54 +107,52 @@ void X11DesktopWindowTest::testDesktopWindow()
         return 0;
     };
     auto visualId = findDepth();
-    auto colormapId = xcb_generate_id(c.data());
-    auto cmCookie = xcb_create_colormap_checked(c.data(), XCB_COLORMAP_ALLOC_NONE, colormapId, rootWindow(), visualId);
-    QVERIFY(!xcb_request_check(c.data(), cmCookie));
+    auto colormapId = xcb_generate_id(c.get());
+    auto cmCookie = xcb_create_colormap_checked(c.get(), XCB_COLORMAP_ALLOC_NONE, colormapId, rootWindow(), visualId);
+    QVERIFY(!xcb_request_check(c.get(), cmCookie));
 
-    const uint32_t values[] = {XCB_PIXMAP_NONE, kwinApp()->x11DefaultScreen()->black_pixel, colormapId};
-    auto cookie = xcb_create_window_checked(c.data(), 32, w, rootWindow(),
-                      windowGeometry.x(),
-                      windowGeometry.y(),
-                      windowGeometry.width(),
-                      windowGeometry.height(),
-                      0, XCB_WINDOW_CLASS_INPUT_OUTPUT, visualId, XCB_CW_BACK_PIXMAP | XCB_CW_BORDER_PIXEL | XCB_CW_COLORMAP, values);
-    QVERIFY(!xcb_request_check(c.data(), cookie));
+    const uint32_t values[] = {XCB_PIXMAP_NONE, Xcb::defaultScreen()->black_pixel, colormapId};
+    auto cookie = xcb_create_window_checked(c.get(), 32, windowId, rootWindow(),
+                                            windowGeometry.x(),
+                                            windowGeometry.y(),
+                                            windowGeometry.width(),
+                                            windowGeometry.height(),
+                                            0, XCB_WINDOW_CLASS_INPUT_OUTPUT, visualId, XCB_CW_BACK_PIXMAP | XCB_CW_BORDER_PIXEL | XCB_CW_COLORMAP, values);
+    QVERIFY(!xcb_request_check(c.get(), cookie));
     xcb_size_hints_t hints;
     memset(&hints, 0, sizeof(hints));
     xcb_icccm_size_hints_set_position(&hints, 1, windowGeometry.x(), windowGeometry.y());
     xcb_icccm_size_hints_set_size(&hints, 1, windowGeometry.width(), windowGeometry.height());
-    xcb_icccm_set_wm_normal_hints(c.data(), w, &hints);
-    NETWinInfo info(c.data(), w, rootWindow(), NET::WMAllProperties, NET::WM2AllProperties);
+    xcb_icccm_set_wm_normal_hints(c.get(), windowId, &hints);
+    NETWinInfo info(c.get(), windowId, rootWindow(), NET::WMAllProperties, NET::WM2AllProperties);
     info.setWindowType(NET::Desktop);
-    xcb_map_window(c.data(), w);
-    xcb_flush(c.data());
+    xcb_map_window(c.get(), windowId);
+    xcb_flush(c.get());
 
     // verify through a geometry request that it's depth 32
-    Xcb::WindowGeometry geo(w);
+    Xcb::WindowGeometry geo(windowId);
     QCOMPARE(geo->depth, uint8_t(32));
 
-    // we should get a client for it
-    QSignalSpy windowCreatedSpy(workspace(), &Workspace::clientAdded);
-    QVERIFY(windowCreatedSpy.isValid());
+    // we should get a window for it
+    QSignalSpy windowCreatedSpy(workspace(), &Workspace::windowAdded);
     QVERIFY(windowCreatedSpy.wait());
-    X11Client *client = windowCreatedSpy.first().first().value<X11Client *>();
-    QVERIFY(client);
-    QCOMPARE(client->window(), w);
-    QVERIFY(!client->isDecorated());
-    QCOMPARE(client->windowType(), NET::Desktop);
-    QCOMPARE(client->frameGeometry(), windowGeometry);
-    QVERIFY(client->isDesktop());
-    QCOMPARE(client->depth(), 24);
-    QVERIFY(!client->hasAlpha());
+    X11Window *window = windowCreatedSpy.first().first().value<X11Window *>();
+    QVERIFY(window);
+    QCOMPARE(window->window(), windowId);
+    QVERIFY(!window->isDecorated());
+    QCOMPARE(window->windowType(), NET::Desktop);
+    QCOMPARE(window->frameGeometry(), windowGeometry);
+    QVERIFY(window->isDesktop());
+    QCOMPARE(window->depth(), 24);
+    QVERIFY(!window->hasAlpha());
 
     // and destroy the window again
-    xcb_unmap_window(c.data(), w);
-    xcb_destroy_window(c.data(), w);
-    xcb_flush(c.data());
+    xcb_unmap_window(c.get(), windowId);
+    xcb_destroy_window(c.get(), windowId);
+    xcb_flush(c.get());
     c.reset();
 
-    QSignalSpy windowClosedSpy(client, &X11Client::windowClosed);
-    QVERIFY(windowClosedSpy.isValid());
+    QSignalSpy windowClosedSpy(window, &X11Window::windowClosed);
     QVERIFY(windowClosedSpy.wait());
 }
 

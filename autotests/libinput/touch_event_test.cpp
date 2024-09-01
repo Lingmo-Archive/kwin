@@ -7,8 +7,9 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "mock_libinput.h"
-#include "../../libinput/device.h"
-#include "../../libinput/events.h"
+
+#include "backends/libinput/device.h"
+#include "backends/libinput/events.h"
 
 #include <QtTest>
 
@@ -17,6 +18,7 @@
 Q_DECLARE_METATYPE(libinput_event_type)
 
 using namespace KWin::LibInput;
+using namespace std::literals;
 
 class TestLibinputTouchEvent : public QObject
 {
@@ -29,7 +31,6 @@ private Q_SLOTS:
     void testType();
     void testAbsoluteMotion_data();
     void testAbsoluteMotion();
-    void testNoAssignedSlot();
 
 private:
     libinput_device *m_nativeDevice = nullptr;
@@ -74,18 +75,18 @@ void TestLibinputTouchEvent::testType()
     touchEvent->device = m_nativeDevice;
     touchEvent->slot = 0;
 
-    QScopedPointer<Event> event(Event::create(touchEvent));
+    std::unique_ptr<Event> event(Event::create(touchEvent));
     // API of event
     QCOMPARE(event->type(), type);
     QCOMPARE(event->device(), m_device);
     QCOMPARE(event->nativeDevice(), m_nativeDevice);
-    QCOMPARE((libinput_event*)(*event.data()), touchEvent);
+    QCOMPARE((libinput_event *)(*event.get()), touchEvent);
     // verify it's a pointer event
-    QVERIFY(dynamic_cast<TouchEvent*>(event.data()));
-    QCOMPARE((libinput_event_touch*)(*dynamic_cast<TouchEvent*>(event.data())), touchEvent);
+    QVERIFY(dynamic_cast<TouchEvent *>(event.get()));
+    QCOMPARE((libinput_event_touch *)(*dynamic_cast<TouchEvent *>(event.get())), touchEvent);
     QFETCH(bool, hasId);
     if (hasId) {
-        QCOMPARE(dynamic_cast<TouchEvent*>(event.data())->id(), 0);
+        QCOMPARE(dynamic_cast<TouchEvent *>(event.get())->id(), 0);
     }
 }
 
@@ -104,30 +105,16 @@ void TestLibinputTouchEvent::testAbsoluteMotion()
     QFETCH(libinput_event_type, type);
     touchEvent->type = type;
     touchEvent->absolutePos = QPointF(6.25, 6.9);
-    touchEvent->time = 500u;
+    touchEvent->time = 500ms;
     touchEvent->slot = 1;
 
-    QScopedPointer<Event> event(Event::create(touchEvent));
-    auto te = dynamic_cast<TouchEvent*>(event.data());
+    std::unique_ptr<Event> event(Event::create(touchEvent));
+    auto te = dynamic_cast<TouchEvent *>(event.get());
     QVERIFY(te);
     QCOMPARE(te->type(), type);
-    QCOMPARE(te->time(), 500u);
+    QCOMPARE(te->time(), touchEvent->time);
     QCOMPARE(te->absolutePos(), QPointF(6.25, 6.9));
     QCOMPARE(te->absolutePos(QSize(1280, 1024)), QPointF(640, 512));
-}
-
-void TestLibinputTouchEvent::testNoAssignedSlot()
-{
-    // this test verifies that touch events without an assigned slot get id == 0
-    libinput_event_touch *touchEvent = new libinput_event_touch;
-    touchEvent->type = LIBINPUT_EVENT_TOUCH_UP;
-    touchEvent->device = m_nativeDevice;
-    // touch events without an assigned slot have slot == -1
-    touchEvent->slot = -1;
-
-    QScopedPointer<Event> event(Event::create(touchEvent));
-    QVERIFY(dynamic_cast<TouchEvent*>(event.data()));
-    QCOMPARE(dynamic_cast<TouchEvent*>(event.data())->id(), 0);
 }
 
 QTEST_GUILESS_MAIN(TestLibinputTouchEvent)

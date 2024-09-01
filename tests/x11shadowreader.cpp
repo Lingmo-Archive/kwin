@@ -3,15 +3,20 @@
 
     SPDX-License-Identifier: GPL-2.0-only OR GPL-3.0-only OR LicenseRef-KDE-Accepted-GPL
 */
-#include "../xcbutils.h"
+#include "utils/xcbutils.h"
+
 #include <QApplication>
-#include <QDebug>
 #include <QCommandLineParser>
-#include <QLabel>
+#include <QDebug>
 #include <QFormLayout>
+#include <QLabel>
 #include <QVBoxLayout>
 #include <QWidget>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
+#endif
 
 static QVector<uint32_t> readShadow(quint32 windowId)
 {
@@ -19,10 +24,10 @@ static QVector<uint32_t> readShadow(quint32 windowId)
     QVector<uint32_t> ret;
     if (windowId != XCB_WINDOW) {
         KWin::Xcb::Property property(false, windowId, atom, XCB_ATOM_CARDINAL, 0, 12);
-        uint32_t *shadow = property.value<uint32_t*>();
+        uint32_t *shadow = property.value<uint32_t *>();
         if (shadow) {
             ret.reserve(12);
-            for (int i=0; i<12; ++i) {
+            for (int i = 0; i < 12; ++i) {
                 ret << shadow[i];
             }
         } else {
@@ -61,7 +66,7 @@ static QVector<QPixmap> getPixmaps(const QVector<uint32_t> &data)
     for (int i = 0; i < ShadowElementsCount; ++i) {
         auto *reply = xcb_get_image_reply(c, getImageCookies.at(i), nullptr);
         if (!reply) {
-            discardReplies(i+1);
+            discardReplies(i + 1);
             return QVector<QPixmap>();
         }
         auto &geo = pixmapGeometries[i];
@@ -76,7 +81,7 @@ int main(int argc, char **argv)
 {
     qputenv("QT_QPA_PLATFORM", "xcb");
     QApplication app(argc, argv);
-    app.setProperty("x11Connection", QVariant::fromValue<void*>(QX11Info::connection()));
+    app.setProperty("x11Connection", QVariant::fromValue<void *>(QX11Info::connection()));
 
     QCommandLineParser parser;
     parser.addPositionalArgument(QStringLiteral("windowId"), QStringLiteral("The X11 windowId from which to read the shadow"));
@@ -88,7 +93,7 @@ int main(int argc, char **argv)
     }
 
     bool ok = false;
-    const auto shadow = readShadow(parser.positionalArguments().first().toULongLong(&ok, 16));
+    const auto shadow = readShadow(parser.positionalArguments().constFirst().toULongLong(&ok, 16));
     if (!ok) {
         qDebug() << "!!! Failed to read window id";
         return 1;
@@ -103,10 +108,10 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    QScopedPointer<QWidget> widget(new QWidget());
-    QFormLayout *layout = new QFormLayout(widget.data());
+    std::unique_ptr<QWidget> widget(new QWidget());
+    QFormLayout *layout = new QFormLayout(widget.get());
     for (const auto &pix : pixmaps) {
-        QLabel *l = new QLabel(widget.data());
+        QLabel *l = new QLabel(widget.get());
         l->setPixmap(pix);
         layout->addRow(QStringLiteral("%1x%2:").arg(pix.width()).arg(pix.height()), l);
     }

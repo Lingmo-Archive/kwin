@@ -5,16 +5,18 @@
 */
 
 #include "kwin_wayland_test.h"
+
 #include "composite.h"
+#include "core/output.h"
+#include "core/outputbackend.h"
 #include "main.h"
-#include "platform.h"
-#include "scene.h"
-#include "screens.h"
+#include "scene/workspacescene.h"
 #include "unmanaged.h"
 #include "wayland_server.h"
 #include "workspace.h"
-#include "x11client.h"
-#include "xwl/xwayland_interface.h"
+#include "x11window.h"
+#include "xwayland/xwayland.h"
+#include "xwayland/xwaylandlauncher.h"
 
 #include <xcb/xcb_icccm.h>
 
@@ -23,7 +25,7 @@ namespace KWin
 
 struct XcbConnectionDeleter
 {
-    static inline void cleanup(xcb_connection_t *pointer)
+    void operator()(xcb_connection_t *pointer)
     {
         xcb_disconnect(pointer);
     }
@@ -43,12 +45,10 @@ private Q_SLOTS:
 void XwaylandServerCrashTest::initTestCase()
 {
     qRegisterMetaType<Unmanaged *>();
-    qRegisterMetaType<X11Client *>();
+    qRegisterMetaType<X11Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     KSharedConfig::Ptr config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup xwaylandGroup = config->group("Xwayland");
@@ -58,10 +58,10 @@ void XwaylandServerCrashTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
-    waylandServer()->initWorkspace();
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
 }
 
 void XwaylandServerCrashTest::testCrash()
@@ -69,11 +69,11 @@ void XwaylandServerCrashTest::testCrash()
     // This test verifies that all connected X11 clients get destroyed when Xwayland crashes.
 
     // Create a normal window.
-    QScopedPointer<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
-    QVERIFY(!xcb_connection_has_error(c.data()));
+    std::unique_ptr<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
+    QVERIFY(!xcb_connection_has_error(c.get()));
     const QRect windowGeometry(0, 0, 100, 200);
-    xcb_window_t window1 = xcb_generate_id(c.data());
-    xcb_create_window(c.data(), XCB_COPY_FROM_PARENT, window1, rootWindow(),
+    xcb_window_t windowId1 = xcb_generate_id(c.get());
+    xcb_create_window(c.get(), XCB_COPY_FROM_PARENT, windowId1, rootWindow(),
                       windowGeometry.x(),
                       windowGeometry.y(),
                       windowGeometry.width(),
@@ -84,52 +84,48 @@ void XwaylandServerCrashTest::testCrash()
     xcb_icccm_size_hints_set_position(&hints, 1, windowGeometry.x(), windowGeometry.y());
     xcb_icccm_size_hints_set_size(&hints, 1, windowGeometry.width(), windowGeometry.height());
     xcb_icccm_size_hints_set_min_size(&hints, windowGeometry.width(), windowGeometry.height());
-    xcb_icccm_set_wm_normal_hints(c.data(), window1, &hints);
-    xcb_map_window(c.data(), window1);
-    xcb_flush(c.data());
+    xcb_icccm_set_wm_normal_hints(c.get(), windowId1, &hints);
+    xcb_map_window(c.get(), windowId1);
+    xcb_flush(c.get());
 
-    QSignalSpy windowCreatedSpy(workspace(), &Workspace::clientAdded);
-    QVERIFY(windowCreatedSpy.isValid());
+    QSignalSpy windowCreatedSpy(workspace(), &Workspace::windowAdded);
     QVERIFY(windowCreatedSpy.wait());
-    QPointer<X11Client> client = windowCreatedSpy.last().first().value<X11Client *>();
-    QVERIFY(client);
-    QVERIFY(client->isDecorated());
+    QPointer<X11Window> window = windowCreatedSpy.last().first().value<X11Window *>();
+    QVERIFY(window);
+    QVERIFY(window->isDecorated());
 
     // Create an override-redirect window.
-    xcb_window_t window2 = xcb_generate_id(c.data());
-    const uint32_t values[] = { true };
-    xcb_create_window(c.data(), XCB_COPY_FROM_PARENT, window2, rootWindow(),
+    xcb_window_t windowId2 = xcb_generate_id(c.get());
+    const uint32_t values[] = {true};
+    xcb_create_window(c.get(), XCB_COPY_FROM_PARENT, windowId2, rootWindow(),
                       windowGeometry.x(), windowGeometry.y(),
                       windowGeometry.width(), windowGeometry.height(), 0,
                       XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT,
                       XCB_CW_OVERRIDE_REDIRECT, values);
-    xcb_map_window(c.data(), window2);
-    xcb_flush(c.data());
+    xcb_map_window(c.get(), windowId2);
+    xcb_flush(c.get());
 
     QSignalSpy unmanagedAddedSpy(workspace(), &Workspace::unmanagedAdded);
-    QVERIFY(unmanagedAddedSpy.isValid());
     QVERIFY(unmanagedAddedSpy.wait());
     QPointer<Unmanaged> unmanaged = unmanagedAddedSpy.last().first().value<Unmanaged *>();
     QVERIFY(unmanaged);
 
     // Let's pretend that the Xwayland process has crashed.
     QSignalSpy x11ConnectionChangedSpy(kwinApp(), &Application::x11ConnectionChanged);
-    QVERIFY(x11ConnectionChangedSpy.isValid());
-    xwayland()->process()->terminate();
+    Xwl::Xwayland *xwayland = static_cast<Xwl::Xwayland *>(kwinApp()->xwayland());
+    xwayland->xwaylandLauncher()->process()->terminate();
     QVERIFY(x11ConnectionChangedSpy.wait());
 
     // When Xwayland crashes, the compositor should tear down the XCB connection and destroy
     // all connected X11 clients.
-    QTRY_VERIFY(!client);
+    QTRY_VERIFY(!window);
     QTRY_VERIFY(!unmanaged);
     QCOMPARE(kwinApp()->x11Connection(), nullptr);
-    QCOMPARE(kwinApp()->x11DefaultScreen(), nullptr);
     QCOMPARE(kwinApp()->x11RootWindow(), XCB_WINDOW_NONE);
-    QCOMPARE(kwinApp()->x11ScreenNumber(), -1);
 
     // Render a frame to ensure that the compositor doesn't crash.
-    Compositor::self()->addRepaintFull();
-    QSignalSpy frameRenderedSpy(Compositor::self()->scene(), &Scene::frameRendered);
+    Compositor::self()->scene()->addRepaintFull();
+    QSignalSpy frameRenderedSpy(Compositor::self()->scene(), &WorkspaceScene::frameRendered);
     QVERIFY(frameRenderedSpy.wait());
 }
 

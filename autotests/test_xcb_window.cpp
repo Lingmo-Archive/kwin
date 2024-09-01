@@ -8,11 +8,15 @@
 */
 #include "testutils.h"
 // KWin
-#include "../xcbutils.h"
+#include "utils/xcbutils.h"
 // Qt
 #include <QApplication>
 #include <QtTest>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
+#endif
 // xcb
 #include <xcb/xcb.h>
 
@@ -36,7 +40,7 @@ private Q_SLOTS:
 void TestXcbWindow::initTestCase()
 {
     qApp->setProperty("x11RootWindow", QVariant::fromValue<quint32>(QX11Info::appRootWindow()));
-    qApp->setProperty("x11Connection", QVariant::fromValue<void*>(QX11Info::connection()));
+    qApp->setProperty("x11Connection", QVariant::fromValue<void *>(QX11Info::connection()));
 }
 
 void TestXcbWindow::defaultCtor()
@@ -157,11 +161,11 @@ void TestXcbWindow::destroy()
     window.create(geometry, XCB_CW_OVERRIDE_REDIRECT, values);
     // wId should now be invalid
     xcb_generic_error_t *error = nullptr;
-    ScopedCPointer<xcb_get_window_attributes_reply_t> attribs(xcb_get_window_attributes_reply(
+    UniqueCPtr<xcb_get_window_attributes_reply_t> attribs(xcb_get_window_attributes_reply(
         connection(),
         xcb_get_window_attributes(connection(), wId),
         &error));
-    QVERIFY(attribs.isNull());
+    QVERIFY(!attribs);
     QCOMPARE(error->error_code, uint8_t(3));
     QCOMPARE(error->resource_id, wId);
     free(error);
@@ -173,11 +177,11 @@ void TestXcbWindow::destroy()
         wId = scopedWindow;
     }
     error = nullptr;
-    ScopedCPointer<xcb_get_window_attributes_reply_t> attribs2(xcb_get_window_attributes_reply(
+    UniqueCPtr<xcb_get_window_attributes_reply_t> attribs2(xcb_get_window_attributes_reply(
         connection(),
         xcb_get_window_attributes(connection(), wId),
         &error));
-    QVERIFY(attribs2.isNull());
+    QVERIFY(!attribs2);
     QCOMPARE(error->error_code, uint8_t(3));
     QCOMPARE(error->resource_id, wId);
     free(error);

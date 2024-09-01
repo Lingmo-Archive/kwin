@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kwin_clients\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-08 02:22+0200\n"
+"POT-Creation-Date: 2023-02-22 02:35+0000\n"
 "PO-Revision-Date: 2019-06-21 20:39+0300\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian <kde-i18n-lt@kde.org>\n"
@@ -19,49 +19,49 @@ msgstr ""
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: aurorae/src/aurorae.cpp:683
+#: aurorae/src/aurorae.cpp:737
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Tiny"
 msgstr "Mažytis"
 
-#: aurorae/src/aurorae.cpp:684
+#: aurorae/src/aurorae.cpp:738
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Normal"
 msgstr "Normalus"
 
-#: aurorae/src/aurorae.cpp:685
+#: aurorae/src/aurorae.cpp:739
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Large"
 msgstr "Didelis"
 
-#: aurorae/src/aurorae.cpp:686
+#: aurorae/src/aurorae.cpp:740
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Very Large"
 msgstr "Labai didelis"
 
-#: aurorae/src/aurorae.cpp:687
+#: aurorae/src/aurorae.cpp:741
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Huge"
 msgstr "Didžiulis"
 
-#: aurorae/src/aurorae.cpp:688
+#: aurorae/src/aurorae.cpp:742
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Very Huge"
 msgstr "Milžiniškas"
 
-#: aurorae/src/aurorae.cpp:689
+#: aurorae/src/aurorae.cpp:743
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Oversized"
 msgstr "Per didelis"
 
-#: aurorae/src/aurorae.cpp:692
+#: aurorae/src/aurorae.cpp:746
 #, kde-format
 msgid "Button size:"
 msgstr "Mygtukų dydis:"
@@ -128,3 +128,13 @@ msgstr ""
 #, kde-format
 msgid "Animate buttons"
 msgstr "Animuoti mygtukus"
+
+#~ msgid ""
+#~ "Check this option if you want the titlebar text to have a 3D look with a "
+#~ "shadow behind it."
+#~ msgstr ""
+#~ "Pažymėkite šią parinktį, jei norite, kad antraštės juostos tekstas turėtų "
+#~ "trimatę išvaizdą su šešėliu už teksto."
+
+#~ msgid "Use shadowed &text"
+#~ msgstr "Naudoti tekstą &su šešėliu"

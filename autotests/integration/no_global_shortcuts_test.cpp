@@ -7,24 +7,24 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
+
+#include "core/outputbackend.h"
 #include "cursor.h"
 #include "input.h"
 #include "keyboard_input.h"
-#include "platform.h"
 #include "screenedge.h"
-#include "screens.h"
 #include "wayland_server.h"
 #include "workspace.h"
 
 #include <KConfigGroup>
 #include <KGlobalAccel>
 
+#include <QAction>
 #include <QDBusConnection>
 
 #include <linux/input.h>
 
 using namespace KWin;
-using namespace KWayland::Client;
 
 static const QString s_socketName = QStringLiteral("wayland_test_kwin_no_global_shortcuts-0");
 static const QString s_serviceName = QStringLiteral("org.kde.KWin.Test.ModifierOnlyShortcut");
@@ -83,16 +83,15 @@ Target::~Target()
 
 void Target::shortcut()
 {
-    emit shortcutTriggered();
+    Q_EMIT shortcutTriggered();
 }
 
 void NoGlobalShortcutsTest::initTestCase()
 {
     qRegisterMetaType<KWin::ElectricBorder>("ElectricBorder");
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit(), KWin::WaylandServer::InitializationFlag::NoGlobalShortcuts));
+    QVERIFY(waylandServer()->init(s_socketName, KWin::WaylandServer::InitializationFlag::NoGlobalShortcuts));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->setConfig(KSharedConfig::openConfig(QString(), KConfig::SimpleConfig));
     qputenv("KWIN_XKB_DEFAULT_KEYMAP", "1");
@@ -100,12 +99,11 @@ void NoGlobalShortcutsTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 }
 
 void NoGlobalShortcutsTest::init()
 {
-    screens()->setCurrent(0);
+    workspace()->setActiveOutput(QPoint(640, 512));
     KWin::Cursors::self()->mouse()->setPos(QPoint(640, 512));
 }
 
@@ -132,7 +130,7 @@ void NoGlobalShortcutsTest::testTrigger_data()
     QTest::newRow("leftControl") << e << e << trigger << e << KEY_LEFTCTRL << QList<int>{KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTMETA, KEY_RIGHTMETA, KEY_LEFTSHIFT, KEY_RIGHTSHIFT};
     QTest::newRow("rightControl") << e << e << trigger << e << KEY_RIGHTCTRL << QList<int>{KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTMETA, KEY_RIGHTMETA, KEY_LEFTSHIFT, KEY_RIGHTSHIFT};
     QTest::newRow("leftShift") << e << e << e << trigger << KEY_LEFTSHIFT << QList<int>{KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTCTRL, KEY_RIGHTCTRL, KEY_LEFTMETA, KEY_RIGHTMETA};
-    QTest::newRow("rightShift") << e << e <<  e << trigger <<KEY_RIGHTSHIFT << QList<int>{KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTCTRL, KEY_RIGHTCTRL, KEY_LEFTMETA, KEY_RIGHTMETA};
+    QTest::newRow("rightShift") << e << e << e << trigger << KEY_RIGHTSHIFT << QList<int>{KEY_LEFTALT, KEY_RIGHTALT, KEY_LEFTCTRL, KEY_RIGHTCTRL, KEY_LEFTMETA, KEY_RIGHTMETA};
 }
 
 void NoGlobalShortcutsTest::testTrigger()
@@ -140,7 +138,6 @@ void NoGlobalShortcutsTest::testTrigger()
     // test based on ModifierOnlyShortcutTest::testTrigger
     Target target;
     QSignalSpy triggeredSpy(&target, &Target::shortcutTriggered);
-    QVERIFY(triggeredSpy.isValid());
 
     KConfigGroup group = kwinApp()->config()->group("ModifierOnlyShortcuts");
     QFETCH(QStringList, metaConfig);
@@ -157,62 +154,59 @@ void NoGlobalShortcutsTest::testTrigger()
     // configured shortcut should trigger
     quint32 timestamp = 1;
     QFETCH(int, modifier);
-    kwinApp()->platform()->keyboardKeyPressed(modifier, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(modifier, timestamp++);
+    Test::keyboardKeyPressed(modifier, timestamp++);
+    Test::keyboardKeyReleased(modifier, timestamp++);
     QCOMPARE(triggeredSpy.count(), 0);
 
     // the other shortcuts should not trigger
     QFETCH(QList<int>, nonTriggeringMods);
     for (auto it = nonTriggeringMods.constBegin(), end = nonTriggeringMods.constEnd(); it != end; it++) {
-        kwinApp()->platform()->keyboardKeyPressed(*it, timestamp++);
-        kwinApp()->platform()->keyboardKeyReleased(*it, timestamp++);
+        Test::keyboardKeyPressed(*it, timestamp++);
+        Test::keyboardKeyReleased(*it, timestamp++);
         QCOMPARE(triggeredSpy.count(), 0);
     }
 }
 
 void NoGlobalShortcutsTest::testKGlobalAccel()
 {
-    QScopedPointer<QAction> action(new QAction(nullptr));
-    action->setProperty("componentName", QStringLiteral(KWIN_NAME));
+    std::unique_ptr<QAction> action(new QAction(nullptr));
+    action->setProperty("componentName", QStringLiteral("kwin"));
     action->setObjectName(QStringLiteral("globalshortcuts-test-meta-shift-w"));
-    QSignalSpy triggeredSpy(action.data(), &QAction::triggered);
-    QVERIFY(triggeredSpy.isValid());
-    KGlobalAccel::self()->setShortcut(action.data(), QList<QKeySequence>{Qt::META + Qt::SHIFT + Qt::Key_W}, KGlobalAccel::NoAutoloading);
-    input()->registerShortcut(Qt::META + Qt::SHIFT + Qt::Key_W, action.data());
+    QSignalSpy triggeredSpy(action.get(), &QAction::triggered);
+    KGlobalAccel::self()->setShortcut(action.get(), QList<QKeySequence>{Qt::META | Qt::SHIFT | Qt::Key_W}, KGlobalAccel::NoAutoloading);
 
     // press meta+shift+w
     quint32 timestamp = 0;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
     QCOMPARE(input()->keyboardModifiers(), Qt::MetaModifier);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
     QCOMPARE(input()->keyboardModifiers(), Qt::ShiftModifier | Qt::MetaModifier);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_W, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_W, timestamp++);
+    Test::keyboardKeyPressed(KEY_W, timestamp++);
+    Test::keyboardKeyReleased(KEY_W, timestamp++);
 
     // release meta+shift
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
 
-    QVERIFY(!triggeredSpy.wait());
+    QVERIFY(!triggeredSpy.wait(100));
     QCOMPARE(triggeredSpy.count(), 0);
 }
 
 void NoGlobalShortcutsTest::testPointerShortcut()
 {
     // based on LockScreenTest::testPointerShortcut
-    QScopedPointer<QAction> action(new QAction(nullptr));
-    QSignalSpy actionSpy(action.data(), &QAction::triggered);
-    QVERIFY(actionSpy.isValid());
-    input()->registerPointerShortcut(Qt::MetaModifier, Qt::LeftButton, action.data());
+    std::unique_ptr<QAction> action(new QAction(nullptr));
+    QSignalSpy actionSpy(action.get(), &QAction::triggered);
+    input()->registerPointerShortcut(Qt::MetaModifier, Qt::LeftButton, action.get());
 
     // try to trigger the shortcut
     quint32 timestamp = 1;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
-    kwinApp()->platform()->pointerButtonPressed(BTN_LEFT, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
+    Test::pointerButtonPressed(BTN_LEFT, timestamp++);
     QCoreApplication::instance()->processEvents();
     QCOMPARE(actionSpy.count(), 0);
-    kwinApp()->platform()->pointerButtonReleased(BTN_LEFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
+    Test::pointerButtonReleased(BTN_LEFT, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
     QCoreApplication::instance()->processEvents();
     QCOMPARE(actionSpy.count(), 0);
 }
@@ -231,9 +225,8 @@ void NoGlobalShortcutsTest::testAxisShortcut_data()
 void NoGlobalShortcutsTest::testAxisShortcut()
 {
     // based on LockScreenTest::testAxisShortcut
-    QScopedPointer<QAction> action(new QAction(nullptr));
-    QSignalSpy actionSpy(action.data(), &QAction::triggered);
-    QVERIFY(actionSpy.isValid());
+    std::unique_ptr<QAction> action(new QAction(nullptr));
+    QSignalSpy actionSpy(action.get(), &QAction::triggered);
     QFETCH(Qt::Orientation, direction);
     QFETCH(int, sign);
     PointerAxisDirection axisDirection = PointerAxisUp;
@@ -242,18 +235,19 @@ void NoGlobalShortcutsTest::testAxisShortcut()
     } else {
         axisDirection = sign > 0 ? PointerAxisLeft : PointerAxisRight;
     }
-    input()->registerAxisShortcut(Qt::MetaModifier, axisDirection, action.data());
+    input()->registerAxisShortcut(Qt::MetaModifier, axisDirection, action.get());
 
     // try to trigger the shortcut
     quint32 timestamp = 1;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
-    if (direction == Qt::Vertical)
-        kwinApp()->platform()->pointerAxisVertical(sign * 5.0, timestamp++);
-    else
-        kwinApp()->platform()->pointerAxisHorizontal(sign * 5.0, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
+    if (direction == Qt::Vertical) {
+        Test::pointerAxisVertical(sign * 5.0, timestamp++);
+    } else {
+        Test::pointerAxisHorizontal(sign * 5.0, timestamp++);
+    }
     QCoreApplication::instance()->processEvents();
     QCOMPARE(actionSpy.count(), 0);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
     QCoreApplication::instance()->processEvents();
     QCOMPARE(actionSpy.count(), 0);
 }
@@ -261,12 +255,11 @@ void NoGlobalShortcutsTest::testAxisShortcut()
 void NoGlobalShortcutsTest::testScreenEdge()
 {
     // based on LockScreenTest::testScreenEdge
-    QSignalSpy screenEdgeSpy(ScreenEdges::self(), &ScreenEdges::approaching);
-    QVERIFY(screenEdgeSpy.isValid());
+    QSignalSpy screenEdgeSpy(workspace()->screenEdges(), &ScreenEdges::approaching);
     QCOMPARE(screenEdgeSpy.count(), 0);
 
     quint32 timestamp = 1;
-    kwinApp()->platform()->pointerMotion({5, 5}, timestamp++);
+    Test::pointerMotion({5, 5}, timestamp++);
     QCOMPARE(screenEdgeSpy.count(), 0);
 }
 

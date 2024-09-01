@@ -9,20 +9,18 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
 #include "composite.h"
+#include "core/output.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "deleted.h"
 #include "effectloader.h"
 #include "effects.h"
-#include "platform.h"
-#include "screens.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
 
-#include "effect_builtins.h"
-
 #include <KWayland/Client/surface.h>
-#include <KWayland/Client/xdgshell.h>
 
 namespace KWin
 {
@@ -46,18 +44,15 @@ void DontCrashReinitializeCompositorTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<KWin::AbstractClient *>();
+    qRegisterMetaType<KWin::Window *>();
     qRegisterMetaType<KWin::Deleted *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (const QString &name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -69,14 +64,12 @@ void DontCrashReinitializeCompositorTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
-    waylandServer()->initWorkspace();
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
 
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void DontCrashReinitializeCompositorTest::init()
@@ -99,9 +92,9 @@ void DontCrashReinitializeCompositorTest::testReinitializeCompositor_data()
 {
     QTest::addColumn<QString>("effectName");
 
-    QTest::newRow("Fade")   << QStringLiteral("kwin4_effect_fade");
-    QTest::newRow("Glide")  << QStringLiteral("glide");
-    QTest::newRow("Scale")  << QStringLiteral("kwin4_effect_scale");
+    QTest::newRow("Fade") << QStringLiteral("kwin4_effect_fade");
+    QTest::newRow("Glide") << QStringLiteral("glide");
+    QTest::newRow("Scale") << QStringLiteral("kwin4_effect_scale");
 }
 
 void DontCrashReinitializeCompositorTest::testReinitializeCompositor()
@@ -114,15 +107,13 @@ void DontCrashReinitializeCompositorTest::testReinitializeCompositor()
     auto effectsImpl = qobject_cast<EffectsHandlerImpl *>(effects);
     QVERIFY(effectsImpl);
 
-    // Create the test client.
-    using namespace KWayland::Client;
-
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QVERIFY(!surface.isNull());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    QVERIFY(!shellSurface.isNull());
-    AbstractClient *client = Test::renderAndWaitForShown(surface.data(), QSize(100, 50), Qt::blue);
-    QVERIFY(client);
+    // Create the test window.
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    QVERIFY(surface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    QVERIFY(shellSurface != nullptr);
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window);
 
     // Make sure that only the test effect is loaded.
     QFETCH(QString, effectName);
@@ -133,15 +124,14 @@ void DontCrashReinitializeCompositorTest::testReinitializeCompositor()
     QVERIFY(effect);
     QVERIFY(!effect->isActive());
 
-    // Close the test client.
-    QSignalSpy windowClosedSpy(client, &AbstractClient::windowClosed);
-    QVERIFY(windowClosedSpy.isValid());
+    // Close the test window.
+    QSignalSpy windowClosedSpy(window, &Window::windowClosed);
     shellSurface.reset();
     surface.reset();
     QVERIFY(windowClosedSpy.wait());
 
-    // The test effect should start animating the test client. Is there a better
-    // way to verify that the test effect actually animates the test client?
+    // The test effect should start animating the test window. Is there a better
+    // way to verify that the test effect actually animates the test window?
     QVERIFY(effect->isActive());
 
     // Re-initialize the compositor, effects will be destroyed and created again.

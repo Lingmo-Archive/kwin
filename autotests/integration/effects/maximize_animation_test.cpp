@@ -9,19 +9,16 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
 #include "composite.h"
+#include "core/outputbackend.h"
 #include "effectloader.h"
 #include "effects.h"
-#include "platform.h"
-#include "scene.h"
+#include "scene/workspacescene.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
 
-#include "effect_builtins.h"
-
 #include <KWayland/Client/surface.h>
-#include <KWayland/Client/xdgshell.h>
 
 using namespace KWin;
 
@@ -43,27 +40,25 @@ void MaximizeAnimationTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<KWin::AbstractClient *>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (const QString &name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
     config->sync();
     kwinApp()->setConfig(config);
 
+    qputenv("KWIN_COMPOSE", QByteArrayLiteral("O2"));
     qputenv("KWIN_EFFECTS_FORCE_ANIMATIONS", QByteArrayLiteral("1"));
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 }
 
 void MaximizeAnimationTest::init()
@@ -83,44 +78,42 @@ void MaximizeAnimationTest::cleanup()
 
 void MaximizeAnimationTest::testMaximizeRestore()
 {
-    // This test verifies that the maximize effect animates a client
+    // This test verifies that the maximize effect animates a window
     // when it's maximized or restored.
 
-    using namespace KWayland::Client;
+    // Create the test window.
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    QVERIFY(surface != nullptr);
 
-    // Create the test client.
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QVERIFY(!surface.isNull());
-
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data(), nullptr, Test::CreationSetup::CreateOnly));
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get(), Test::CreationSetup::CreateOnly));
 
     // Wait for the initial configure event.
-    XdgShellSurface::States states;
-    QSignalSpy configureRequestedSpy(shellSurface.data(), &XdgShellSurface::configureRequested);
+    Test::XdgToplevel::States states;
+    QSignalSpy toplevelConfigureRequestedSpy(shellSurface.get(), &Test::XdgToplevel::configureRequested);
+    QSignalSpy surfaceConfigureRequestedSpy(shellSurface->xdgSurface(), &Test::XdgSurface::configureRequested);
 
-    surface->commit(Surface::CommitFlag::None);
+    surface->commit(KWayland::Client::Surface::CommitFlag::None);
 
-    QVERIFY(configureRequestedSpy.isValid());
-    QVERIFY(configureRequestedSpy.wait());
-    QCOMPARE(configureRequestedSpy.count(), 1);
-    QCOMPARE(configureRequestedSpy.last().at(0).value<QSize>(), QSize(0, 0));
-    states = configureRequestedSpy.last().at(1).value<XdgShellSurface::States>();
-    QVERIFY(!states.testFlag(XdgShellSurface::State::Activated));
-    QVERIFY(!states.testFlag(XdgShellSurface::State::Maximized));
+    QVERIFY(surfaceConfigureRequestedSpy.wait());
+    QCOMPARE(surfaceConfigureRequestedSpy.count(), 1);
+    QCOMPARE(toplevelConfigureRequestedSpy.last().at(0).value<QSize>(), QSize(0, 0));
+    states = toplevelConfigureRequestedSpy.last().at(1).value<Test::XdgToplevel::States>();
+    QVERIFY(!states.testFlag(Test::XdgToplevel::State::Activated));
+    QVERIFY(!states.testFlag(Test::XdgToplevel::State::Maximized));
 
     // Draw contents of the surface.
-    shellSurface->ackConfigure(configureRequestedSpy.last().at(2).value<quint32>());
-    AbstractClient *client = Test::renderAndWaitForShown(surface.data(), QSize(100, 50), Qt::blue);
-    QVERIFY(client);
-    QVERIFY(client->isActive());
-    QCOMPARE(client->maximizeMode(), MaximizeMode::MaximizeRestore);
+    shellSurface->xdgSurface()->ack_configure(surfaceConfigureRequestedSpy.last().at(0).value<quint32>());
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window);
+    QVERIFY(window->isActive());
+    QCOMPARE(window->maximizeMode(), MaximizeMode::MaximizeRestore);
 
-    // We should receive a configure event when the client becomes active.
-    QVERIFY(configureRequestedSpy.wait());
-    QCOMPARE(configureRequestedSpy.count(), 2);
-    states = configureRequestedSpy.last().at(1).value<XdgShellSurface::States>();
-    QVERIFY(states.testFlag(XdgShellSurface::State::Activated));
-    QVERIFY(!states.testFlag(XdgShellSurface::State::Maximized));
+    // We should receive a configure event when the window becomes active.
+    QVERIFY(surfaceConfigureRequestedSpy.wait());
+    QCOMPARE(surfaceConfigureRequestedSpy.count(), 2);
+    states = toplevelConfigureRequestedSpy.last().at(1).value<Test::XdgToplevel::States>();
+    QVERIFY(states.testFlag(Test::XdgToplevel::State::Activated));
+    QVERIFY(!states.testFlag(Test::XdgToplevel::State::Maximized));
 
     // Load effect that will be tested.
     const QString effectName = QStringLiteral("kwin4_effect_maximize");
@@ -133,56 +126,54 @@ void MaximizeAnimationTest::testMaximizeRestore()
     QVERIFY(effect);
     QVERIFY(!effect->isActive());
 
-    // Maximize the client.
-    QSignalSpy frameGeometryChangedSpy(client, &AbstractClient::frameGeometryChanged);
-    QVERIFY(frameGeometryChangedSpy.isValid());
-    QSignalSpy maximizeChangedSpy(client, qOverload<AbstractClient *, bool, bool>(&AbstractClient::clientMaximizedStateChanged));
-    QVERIFY(maximizeChangedSpy.isValid());
+    // Maximize the window.
+    QSignalSpy frameGeometryChangedSpy(window, &Window::frameGeometryChanged);
+    QSignalSpy maximizeChangedSpy(window, qOverload<Window *, bool, bool>(&Window::clientMaximizedStateChanged));
 
     workspace()->slotWindowMaximize();
-    QVERIFY(configureRequestedSpy.wait());
-    QCOMPARE(configureRequestedSpy.count(), 3);
-    QCOMPARE(configureRequestedSpy.last().at(0).value<QSize>(), QSize(1280, 1024));
-    states = configureRequestedSpy.last().at(1).value<XdgShellSurface::States>();
-    QVERIFY(states.testFlag(XdgShellSurface::State::Activated));
-    QVERIFY(states.testFlag(XdgShellSurface::State::Maximized));
+    QVERIFY(surfaceConfigureRequestedSpy.wait());
+    QCOMPARE(surfaceConfigureRequestedSpy.count(), 3);
+    QCOMPARE(toplevelConfigureRequestedSpy.last().at(0).value<QSize>(), QSize(1280, 1024));
+    states = toplevelConfigureRequestedSpy.last().at(1).value<Test::XdgToplevel::States>();
+    QVERIFY(states.testFlag(Test::XdgToplevel::State::Activated));
+    QVERIFY(states.testFlag(Test::XdgToplevel::State::Maximized));
 
-    // Draw contents of the maximized client.
-    shellSurface->ackConfigure(configureRequestedSpy.last().at(2).value<quint32>());
-    Test::render(surface.data(), QSize(1280, 1024), Qt::red);
+    // Draw contents of the maximized window.
+    shellSurface->xdgSurface()->ack_configure(surfaceConfigureRequestedSpy.last().at(0).value<quint32>());
+    Test::render(surface.get(), QSize(1280, 1024), Qt::red);
     QVERIFY(frameGeometryChangedSpy.wait());
     QCOMPARE(frameGeometryChangedSpy.count(), 1);
     QCOMPARE(maximizeChangedSpy.count(), 1);
-    QCOMPARE(client->maximizeMode(), MaximizeMode::MaximizeFull);
+    QCOMPARE(window->maximizeMode(), MaximizeMode::MaximizeFull);
     QVERIFY(effect->isActive());
 
     // Eventually, the animation will be complete.
     QTRY_VERIFY(!effect->isActive());
 
-    // Restore the client.
+    // Restore the window.
     workspace()->slotWindowMaximize();
-    QVERIFY(configureRequestedSpy.wait());
-    QCOMPARE(configureRequestedSpy.count(), 4);
-    QCOMPARE(configureRequestedSpy.last().at(0).value<QSize>(), QSize(100, 50));
-    states = configureRequestedSpy.last().at(1).value<XdgShellSurface::States>();
-    QVERIFY(states.testFlag(XdgShellSurface::State::Activated));
-    QVERIFY(!states.testFlag(XdgShellSurface::State::Maximized));
+    QVERIFY(surfaceConfigureRequestedSpy.wait());
+    QCOMPARE(surfaceConfigureRequestedSpy.count(), 4);
+    QCOMPARE(toplevelConfigureRequestedSpy.last().at(0).value<QSize>(), QSize(100, 50));
+    states = toplevelConfigureRequestedSpy.last().at(1).value<Test::XdgToplevel::States>();
+    QVERIFY(states.testFlag(Test::XdgToplevel::State::Activated));
+    QVERIFY(!states.testFlag(Test::XdgToplevel::State::Maximized));
 
-    // Draw contents of the restored client.
-    shellSurface->ackConfigure(configureRequestedSpy.last().at(2).value<quint32>());
-    Test::render(surface.data(), QSize(100, 50), Qt::blue);
+    // Draw contents of the restored window.
+    shellSurface->xdgSurface()->ack_configure(surfaceConfigureRequestedSpy.last().at(0).value<quint32>());
+    Test::render(surface.get(), QSize(100, 50), Qt::blue);
     QVERIFY(frameGeometryChangedSpy.wait());
     QCOMPARE(frameGeometryChangedSpy.count(), 2);
     QCOMPARE(maximizeChangedSpy.count(), 2);
-    QCOMPARE(client->maximizeMode(), MaximizeMode::MaximizeRestore);
+    QCOMPARE(window->maximizeMode(), MaximizeMode::MaximizeRestore);
     QVERIFY(effect->isActive());
 
     // Eventually, the animation will be complete.
     QTRY_VERIFY(!effect->isActive());
 
-    // Destroy the test client.
+    // Destroy the test window.
     surface.reset();
-    QVERIFY(Test::waitForWindowDestroyed(client));
+    QVERIFY(Test::waitForWindowDestroyed(window));
 }
 
 WAYLANDTEST_MAIN(MaximizeAnimationTest)

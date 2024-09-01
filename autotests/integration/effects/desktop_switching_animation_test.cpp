@@ -9,19 +9,17 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
 #include "composite.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "effectloader.h"
 #include "effects.h"
-#include "platform.h"
-#include "scene.h"
+#include "virtualdesktops.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
 
-#include "effect_builtins.h"
-
 #include <KWayland/Client/surface.h>
-#include <KWayland/Client/xdgshell.h>
 
 using namespace KWin;
 
@@ -44,16 +42,14 @@ void DesktopSwitchingAnimationTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<KWin::AbstractClient *>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (const QString &name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -65,11 +61,8 @@ void DesktopSwitchingAnimationTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 
-    auto scene = Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void DesktopSwitchingAnimationTest::init()
@@ -93,9 +86,8 @@ void DesktopSwitchingAnimationTest::testSwitchDesktops_data()
 {
     QTest::addColumn<QString>("effectName");
 
-    QTest::newRow("Desktop Cube Animation") << QStringLiteral("cubeslide");
-    QTest::newRow("Fade Desktop")           << QStringLiteral("kwin4_effect_fadedesktop");
-    QTest::newRow("Slide")                  << QStringLiteral("slide");
+    QTest::newRow("Fade Desktop") << QStringLiteral("kwin4_effect_fadedesktop");
+    QTest::newRow("Slide") << QStringLiteral("slide");
 }
 
 void DesktopSwitchingAnimationTest::testSwitchDesktops()
@@ -108,17 +100,16 @@ void DesktopSwitchingAnimationTest::testSwitchDesktops()
     QCOMPARE(VirtualDesktopManager::self()->current(), 1u);
     QCOMPARE(VirtualDesktopManager::self()->count(), 2u);
 
-    // The Fade Desktop effect will do nothing if there are no clients to fade,
-    // so we have to create a dummy test client.
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QVERIFY(!surface.isNull());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    QVERIFY(!shellSurface.isNull());
-    AbstractClient *client = Test::renderAndWaitForShown(surface.data(), QSize(100, 50), Qt::blue);
-    QVERIFY(client);
-    QCOMPARE(client->desktops().count(), 1);
-    QCOMPARE(client->desktops().first(), VirtualDesktopManager::self()->desktops().first());
+    // The Fade Desktop effect will do nothing if there are no windows to fade,
+    // so we have to create a dummy test window.
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    QVERIFY(surface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    QVERIFY(shellSurface != nullptr);
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window);
+    QCOMPARE(window->desktops().count(), 1);
+    QCOMPARE(window->desktops().first(), VirtualDesktopManager::self()->desktops().first());
 
     // Load effect that will be tested.
     QFETCH(QString, effectName);
@@ -141,9 +132,9 @@ void DesktopSwitchingAnimationTest::testSwitchDesktops()
     QTRY_VERIFY(!effect->isActive());
     QTRY_COMPARE(effects->activeFullScreenEffect(), nullptr);
 
-    // Destroy the test client.
+    // Destroy the test window.
     surface.reset();
-    QVERIFY(Test::waitForWindowDestroyed(client));
+    QVERIFY(Test::waitForWindowDestroyed(window));
 }
 
 WAYLANDTEST_MAIN(DesktopSwitchingAnimationTest)

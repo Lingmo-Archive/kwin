@@ -5,13 +5,14 @@
 #
 # Albert Astals Cid <aacid@kde.org>, 2004, 2005.
 # Sebastià Pla i Sanz <sps@sastia.com>, 2004, 2005, 2006.
-# Josep Ma. Ferrer <txemaq@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015.
+# Josep M. Ferrer <txemaq@gmail.com>, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015.
 # Antoni Bella Pérez <antonibella5@yahoo.com>, 2015, 2020.
+# Empar Montoro Martín <montoro_mde@gva.es>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: kwin\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-08 02:22+0200\n"
+"POT-Creation-Date: 2023-02-22 02:35+0000\n"
 "PO-Revision-Date: 2020-07-27 13:37+0200\n"
 "Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
@@ -23,49 +24,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
 
-#: aurorae/src/aurorae.cpp:683
+#: aurorae/src/aurorae.cpp:737
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Tiny"
 msgstr "Minúscul"
 
-#: aurorae/src/aurorae.cpp:684
+#: aurorae/src/aurorae.cpp:738
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Normal"
 msgstr "Normal"
 
-#: aurorae/src/aurorae.cpp:685
+#: aurorae/src/aurorae.cpp:739
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Large"
 msgstr "Gran"
 
-#: aurorae/src/aurorae.cpp:686
+#: aurorae/src/aurorae.cpp:740
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Very Large"
 msgstr "Molt gran"
 
-#: aurorae/src/aurorae.cpp:687
+#: aurorae/src/aurorae.cpp:741
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Huge"
 msgstr "Enorme"
 
-#: aurorae/src/aurorae.cpp:688
+#: aurorae/src/aurorae.cpp:742
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Very Huge"
 msgstr "Molt enorme"
 
-#: aurorae/src/aurorae.cpp:689
+#: aurorae/src/aurorae.cpp:743
 #, kde-format
 msgctxt "@item:inlistbox Button size:"
 msgid "Oversized"
 msgstr "Fora de mida"
 
-#: aurorae/src/aurorae.cpp:692
+#: aurorae/src/aurorae.cpp:746
 #, kde-format
 msgid "Button size:"
 msgstr "Mida dels botons:"

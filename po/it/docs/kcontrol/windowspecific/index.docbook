@@ -818,12 +818,6 @@
 <listitem
 ><para
 ><guilabel
->A cascata</guilabel
->: a gradini per titolo.</para
-></listitem>
-<listitem
-><para
-><guilabel
 >Centrata</guilabel
 >: centro del desktop.</para
 ></listitem>
@@ -980,7 +974,7 @@
   <varlistentry
 ><term
 ><emphasis role="bold"
->Togli dallo scambiafinestre</emphasis
+>Togli dal selettore delle finestre</emphasis
 ></term>
     <listitem>
     <para
@@ -1192,6 +1186,10 @@
 <listitem
 ><para
 >Barra dei menu indipendente</para
+></listitem>
+<listitem
+><para
+>Vista a schermo</para
 ></listitem>
 </itemizedlist>
 

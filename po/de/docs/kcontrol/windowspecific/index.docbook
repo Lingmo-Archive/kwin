@@ -434,7 +434,7 @@
 >Übereinstimmung bei enthaltener Zeichenfolge</guilabel
 > wird die Groß- oder Kleinschreibung nicht beachtet. Zum Beispiel <emphasis
 >AB</emphasis
-> passt auf die Zeichenketten <emphasis
+> passt auf die Zeichenfolgen <emphasis
 >AB</emphasis
 >, <emphasis
 >ab</emphasis
@@ -826,12 +826,6 @@
 <listitem
 ><para
 ><guilabel
->Gestaffelt</guilabel
-> - Treppenförmige Anordnung der Titelleisten</para
-></listitem>
-<listitem
-><para
-><guilabel
 >Zentriert</guilabel
 > - Mitten auf der Arbeitsfläche.</para
 ></listitem>
@@ -1198,6 +1192,10 @@
 <listitem
 ><para
 >Selbständige Menüleiste</para
+></listitem>
+<listitem
+><para
+>OnScreen-Anzeige</para
 ></listitem>
 </itemizedlist>
 

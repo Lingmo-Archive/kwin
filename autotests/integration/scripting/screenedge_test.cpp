@@ -7,13 +7,13 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
+
+#include "core/outputbackend.h"
 #include "cursor.h"
 #include "effectloader.h"
-#include "platform.h"
+#include "scripting/scripting.h"
 #include "wayland_server.h"
 #include "workspace.h"
-#include "scripting/scripting.h"
-#include "effect_builtins.h"
 
 #define private public
 #include "screenedge.h"
@@ -49,17 +49,15 @@ private:
 void ScreenEdgeTest::initTestCase()
 {
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024)));
 
     // empty config to have defaults
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
 
     // disable all effects to prevent them grabbing edges
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (QString name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -75,8 +73,8 @@ void ScreenEdgeTest::initTestCase()
     QVERIFY(applicationStartedSpy.wait());
     QVERIFY(Scripting::self());
 
-    ScreenEdges::self()->setTimeThreshold(0);
-    ScreenEdges::self()->setReActivationThreshold(0);
+    workspace()->screenEdges()->setTimeThreshold(0);
+    workspace()->screenEdges()->setReActivationThreshold(0);
 }
 
 void ScreenEdgeTest::init()
@@ -92,7 +90,7 @@ void ScreenEdgeTest::cleanup()
 {
     // try to unload the script
     const QStringList scripts = {QFINDTESTDATA("./scripts/screenedge.js"), QFINDTESTDATA("./scripts/screenedgeunregister.js"), QFINDTESTDATA("./scripts/touchScreenedge.js")};
-    for (const QString &script: scripts) {
+    for (const QString &script : scripts) {
         if (!script.isEmpty()) {
             if (Scripting::self()->isScriptLoaded(script)) {
                 QVERIFY(Scripting::self()->unloadScript(script));
@@ -107,17 +105,17 @@ void ScreenEdgeTest::testEdge_data()
     QTest::addColumn<KWin::ElectricBorder>("edge");
     QTest::addColumn<QPoint>("triggerPos");
 
-    QTest::newRow("Top")      << KWin::ElectricTop << QPoint(512, 0);
+    QTest::newRow("Top") << KWin::ElectricTop << QPoint(512, 0);
     QTest::newRow("TopRight") << KWin::ElectricTopRight << QPoint(1279, 0);
-    QTest::newRow("Right")    << KWin::ElectricRight << QPoint(1279, 512);
+    QTest::newRow("Right") << KWin::ElectricRight << QPoint(1279, 512);
     QTest::newRow("BottomRight") << KWin::ElectricBottomRight << QPoint(1279, 1023);
     QTest::newRow("Bottom") << KWin::ElectricBottom << QPoint(512, 1023);
     QTest::newRow("BottomLeft") << KWin::ElectricBottomLeft << QPoint(0, 1023);
     QTest::newRow("Left") << KWin::ElectricLeft << QPoint(0, 512);
     QTest::newRow("TopLeft") << KWin::ElectricTopLeft << QPoint(0, 0);
 
-    //repeat a row to show previously unloading and re-registering works
-    QTest::newRow("Top")      << KWin::ElectricTop << QPoint(512, 0);
+    // repeat a row to show previously unloading and re-registering works
+    QTest::newRow("Top") << KWin::ElectricTop << QPoint(512, 0);
 }
 
 void ScreenEdgeTest::testEdge()
@@ -138,14 +136,12 @@ void ScreenEdgeTest::testEdge()
     auto s = Scripting::self()->findScript(scriptToLoad);
     QVERIFY(s);
     QSignalSpy runningChangedSpy(s, &AbstractScript::runningChanged);
-    QVERIFY(runningChangedSpy.isValid());
     s->run();
     QVERIFY(runningChangedSpy.wait());
     QCOMPARE(runningChangedSpy.count(), 1);
     QCOMPARE(runningChangedSpy.first().first().toBool(), true);
     // triggering the edge will result in show desktop being triggered
     QSignalSpy showDesktopSpy(workspace(), &Workspace::showingDesktopChanged);
-    QVERIFY(showDesktopSpy.isValid());
 
     // trigger the edge
     QFETCH(QPoint, triggerPos);
@@ -160,13 +156,13 @@ void ScreenEdgeTest::testTouchEdge_data()
     QTest::addColumn<QPoint>("triggerPos");
     QTest::addColumn<QPoint>("motionPos");
 
-    QTest::newRow("Top")      << KWin::ElectricTop << QPoint(50, 0) << QPoint(50, 500);
-    QTest::newRow("Right")    << KWin::ElectricRight << QPoint(1279, 50) << QPoint(500, 50);
+    QTest::newRow("Top") << KWin::ElectricTop << QPoint(50, 0) << QPoint(50, 500);
+    QTest::newRow("Right") << KWin::ElectricRight << QPoint(1279, 50) << QPoint(500, 50);
     QTest::newRow("Bottom") << KWin::ElectricBottom << QPoint(512, 1023) << QPoint(512, 500);
     QTest::newRow("Left") << KWin::ElectricLeft << QPoint(0, 50) << QPoint(500, 50);
 
-    //repeat a row to show previously unloading and re-registering works
-    QTest::newRow("Top")      << KWin::ElectricTop << QPoint(512, 0) << QPoint(512, 500);
+    // repeat a row to show previously unloading and re-registering works
+    QTest::newRow("Top") << KWin::ElectricTop << QPoint(512, 0) << QPoint(512, 500);
 }
 
 void ScreenEdgeTest::testTouchEdge()
@@ -187,28 +183,27 @@ void ScreenEdgeTest::testTouchEdge()
     auto s = Scripting::self()->findScript(scriptToLoad);
     QVERIFY(s);
     QSignalSpy runningChangedSpy(s, &AbstractScript::runningChanged);
-    QVERIFY(runningChangedSpy.isValid());
     s->run();
     QVERIFY(runningChangedSpy.wait());
     QCOMPARE(runningChangedSpy.count(), 1);
     QCOMPARE(runningChangedSpy.first().first().toBool(), true);
     // triggering the edge will result in show desktop being triggered
     QSignalSpy showDesktopSpy(workspace(), &Workspace::showingDesktopChanged);
-    QVERIFY(showDesktopSpy.isValid());
 
     // trigger the edge
     QFETCH(QPoint, triggerPos);
     quint32 timestamp = 0;
-    kwinApp()->platform()->touchDown(0, triggerPos, timestamp++);
+    Test::touchDown(0, triggerPos, timestamp++);
     QFETCH(QPoint, motionPos);
-    kwinApp()->platform()->touchMotion(0, motionPos, timestamp++);
-    kwinApp()->platform()->touchUp(0, timestamp++);
+    Test::touchMotion(0, motionPos, timestamp++);
+    Test::touchUp(0, timestamp++);
     QVERIFY(showDesktopSpy.wait());
     QCOMPARE(showDesktopSpy.count(), 1);
     QVERIFY(workspace()->showingDesktop());
 }
 
-void ScreenEdgeTest::triggerConfigReload() {
+void ScreenEdgeTest::triggerConfigReload()
+{
     workspace()->slotReconfigure();
 }
 
@@ -229,33 +224,32 @@ void ScreenEdgeTest::testEdgeUnregister()
     QVERIFY(runningChangedSpy.wait());
 
     QSignalSpy showDesktopSpy(workspace(), &Workspace::showingDesktopChanged);
-    QVERIFY(showDesktopSpy.isValid());
 
-    //trigger the edge
+    // trigger the edge
     KWin::Cursors::self()->mouse()->setPos(triggerPos);
     QCOMPARE(showDesktopSpy.count(), 1);
 
-    //reset
-    KWin::Cursors::self()->mouse()->setPos(500,500);
+    // reset
+    KWin::Cursors::self()->mouse()->setPos(500, 500);
     workspace()->slotToggleShowDesktop();
     showDesktopSpy.clear();
 
-    //trigger again, to show that retriggering works
+    // trigger again, to show that retriggering works
     KWin::Cursors::self()->mouse()->setPos(triggerPos);
     QCOMPARE(showDesktopSpy.count(), 1);
 
-    //reset
-    KWin::Cursors::self()->mouse()->setPos(500,500);
+    // reset
+    KWin::Cursors::self()->mouse()->setPos(500, 500);
     workspace()->slotToggleShowDesktop();
     showDesktopSpy.clear();
 
-    //make the script unregister the edge
+    // make the script unregister the edge
     configGroup.writeEntry("mode", "unregister");
     triggerConfigReload();
     KWin::Cursors::self()->mouse()->setPos(triggerPos);
-    QCOMPARE(showDesktopSpy.count(), 0); //not triggered
+    QCOMPARE(showDesktopSpy.count(), 0); // not triggered
 
-    //force the script to unregister a non-registered edge to prove it doesn't explode
+    // force the script to unregister a non-registered edge to prove it doesn't explode
     triggerConfigReload();
 }
 
@@ -272,13 +266,12 @@ void ScreenEdgeTest::testDeclarativeTouchEdge()
     QTRY_COMPARE(runningChangedSpy.count(), 1);
 
     QSignalSpy showDesktopSpy(workspace(), &Workspace::showingDesktopChanged);
-    QVERIFY(showDesktopSpy.isValid());
 
     // Trigger the edge through touch
     quint32 timestamp = 0;
-    kwinApp()->platform()->touchDown(0, QPointF(0, 50), timestamp++);
-    kwinApp()->platform()->touchMotion(0, QPointF(500, 50), timestamp++);
-    kwinApp()->platform()->touchUp(0, timestamp++);
+    Test::touchDown(0, QPointF(0, 50), timestamp++);
+    Test::touchMotion(0, QPointF(500, 50), timestamp++);
+    Test::touchUp(0, timestamp++);
 
     QVERIFY(showDesktopSpy.wait());
 }

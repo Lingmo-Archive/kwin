@@ -7,13 +7,13 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "platform.h"
-#include "x11client.h"
+
+#include "core/output.h"
+#include "core/outputbackend.h"
 #include "cursor.h"
-#include "screenedge.h"
-#include "screens.h"
 #include "wayland_server.h"
 #include "workspace.h"
+#include "x11window.h"
 #include <kwineffects.h>
 
 #include <KDecoration2/Decoration>
@@ -37,25 +37,23 @@ private Q_SLOTS:
 
 void ShadeTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
     setenv("QT_QPA_PLATFORM", "wayland", true);
-    waylandServer()->initWorkspace();
 }
 
 void ShadeTest::init()
 {
-    screens()->setCurrent(0);
+    workspace()->setActiveOutput(QPoint(640, 512));
     Cursors::self()->mouse()->setPos(QPoint(640, 512));
 }
 
@@ -66,16 +64,16 @@ void ShadeTest::testShadeGeometry()
     // create an xcb window
     struct XcbConnectionDeleter
     {
-        static inline void cleanup(xcb_connection_t *pointer)
+        void operator()(xcb_connection_t *pointer)
         {
             xcb_disconnect(pointer);
         }
     };
-    QScopedPointer<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
-    QVERIFY(!xcb_connection_has_error(c.data()));
+    std::unique_ptr<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
+    QVERIFY(!xcb_connection_has_error(c.get()));
     const QRect windowGeometry(0, 0, 100, 200);
-    xcb_window_t w = xcb_generate_id(c.data());
-    xcb_create_window(c.data(), XCB_COPY_FROM_PARENT, w, rootWindow(),
+    xcb_window_t windowId = xcb_generate_id(c.get());
+    xcb_create_window(c.get(), XCB_COPY_FROM_PARENT, windowId, rootWindow(),
                       windowGeometry.x(),
                       windowGeometry.y(),
                       windowGeometry.width(),
@@ -85,42 +83,40 @@ void ShadeTest::testShadeGeometry()
     memset(&hints, 0, sizeof(hints));
     xcb_icccm_size_hints_set_position(&hints, 1, windowGeometry.x(), windowGeometry.y());
     xcb_icccm_size_hints_set_size(&hints, 1, windowGeometry.width(), windowGeometry.height());
-    xcb_icccm_set_wm_normal_hints(c.data(), w, &hints);
-    xcb_map_window(c.data(), w);
-    xcb_flush(c.data());
+    xcb_icccm_set_wm_normal_hints(c.get(), windowId, &hints);
+    xcb_map_window(c.get(), windowId);
+    xcb_flush(c.get());
 
-    // we should get a client for it
-    QSignalSpy windowCreatedSpy(workspace(), &Workspace::clientAdded);
-    QVERIFY(windowCreatedSpy.isValid());
+    // we should get a window for it
+    QSignalSpy windowCreatedSpy(workspace(), &Workspace::windowAdded);
     QVERIFY(windowCreatedSpy.wait());
-    X11Client *client = windowCreatedSpy.first().first().value<X11Client *>();
-    QVERIFY(client);
-    QCOMPARE(client->window(), w);
-    QVERIFY(client->isDecorated());
-    QVERIFY(client->isShadeable());
-    QVERIFY(!client->isShade());
-    QVERIFY(client->isActive());
+    X11Window *window = windowCreatedSpy.first().first().value<X11Window *>();
+    QVERIFY(window);
+    QCOMPARE(window->window(), windowId);
+    QVERIFY(window->isDecorated());
+    QVERIFY(window->isShadeable());
+    QVERIFY(!window->isShade());
+    QVERIFY(window->isActive());
 
     // now shade the window
-    const QRect geoBeforeShade = client->frameGeometry();
+    const QRectF geoBeforeShade = window->frameGeometry();
     QVERIFY(geoBeforeShade.isValid());
     QVERIFY(!geoBeforeShade.isEmpty());
     workspace()->slotWindowShade();
-    QVERIFY(client->isShade());
-    QVERIFY(client->frameGeometry() != geoBeforeShade);
+    QVERIFY(window->isShade());
+    QVERIFY(window->frameGeometry() != geoBeforeShade);
     // and unshade again
     workspace()->slotWindowShade();
-    QVERIFY(!client->isShade());
-    QCOMPARE(client->frameGeometry(), geoBeforeShade);
+    QVERIFY(!window->isShade());
+    QCOMPARE(window->frameGeometry(), geoBeforeShade);
 
     // and destroy the window again
-    xcb_unmap_window(c.data(), w);
-    xcb_destroy_window(c.data(), w);
-    xcb_flush(c.data());
+    xcb_unmap_window(c.get(), windowId);
+    xcb_destroy_window(c.get(), windowId);
+    xcb_flush(c.get());
     c.reset();
 
-    QSignalSpy windowClosedSpy(client, &X11Client::windowClosed);
-    QVERIFY(windowClosedSpy.isValid());
+    QSignalSpy windowClosedSpy(window, &X11Window::windowClosed);
     QVERIFY(windowClosedSpy.wait());
 }
 

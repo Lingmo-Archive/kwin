@@ -68,6 +68,10 @@ void GLPlatformTest::testDriverToString_data()
     QTest::newRow("VMware") << Driver_VMware << QStringLiteral("VMware (SVGA3D)");
     QTest::newRow("Qualcomm") << Driver_Qualcomm << QStringLiteral("Qualcomm");
     QTest::newRow("Virgl") << Driver_Virgl << QStringLiteral("Virgl (virtio-gpu, Qemu/KVM guest)");
+    QTest::newRow("Panfrost") << Driver_Panfrost << QStringLiteral("Panfrost");
+    QTest::newRow("Lima") << Driver_Lima << QStringLiteral("Mali (Lima)");
+    QTest::newRow("VC4") << Driver_VC4 << QStringLiteral("VideoCore IV");
+    QTest::newRow("V3D") << Driver_V3D << QStringLiteral("VideoCore 3D");
     QTest::newRow("Unknown") << Driver_Unknown << QStringLiteral("Unknown");
 }
 
@@ -116,7 +120,19 @@ void GLPlatformTest::testChipClassToString_data()
     QTest::newRow("Adreno3XX") << Adreno3XX << QStringLiteral("Adreno 3xx series");
     QTest::newRow("Adreno4XX") << Adreno4XX << QStringLiteral("Adreno 4xx series");
     QTest::newRow("Adreno5XX") << Adreno5XX << QStringLiteral("Adreno 5xx series");
-    QTest::newRow("UnknwonAdreno") << UnknownAdreno << QStringLiteral("Unknown");
+    QTest::newRow("UnknownAdreno") << UnknownAdreno << QStringLiteral("Unknown");
+    QTest::newRow("MaliT7XX") << MaliT7XX << QStringLiteral("Mali T7xx series");
+    QTest::newRow("MaliT8XX") << MaliT8XX << QStringLiteral("Mali T8xx series");
+    QTest::newRow("MaliGXX") << MaliGXX << QStringLiteral("Mali Gxx series");
+    QTest::newRow("UnknownPanfrost") << UnknownPanfrost << QStringLiteral("Unknown");
+    QTest::newRow("Mali400") << Mali400 << QStringLiteral("Mali 400 series");
+    QTest::newRow("Mali450") << Mali450 << QStringLiteral("Mali 450 series");
+    QTest::newRow("Mali470") << Mali470 << QStringLiteral("Mali 470 series");
+    QTest::newRow("UnknownLima") << UnknownLima << QStringLiteral("Unknown");
+    QTest::newRow("VC4_2_1") << VC4_2_1 << QStringLiteral("VideoCore IV");
+    QTest::newRow("UnknownVideoCore4") << UnknownVideoCore4 << QStringLiteral("Unknown");
+    QTest::newRow("V3D_4_2") << V3D_4_2 << QStringLiteral("VideoCore 3D");
+    QTest::newRow("UnknownVideoCore3D") << UnknownVideoCore3D << QStringLiteral("Unknown");
     QTest::newRow("UnknownChipClass") << UnknownChipClass << QStringLiteral("Unknown");
 }
 
@@ -152,6 +168,11 @@ void GLPlatformTest::testPriorDetect()
     QCOMPARE(gl->isRadeon(), false);
     QCOMPARE(gl->isNvidia(), false);
     QCOMPARE(gl->isIntel(), false);
+    QCOMPARE(gl->isPanfrost(), false);
+    QCOMPARE(gl->isLima(), false);
+    QCOMPARE(gl->isVideoCore4(), false);
+    QCOMPARE(gl->isVideoCore3D(), false);
+
     QCOMPARE(gl->isVirtualBox(), false);
     QCOMPARE(gl->isVMware(), false);
 
@@ -165,7 +186,7 @@ void GLPlatformTest::testPriorDetect()
 
     QCOMPARE(gl->isLooseBinding(), false);
     QCOMPARE(gl->isGLES(), false);
-    QCOMPARE(gl->recommendedCompositor(), XRenderCompositing);
+    QCOMPARE(gl->recommendedCompositor(), QPainterCompositing);
     QCOMPARE(gl->preferBufferSubData(), false);
     QCOMPARE(gl->platformInterface(), NoOpenGLPlatformInterface);
 }
@@ -252,6 +273,10 @@ void GLPlatformTest::testDetect()
     QCOMPARE(gl->isVirtualBox(), settingsGroup.readEntry("VirtualBox", false));
     QCOMPARE(gl->isVMware(), settingsGroup.readEntry("VMware", false));
     QCOMPARE(gl->isAdreno(), settingsGroup.readEntry("Adreno", false));
+    QCOMPARE(gl->isPanfrost(), settingsGroup.readEntry("Panfrost", false));
+    QCOMPARE(gl->isLima(), settingsGroup.readEntry("Lima", false));
+    QCOMPARE(gl->isVideoCore4(), settingsGroup.readEntry("VC4", false));
+    QCOMPARE(gl->isVideoCore3D(), settingsGroup.readEntry("V3D", false));
     QCOMPARE(gl->isVirgl(), settingsGroup.readEntry("Virgl", false));
 
     QCOMPARE(gl->isSoftwareEmulation(), settingsGroup.readEntry("SoftwareEmulation", false));

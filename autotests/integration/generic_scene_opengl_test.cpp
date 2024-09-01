@@ -7,14 +7,14 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "generic_scene_opengl_test.h"
-#include "abstract_client.h"
 #include "composite.h"
-#include "effectloader.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "cursor.h"
-#include "platform.h"
-#include "scene.h"
+#include "effectloader.h"
+#include "scene/workspacescene.h"
 #include "wayland_server.h"
-#include "effect_builtins.h"
+#include "window.h"
 
 #include <KConfigGroup>
 
@@ -38,17 +38,15 @@ void GenericSceneOpenGLTest::cleanup()
 
 void GenericSceneOpenGLTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     // disable all effects - we don't want to have it interact with the rendering
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (QString name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -64,44 +62,22 @@ void GenericSceneOpenGLTest::initTestCase()
     QVERIFY(applicationStartedSpy.wait());
     QVERIFY(Compositor::self());
 
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
-    QCOMPARE(kwinApp()->platform()->selectedCompositor(), KWin::OpenGLCompositing);
-}
-
-void GenericSceneOpenGLTest::testRestart_data()
-{
-    QTest::addColumn<bool>("core");
-
-    QTest::newRow("GLCore") << true;
-    QTest::newRow("Legacy") << false;
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void GenericSceneOpenGLTest::testRestart()
 {
     // simple restart of the OpenGL compositor without any windows being shown
-
-    // setup opengl compositing options
-    auto compositingGroup = kwinApp()->config()->group("Compositing");
-    QFETCH(bool, core);
-    compositingGroup.writeEntry("GLCore", core);
-    compositingGroup.sync();
-
     QSignalSpy sceneCreatedSpy(KWin::Compositor::self(), &Compositor::sceneCreated);
-    QVERIFY(sceneCreatedSpy.isValid());
     KWin::Compositor::self()->reinitialize();
     if (sceneCreatedSpy.isEmpty()) {
         QVERIFY(sceneCreatedSpy.wait());
     }
     QCOMPARE(sceneCreatedSpy.count(), 1);
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
-    QCOMPARE(kwinApp()->platform()->selectedCompositor(), KWin::OpenGLCompositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 
     // trigger a repaint
-    KWin::Compositor::self()->addRepaintFull();
+    KWin::Compositor::self()->scene()->addRepaintFull();
     // and wait 100 msec to ensure it's rendered
     // TODO: introduce frameRendered signal in SceneOpenGL
     QTest::qWait(100);

@@ -7,22 +7,23 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "x11client.h"
+
 #include "composite.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "cursor.h"
-#include "effects.h"
 #include "effectloader.h"
-#include "platform.h"
+#include "effects.h"
 #include "wayland_server.h"
 #include "workspace.h"
-#include "effect_builtins.h"
+#include "x11window.h"
 
 #include <KConfigGroup>
 
 #include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/registry.h>
-#include <KWayland/Client/surface.h>
 #include <KWayland/Client/slide.h>
+#include <KWayland/Client/surface.h>
 
 #include <netwm.h>
 #include <xcb/xcb_icccm.h>
@@ -32,7 +33,7 @@ static const QString s_socketName = QStringLiteral("wayland_test_effects_wobbly_
 
 class WobblyWindowsShadeTest : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 private Q_SLOTS:
     void initTestCase();
     void init();
@@ -43,18 +44,16 @@ private Q_SLOTS:
 
 void WobblyWindowsShadeTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
-    qRegisterMetaType<KWin::Effect*>();
+    qRegisterMetaType<KWin::Window *>();
+    qRegisterMetaType<KWin::Effect *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     // disable all effects - we don't want to have it interact with the rendering
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (QString name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -68,9 +67,7 @@ void WobblyWindowsShadeTest::initTestCase()
     QVERIFY(applicationStartedSpy.wait());
     QVERIFY(Compositor::self());
 
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void WobblyWindowsShadeTest::init()
@@ -89,7 +86,7 @@ void WobblyWindowsShadeTest::cleanup()
 
 struct XcbConnectionDeleter
 {
-    static inline void cleanup(xcb_connection_t *pointer)
+    void operator()(xcb_connection_t *pointer)
     {
         xcb_disconnect(pointer);
     }
@@ -98,16 +95,15 @@ struct XcbConnectionDeleter
 void WobblyWindowsShadeTest::testShadeMove()
 {
     // this test simulates the condition from BUG 390953
-    EffectsHandlerImpl *e = static_cast<EffectsHandlerImpl*>(effects);
-    QVERIFY(e->loadEffect(BuiltInEffects::nameForEffect(BuiltInEffect::WobblyWindows)));
-    QVERIFY(e->isEffectLoaded(BuiltInEffects::nameForEffect(BuiltInEffect::WobblyWindows)));
+    EffectsHandlerImpl *e = static_cast<EffectsHandlerImpl *>(effects);
+    QVERIFY(e->loadEffect(QStringLiteral("wobblywindows")));
+    QVERIFY(e->isEffectLoaded(QStringLiteral("wobblywindows")));
 
-
-    QScopedPointer<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
-    QVERIFY(!xcb_connection_has_error(c.data()));
+    std::unique_ptr<xcb_connection_t, XcbConnectionDeleter> c(xcb_connect(nullptr, nullptr));
+    QVERIFY(!xcb_connection_has_error(c.get()));
     const QRect windowGeometry(0, 0, 100, 200);
-    xcb_window_t w = xcb_generate_id(c.data());
-    xcb_create_window(c.data(), XCB_COPY_FROM_PARENT, w, rootWindow(),
+    xcb_window_t windowId = xcb_generate_id(c.get());
+    xcb_create_window(c.get(), XCB_COPY_FROM_PARENT, windowId, rootWindow(),
                       windowGeometry.x(),
                       windowGeometry.y(),
                       windowGeometry.width(),
@@ -117,65 +113,62 @@ void WobblyWindowsShadeTest::testShadeMove()
     memset(&hints, 0, sizeof(hints));
     xcb_icccm_size_hints_set_position(&hints, 1, windowGeometry.x(), windowGeometry.y());
     xcb_icccm_size_hints_set_size(&hints, 1, windowGeometry.width(), windowGeometry.height());
-    xcb_icccm_set_wm_normal_hints(c.data(), w, &hints);
-    xcb_map_window(c.data(), w);
-    xcb_flush(c.data());
+    xcb_icccm_set_wm_normal_hints(c.get(), windowId, &hints);
+    xcb_map_window(c.get(), windowId);
+    xcb_flush(c.get());
 
-    // we should get a client for it
-    QSignalSpy windowCreatedSpy(workspace(), &Workspace::clientAdded);
-    QVERIFY(windowCreatedSpy.isValid());
+    // we should get a window for it
+    QSignalSpy windowCreatedSpy(workspace(), &Workspace::windowAdded);
     QVERIFY(windowCreatedSpy.wait());
-    X11Client *client = windowCreatedSpy.first().first().value<X11Client *>();
-    QVERIFY(client);
-    QCOMPARE(client->window(), w);
-    QVERIFY(client->isDecorated());
-    QVERIFY(client->isShadeable());
-    QVERIFY(!client->isShade());
-    QVERIFY(client->isActive());
+    X11Window *window = windowCreatedSpy.first().first().value<X11Window *>();
+    QVERIFY(window);
+    QCOMPARE(window->window(), windowId);
+    QVERIFY(window->isDecorated());
+    QVERIFY(window->isShadeable());
+    QVERIFY(!window->isShade());
+    QVERIFY(window->isActive());
 
-    QSignalSpy windowShownSpy(client, &AbstractClient::windowShown);
-    QVERIFY(windowShownSpy.isValid());
+    QSignalSpy windowShownSpy(window, &Window::windowShown);
     QVERIFY(windowShownSpy.wait());
 
     // now shade the window
     workspace()->slotWindowShade();
-    QVERIFY(client->isShade());
+    QVERIFY(window->isShade());
 
     QSignalSpy windowStartUserMovedResizedSpy(e, &EffectsHandler::windowStartUserMovedResized);
-    QVERIFY(windowStartUserMovedResizedSpy.isValid());
 
     // begin move
-    QVERIFY(workspace()->moveResizeClient() == nullptr);
-    QCOMPARE(client->isMove(), false);
+    QVERIFY(workspace()->moveResizeWindow() == nullptr);
+    QCOMPARE(window->isInteractiveMove(), false);
     workspace()->slotWindowMove();
-    QCOMPARE(workspace()->moveResizeClient(), client);
-    QCOMPARE(client->isMove(), true);
+    QCOMPARE(workspace()->moveResizeWindow(), window);
+    QCOMPARE(window->isInteractiveMove(), true);
     QCOMPARE(windowStartUserMovedResizedSpy.count(), 1);
 
     // wait for frame rendered
     QTest::qWait(100);
 
     // send some key events, not going through input redirection
-    client->keyPressEvent(Qt::Key_Right);
-    client->updateMoveResize(KWin::Cursors::self()->mouse()->pos());
+    window->keyPressEvent(Qt::Key_Right);
+    window->updateInteractiveMoveResize(KWin::Cursors::self()->mouse()->pos());
 
     // wait for frame rendered
     QTest::qWait(100);
 
-    client->keyPressEvent(Qt::Key_Right);
-    client->updateMoveResize(KWin::Cursors::self()->mouse()->pos());
+    window->keyPressEvent(Qt::Key_Right);
+    window->updateInteractiveMoveResize(KWin::Cursors::self()->mouse()->pos());
 
     // wait for frame rendered
     QTest::qWait(100);
 
-    client->keyPressEvent(Qt::Key_Down | Qt::ALT);
-    client->updateMoveResize(KWin::Cursors::self()->mouse()->pos());
+    window->keyPressEvent(Qt::Key_Down | Qt::ALT);
+    window->updateInteractiveMoveResize(KWin::Cursors::self()->mouse()->pos());
 
     // wait for frame rendered
     QTest::qWait(100);
 
     // let's end
-    client->keyPressEvent(Qt::Key_Enter);
+    window->keyPressEvent(Qt::Key_Enter);
 
     // wait for frame rendered
     QTest::qWait(100);

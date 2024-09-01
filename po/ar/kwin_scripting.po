@@ -2,113 +2,111 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Safa Alfulaij <safa1996alfulaij@gmail.com>, 2015.
+# Zayed Al-Saidi <zayed.alsaidi@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-08 02:22+0200\n"
-"PO-Revision-Date: 2015-01-25 18:08+0300\n"
-"Last-Translator: Safa Alfulaij <safa1996alfulaij@gmail.com>\n"
-"Language-Team: Arabic <doc@arabeyes.org>\n"
+"POT-Creation-Date: 2022-11-01 00:48+0000\n"
+"PO-Revision-Date: 2022-10-29 19:03+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
+"Language-Team: ar\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "صفا الفليج"
+msgstr "زايد السعيدي"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "safa1996alfulaij@gmail.com"
+msgstr "zayed.alsaidi@gmail.com"
 
 #: genericscriptedconfig.cpp:70
 #, kde-format
 msgctxt "Error message"
-msgid "Plugin does not provide configuration file in expected location"
-msgstr "لم توفّر الملحقة ملفّ ضبط في المكان المتوقّع"
+msgid "Could not locate package metadata"
+msgstr "تعذّر تحديد موقع البيانات الوصفية للحزمة"
 
-#: scripting.cpp:117
+#: genericscriptedconfig.cpp:84
 #, kde-format
-msgctxt "Assertion failed in KWin script with given value"
-msgid "Assertion failed: %1 is not null"
-msgstr "فشل التّوكيد: %1 ليس خاليًا"
+msgctxt "Required file does not exist"
+msgid "%1 does not contain a valid metadata.json file"
+msgstr "لا يحوي %1 على ملف metadata.json صالح"
 
-#: scripting.cpp:135
+#: genericscriptedconfig.cpp:90 genericscriptedconfig.cpp:96
 #, kde-format
-msgctxt "Assertion failed in KWin script"
-msgid "Assertion failed: argument is null"
-msgstr "فشل التّوكيد: المعطى خالٍ"
+msgctxt "Required file does not exist"
+msgid "%1 does not exist"
+msgstr "%1 غير موجود"
 
-#: scripting.cpp:177
-#, kde-format
-msgctxt "Error in KWin Script"
-msgid ""
-"Invalid number of arguments. At least service, path, interface and method "
-"need to be provided"
-msgstr ""
-"عدد معطيات غير صالح. يجب توفير الخدمة، والمسار، والواجهة والطريقة على الأقل"
+#~ msgctxt "Error message"
+#~ msgid "Plugin does not provide configuration file in expected location"
+#~ msgstr "لم توفّر الملحقة ملفّ ضبط في المكان المتوقّع"
 
-#: scripting.cpp:183
-#, kde-format
-msgctxt "Error in KWin Script"
-msgid ""
-"Invalid type. Service, path, interface and method need to be string values"
-msgstr ""
-"نوع غير صالح. الخدمة، والمسار، والواجهة والطريقة يجب أن يكونوا قيم سلاسل"
+#~ msgctxt "Assertion failed in KWin script with given value"
+#~ msgid "Assertion failed: %1 is not null"
+#~ msgstr "فشل التّوكيد: %1 ليس خاليًا"
 
-#: scriptingutils.cpp:17
-#, kde-format
-msgctxt "syntax error in KWin script"
-msgid "Invalid number of arguments"
-msgstr "عدد معطيات غير صالح"
+#~ msgctxt "Assertion failed in KWin script"
+#~ msgid "Assertion failed: argument is null"
+#~ msgstr "فشل التّوكيد: المعطى خالٍ"
 
-#: scriptingutils.cpp:30
-#, kde-format
-msgctxt "KWin Scripting function received incorrect value for an expected type"
-msgid "%1 is not a variant type"
-msgstr "%1 ليس نوع تنويعة"
+#~ msgctxt "Error in KWin Script"
+#~ msgid ""
+#~ "Invalid number of arguments. At least service, path, interface and method "
+#~ "need to be provided"
+#~ msgstr ""
+#~ "عدد معطيات غير صالح. يجب توفير الخدمة، والمسار، والواجهة والطريقة على "
+#~ "الأقل"
 
-#: scriptingutils.h:40
-#, kde-format
-msgctxt "KWin Scripting function received incorrect value for an expected type"
-msgid "%1 is not of required type"
-msgstr "%1 ليس من الأنواع المطلوبة"
+#~ msgctxt "Error in KWin Script"
+#~ msgid ""
+#~ "Invalid type. Service, path, interface and method need to be string values"
+#~ msgstr ""
+#~ "نوع غير صالح. الخدمة، والمسار، والواجهة والطريقة يجب أن يكونوا قيم سلاسل"
 
-#: scriptingutils.h:147
-#, kde-format
-msgctxt "KWin Scripting error thrown due to incorrect argument"
-msgid "Second argument to registerScreenEdge needs to be a callback"
-msgstr "المعطى الثّاني إلى registerScreenEdge يجب أن يكون ردّ نداء"
+#~ msgctxt "syntax error in KWin script"
+#~ msgid "Invalid number of arguments"
+#~ msgstr "عدد معطيات غير صالح"
 
-#: scriptingutils.h:202
-#, fuzzy, kde-format
-#| msgctxt "KWin Scripting error thrown due to incorrect argument"
-#| msgid "Second argument to registerScreenEdge needs to be a callback"
-msgctxt "KWin Scripting error thrown due to incorrect argument"
-msgid "Second argument to registerTouchScreenEdge needs to be a callback"
-msgstr "المعطى الثّاني إلى registerScreenEdge يجب أن يكون ردّ نداء"
+#~ msgctxt ""
+#~ "KWin Scripting function received incorrect value for an expected type"
+#~ msgid "%1 is not a variant type"
+#~ msgstr "%1 ليس نوع تنويعة"
 
-#: scriptingutils.h:239
-#, kde-format
-msgctxt "KWin Scripting error thrown due to incorrect argument"
-msgid "Argument for registerUserActionsMenu needs to be a callback"
-msgstr "معطى registerUserActionsMenu يجب أن يكون ردّ نداء"
+#~ msgctxt ""
+#~ "KWin Scripting function received incorrect value for an expected type"
+#~ msgid "%1 is not of required type"
+#~ msgstr "%1 ليس من الأنواع المطلوبة"
 
-#: scriptingutils.h:294
-#, kde-format
-msgctxt "Assertion failed in KWin script with given value"
-msgid "Assertion failed: %1"
-msgstr "فشل التّوكيد: %1"
+#~ msgctxt "KWin Scripting error thrown due to incorrect argument"
+#~ msgid "Second argument to registerScreenEdge needs to be a callback"
+#~ msgstr "المعطى الثّاني إلى registerScreenEdge يجب أن يكون ردّ نداء"
 
-#: scriptingutils.h:305
-#, kde-format
-msgctxt "Assertion failed in KWin script with expected value and actual value"
-msgid "Assertion failed: Expected %1, got %2"
-msgstr "فشل التّوكيد: توقّعت %1، حصلت على %2"
+#, fuzzy
+#~| msgctxt "KWin Scripting error thrown due to incorrect argument"
+#~| msgid "Second argument to registerScreenEdge needs to be a callback"
+#~ msgctxt "KWin Scripting error thrown due to incorrect argument"
+#~ msgid "Second argument to registerTouchScreenEdge needs to be a callback"
+#~ msgstr "المعطى الثّاني إلى registerScreenEdge يجب أن يكون ردّ نداء"
+
+#~ msgctxt "KWin Scripting error thrown due to incorrect argument"
+#~ msgid "Argument for registerUserActionsMenu needs to be a callback"
+#~ msgstr "معطى registerUserActionsMenu يجب أن يكون ردّ نداء"
+
+#~ msgctxt "Assertion failed in KWin script with given value"
+#~ msgid "Assertion failed: %1"
+#~ msgstr "فشل التّوكيد: %1"
+
+#~ msgctxt ""
+#~ "Assertion failed in KWin script with expected value and actual value"
+#~ msgid "Assertion failed: Expected %1, got %2"
+#~ msgstr "فشل التّوكيد: توقّعت %1، حصلت على %2"

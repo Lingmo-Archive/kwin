@@ -18,9 +18,9 @@
 </authorgroup>
 
 <date
->2015-07-14</date>
+>2023-01-30</date>
 <releaseinfo
->Plasma 5.3</releaseinfo>
+>Plasma 5.27</releaseinfo>
 
 <keywordset>
 <keyword
@@ -31,6 +31,10 @@
 >bureaublad</keyword>
 <keyword
 >effecten</keyword>
+<keyword
+>scherm</keyword>
+<keyword
+>rand</keyword>
 </keywordset>
 </articleinfo>
 
@@ -57,18 +61,34 @@
 > in het contextmenu.</para>
 
 <para
->In de sectie <guilabel
->Vensterbeheer</guilabel
-> kunt u <guilabel
->Vensters maximaliseren door ze naar de top van het scherm te slepen</guilabel
+>U kunt <guilabel
+>Maximaliseren: Vensters naar de bovenrand gesleept</guilabel
+>, <guilabel
+>Tegels: Vensters naar de linker of rechter rand gesleept</guilabel
 > of <guilabel
->Vensterstegels maken door ze naar de rand van het venster te slepen</guilabel
-> en een percentage van het scherm in te stellen om tegels maken te starten. </para>
+>Start kwart tegels in:</guilabel
+> inschakelen en een percentage van het scherm instellen om tegels maken te starten. </para>
+
+<tip>
+<para
+>In het tabblad <guilabel
+>Verplaatsing</guilabel
+> van de instellingsmodule <guilabel
+>Venstergedrag</guilabel
+> in de sectie <guilabel
+>Vensterbeheer</guilabel
+> van de systeeminstellingen, kunt u magnetische zones voor vensters configureren om te verplaatsen naar de schermranden, centreren of andere vensters wanneer ze er dichtbij komen. </para>
+</tip>
 
 <para
->In de sectie <guilabel
->Andere instellingen</guilabel
-> stelt u in of u wilt omschakelen naar een ander bureaublad bij het drukken van de muiscursor tegen de schermrand, &eg; alleen bij het verplaatsen van vensters. </para>
+>De optie <guilabel
+>Actief blijven wanneer vensters volledig scherm zijn</guilabel
+> uitschakelen om starten van schermrandacties te onderdrukken wanneer een toepassing actief is in volledig scherm.</para>
+
+<para
+>Door het item <guilabel
+>Bureaublad omschakelen aan rand</guilabel
+> te gebruiken, configureert u dat u wilt omschakelen naar een ander bureaublad bij het drukken van de muiscursor tegen de schermrand, &eg; alleen bij het verplaatsen van vensters. </para>
 <para
 ><guilabel
 >Vertraging van activering</guilabel

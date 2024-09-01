@@ -6,11 +6,12 @@
 */
 
 #include "onscreennotificationtest.h"
-#include "../onscreennotification.h"
-#include "../input.h"
 
-#include <KSharedConfig>
+#include "input.h"
+#include "onscreennotification.h"
+
 #include <KConfigGroup>
+#include <KSharedConfig>
 
 #include <QQmlEngine>
 #include <QSignalSpy>
@@ -23,12 +24,10 @@ namespace KWin
 
 void InputRedirection::installInputEventSpy(InputEventSpy *spy)
 {
-    Q_UNUSED(spy);
 }
 
 void InputRedirection::uninstallInputEventSpy(InputEventSpy *spy)
 {
-    Q_UNUSED(spy);
 }
 
 InputRedirection *InputRedirection::s_self = nullptr;
@@ -96,7 +95,6 @@ void OnScreenNotificationTest::iconName()
 {
     OnScreenNotification notification;
     QSignalSpy iconNameChangedSpy(&notification, &OnScreenNotification::iconNameChanged);
-    QVERIFY(iconNameChangedSpy.isValid());
     QCOMPARE(notification.iconName(), QString());
     notification.setIconName(QStringLiteral("foo"));
     QCOMPARE(notification.iconName(), QStringLiteral("foo"));
@@ -112,7 +110,6 @@ void OnScreenNotificationTest::message()
 {
     OnScreenNotification notification;
     QSignalSpy messageChangedSpy(&notification, &OnScreenNotification::messageChanged);
-    QVERIFY(messageChangedSpy.isValid());
     QCOMPARE(notification.message(), QString());
     notification.setMessage(QStringLiteral("foo"));
     QCOMPARE(notification.message(), QStringLiteral("foo"));

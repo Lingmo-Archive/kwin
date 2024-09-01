@@ -7,22 +7,22 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "platform.h"
-#include "abstract_client.h"
-#include "x11client.h"
+
 #include "composite.h"
+#include "core/outputbackend.h"
 #include "deleted.h"
-#include "effects.h"
 #include "effectloader.h"
-#include "screens.h"
-#include "wayland_server.h"
-#include "workspace.h"
+#include "effects.h"
 #include "scripting/scriptedeffect.h"
+#include "wayland_server.h"
+#include "window.h"
+#include "workspace.h"
+#include "x11window.h"
 
 #include <KDecoration2/Decoration>
 
-#include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/compositor.h>
+#include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/shm_pool.h>
 #include <KWayland/Client/surface.h>
 
@@ -43,14 +43,13 @@ private Q_SLOTS:
 
 void DontCrashCancelAnimationFromAnimationEndedTest::initTestCase()
 {
-    qRegisterMetaType<KWin::Deleted*>();
-    qRegisterMetaType<KWin::AbstractClient*>();
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    qRegisterMetaType<KWin::Deleted *>();
+    qRegisterMetaType<KWin::Window *>();
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
     kwinApp()->start();
     QVERIFY(Compositor::self());
     QSignalSpy compositorToggledSpy(Compositor::self(), &Compositor::compositingToggled);
-    QVERIFY(compositorToggledSpy.isValid());
     QVERIFY(compositorToggledSpy.wait());
     QVERIFY(effects);
 }
@@ -68,7 +67,7 @@ void DontCrashCancelAnimationFromAnimationEndedTest::cleanup()
 void DontCrashCancelAnimationFromAnimationEndedTest::testScript()
 {
     // load a scripted effect which deletes animation data
-    ScriptedEffect *effect = ScriptedEffect::create(QStringLiteral("crashy"), QFINDTESTDATA("data/anim-data-delete-effect/effect.js"), 10);
+    ScriptedEffect *effect = ScriptedEffect::create(QStringLiteral("crashy"), QFINDTESTDATA("data/anim-data-delete-effect/effect.js"), 10, QString());
     QVERIFY(effect);
 
     const auto children = effects->children();
@@ -76,30 +75,28 @@ void DontCrashCancelAnimationFromAnimationEndedTest::testScript()
         if (qstrcmp((*it)->metaObject()->className(), "KWin::EffectLoader") != 0) {
             continue;
         }
-        QVERIFY(QMetaObject::invokeMethod(*it, "effectLoaded", Q_ARG(KWin::Effect*, effect), Q_ARG(QString, QStringLiteral("crashy"))));
+        QVERIFY(QMetaObject::invokeMethod(*it, "effectLoaded", Q_ARG(KWin::Effect *, effect), Q_ARG(QString, QStringLiteral("crashy"))));
         break;
     }
-    QVERIFY(static_cast<EffectsHandlerImpl*>(effects)->isEffectLoaded(QStringLiteral("crashy")));
+    QVERIFY(static_cast<EffectsHandlerImpl *>(effects)->isEffectLoaded(QStringLiteral("crashy")));
 
-    using namespace KWayland::Client;
     // create a window
-    Surface *surface = Test::createSurface(Test::waylandCompositor());
+    std::unique_ptr<KWayland::Client::Surface> surface{Test::createSurface()};
     QVERIFY(surface);
-    XdgShellSurface *shellSurface = Test::createXdgShellStableSurface(surface, surface);
+    Test::XdgToplevel *shellSurface = Test::createXdgToplevelSurface(surface.get(), surface.get());
     QVERIFY(shellSurface);
     // let's render
-    auto c = Test::renderAndWaitForShown(surface, QSize(100, 50), Qt::blue);
-    QVERIFY(c);
-    QCOMPARE(workspace()->activeClient(), c);
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window);
+    QCOMPARE(workspace()->activeWindow(), window);
 
     // make sure we animate
     QTest::qWait(200);
 
     // wait for the window to be passed to Deleted
-    QSignalSpy windowDeletedSpy(c, &AbstractClient::windowClosed);
-    QVERIFY(windowDeletedSpy.isValid());
+    QSignalSpy windowDeletedSpy(window, &Window::windowClosed);
 
-    surface->deleteLater();
+    surface.reset();
 
     QVERIFY(windowDeletedSpy.wait());
     // make sure we animate

@@ -7,17 +7,18 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "abstract_client.h"
-#include "debug_console.h"
-#include "internal_client.h"
-#include "platform.h"
-#include "screens.h"
-#include "wayland_server.h"
-#include "workspace.h"
-#include "xcbutils.h"
 
-#include <KWayland/Client/connection_thread.h>
+#include "core/output.h"
+#include "core/outputbackend.h"
+#include "debug_console.h"
+#include "internalwindow.h"
+#include "utils/xcbutils.h"
+#include "wayland_server.h"
+#include "window.h"
+#include "workspace.h"
+
 #include <KWayland/Client/compositor.h>
+#include <KWayland/Client/connection_thread.h>
 #include <KWayland/Client/shm_pool.h>
 #include <KWayland/Client/surface.h>
 
@@ -37,7 +38,7 @@ private Q_SLOTS:
     void cleanup();
     void topLevelTest_data();
     void topLevelTest();
-    void testX11Client();
+    void testX11Window();
     void testX11Unmanaged();
     void testWaylandClient();
     void testInternalWindow();
@@ -46,21 +47,19 @@ private Q_SLOTS:
 
 void DebugConsoleTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient *>();
-    qRegisterMetaType<KWin::InternalClient *>();
+    qRegisterMetaType<KWin::Window *>();
+    qRegisterMetaType<KWin::InternalWindow *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
     setenv("QT_QPA_PLATFORM", "wayland", true);
-    waylandServer()->initWorkspace();
 }
 
 void DebugConsoleTest::cleanup()
@@ -107,7 +106,7 @@ void DebugConsoleTest::topLevelTest()
     }
 }
 
-void DebugConsoleTest::testX11Client()
+void DebugConsoleTest::testX11Window()
 {
     DebugConsoleModel model;
     QModelIndex x11TopLevelIndex = model.index(0, 0, QModelIndex());
@@ -123,7 +122,6 @@ void DebugConsoleTest::testX11Client()
 
     // start glxgears, to get a window, which should be added to the model
     QSignalSpy rowsInsertedSpy(&model, &QAbstractItemModel::rowsInserted);
-    QVERIFY(rowsInsertedSpy.isValid());
 
     QProcess glxgears;
     glxgears.setProgram(QStringLiteral("glxgears"));
@@ -138,40 +136,40 @@ void DebugConsoleTest::testX11Client()
     QCOMPARE(rowsInsertedSpy.first().at(1).value<int>(), 0);
     QCOMPARE(rowsInsertedSpy.first().at(2).value<int>(), 0);
 
-    QModelIndex clientIndex = model.index(0, 0, x11TopLevelIndex);
-    QVERIFY(clientIndex.isValid());
-    QCOMPARE(model.parent(clientIndex), x11TopLevelIndex);
-    QVERIFY(model.hasChildren(clientIndex));
-    QVERIFY(model.rowCount(clientIndex) != 0);
-    QCOMPARE(model.columnCount(clientIndex), 2);
+    QModelIndex windowIndex = model.index(0, 0, x11TopLevelIndex);
+    QVERIFY(windowIndex.isValid());
+    QCOMPARE(model.parent(windowIndex), x11TopLevelIndex);
+    QVERIFY(model.hasChildren(windowIndex));
+    QVERIFY(model.rowCount(windowIndex) != 0);
+    QCOMPARE(model.columnCount(windowIndex), 2);
     // other indexes are still invalid
     QVERIFY(!model.index(0, 1, x11TopLevelIndex).isValid());
     QVERIFY(!model.index(0, 2, x11TopLevelIndex).isValid());
     QVERIFY(!model.index(1, 0, x11TopLevelIndex).isValid());
 
-    // the clientIndex has children and those are properties
-    for (int i = 0; i < model.rowCount(clientIndex); i++) {
-        const QModelIndex propNameIndex = model.index(i, 0, clientIndex);
+    // the windowIndex has children and those are properties
+    for (int i = 0; i < model.rowCount(windowIndex); i++) {
+        const QModelIndex propNameIndex = model.index(i, 0, windowIndex);
         QVERIFY(propNameIndex.isValid());
-        QCOMPARE(model.parent(propNameIndex), clientIndex);
+        QCOMPARE(model.parent(propNameIndex), windowIndex);
         QVERIFY(!model.hasChildren(propNameIndex));
         QVERIFY(!model.index(0, 0, propNameIndex).isValid());
         QVERIFY(model.data(propNameIndex, Qt::DisplayRole).isValid());
         QCOMPARE(model.data(propNameIndex, Qt::DisplayRole).userType(), int(QMetaType::QString));
 
         // and the value
-        const QModelIndex propValueIndex = model.index(i, 1, clientIndex);
+        const QModelIndex propValueIndex = model.index(i, 1, windowIndex);
         QVERIFY(propValueIndex.isValid());
-        QCOMPARE(model.parent(propValueIndex), clientIndex);
+        QCOMPARE(model.parent(propValueIndex), windowIndex);
         QVERIFY(!model.index(0, 0, propValueIndex).isValid());
         QVERIFY(!model.hasChildren(propValueIndex));
         // TODO: how to test whether the values actually work?
 
         // and on third column we should not get an index any more
-        QVERIFY(!model.index(i, 2, clientIndex).isValid());
+        QVERIFY(!model.index(i, 2, windowIndex).isValid());
     }
     // row after count should be invalid
-    QVERIFY(!model.index(model.rowCount(clientIndex), 0, clientIndex).isValid());
+    QVERIFY(!model.index(model.rowCount(windowIndex), 0, windowIndex).isValid());
 
     // creating a second model should be initialized directly with the X11 child
     DebugConsoleModel model2;
@@ -179,7 +177,6 @@ void DebugConsoleTest::testX11Client()
 
     // now close the window again, it should be removed from the model
     QSignalSpy rowsRemovedSpy(&model, &QAbstractItemModel::rowsRemoved);
-    QVERIFY(rowsRemovedSpy.isValid());
 
     glxgears.terminate();
     QVERIFY(glxgears.waitForFinished());
@@ -211,7 +208,6 @@ void DebugConsoleTest::testX11Unmanaged()
 
     // we need to create an unmanaged window
     QSignalSpy rowsInsertedSpy(&model, &QAbstractItemModel::rowsInserted);
-    QVERIFY(rowsInsertedSpy.isValid());
 
     // let's create an override redirect window
     const uint32_t values[] = {true};
@@ -226,42 +222,42 @@ void DebugConsoleTest::testX11Unmanaged()
     QCOMPARE(rowsInsertedSpy.first().at(1).value<int>(), 0);
     QCOMPARE(rowsInsertedSpy.first().at(2).value<int>(), 0);
 
-    QModelIndex clientIndex = model.index(0, 0, unmanagedTopLevelIndex);
-    QVERIFY(clientIndex.isValid());
-    QCOMPARE(model.parent(clientIndex), unmanagedTopLevelIndex);
-    QVERIFY(model.hasChildren(clientIndex));
-    QVERIFY(model.rowCount(clientIndex) != 0);
-    QCOMPARE(model.columnCount(clientIndex), 2);
+    QModelIndex windowIndex = model.index(0, 0, unmanagedTopLevelIndex);
+    QVERIFY(windowIndex.isValid());
+    QCOMPARE(model.parent(windowIndex), unmanagedTopLevelIndex);
+    QVERIFY(model.hasChildren(windowIndex));
+    QVERIFY(model.rowCount(windowIndex) != 0);
+    QCOMPARE(model.columnCount(windowIndex), 2);
     // other indexes are still invalid
     QVERIFY(!model.index(0, 1, unmanagedTopLevelIndex).isValid());
     QVERIFY(!model.index(0, 2, unmanagedTopLevelIndex).isValid());
     QVERIFY(!model.index(1, 0, unmanagedTopLevelIndex).isValid());
 
-    QCOMPARE(model.data(clientIndex, Qt::DisplayRole).toString(), QString::number(window));
+    QCOMPARE(model.data(windowIndex, Qt::DisplayRole).toString(), QStringLiteral("0x%1").arg(window, 0, 16));
 
-    // the clientIndex has children and those are properties
-    for (int i = 0; i < model.rowCount(clientIndex); i++) {
-        const QModelIndex propNameIndex = model.index(i, 0, clientIndex);
+    // the windowIndex has children and those are properties
+    for (int i = 0; i < model.rowCount(windowIndex); i++) {
+        const QModelIndex propNameIndex = model.index(i, 0, windowIndex);
         QVERIFY(propNameIndex.isValid());
-        QCOMPARE(model.parent(propNameIndex), clientIndex);
+        QCOMPARE(model.parent(propNameIndex), windowIndex);
         QVERIFY(!model.hasChildren(propNameIndex));
         QVERIFY(!model.index(0, 0, propNameIndex).isValid());
         QVERIFY(model.data(propNameIndex, Qt::DisplayRole).isValid());
         QCOMPARE(model.data(propNameIndex, Qt::DisplayRole).userType(), int(QMetaType::QString));
 
         // and the value
-        const QModelIndex propValueIndex = model.index(i, 1, clientIndex);
+        const QModelIndex propValueIndex = model.index(i, 1, windowIndex);
         QVERIFY(propValueIndex.isValid());
-        QCOMPARE(model.parent(propValueIndex), clientIndex);
+        QCOMPARE(model.parent(propValueIndex), windowIndex);
         QVERIFY(!model.index(0, 0, propValueIndex).isValid());
         QVERIFY(!model.hasChildren(propValueIndex));
         // TODO: how to test whether the values actually work?
 
         // and on third column we should not get an index any more
-        QVERIFY(!model.index(i, 2, clientIndex).isValid());
+        QVERIFY(!model.index(i, 2, windowIndex).isValid());
     }
     // row after count should be invalid
-    QVERIFY(!model.index(model.rowCount(clientIndex), 0, clientIndex).isValid());
+    QVERIFY(!model.index(model.rowCount(windowIndex), 0, windowIndex).isValid());
 
     // creating a second model should be initialized directly with the X11 child
     DebugConsoleModel model2;
@@ -269,7 +265,6 @@ void DebugConsoleTest::testX11Unmanaged()
 
     // now close the window again, it should be removed from the model
     QSignalSpy rowsRemovedSpy(&model, &QAbstractItemModel::rowsRemoved);
-    QVERIFY(rowsRemovedSpy.isValid());
 
     window.unmap();
 
@@ -301,18 +296,16 @@ void DebugConsoleTest::testWaylandClient()
 
     // we need to create a wayland window
     QSignalSpy rowsInsertedSpy(&model, &QAbstractItemModel::rowsInserted);
-    QVERIFY(rowsInsertedSpy.isValid());
 
     // create our connection
     QVERIFY(Test::setupWaylandConnection());
 
     // create the Surface and ShellSurface
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> surface(Test::createSurface());
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
     QVERIFY(surface->isValid());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    QVERIFY(!shellSurface.isNull());
-    Test::render(surface.data(), QSize(10, 10), Qt::red);
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    QVERIFY(shellSurface != nullptr);
+    Test::render(surface.get(), QSize(10, 10), Qt::red);
 
     // now we have the window, it should be added to our model
     QVERIFY(rowsInsertedSpy.wait());
@@ -324,40 +317,40 @@ void DebugConsoleTest::testWaylandClient()
     QCOMPARE(rowsInsertedSpy.first().at(1).value<int>(), 0);
     QCOMPARE(rowsInsertedSpy.first().at(2).value<int>(), 0);
 
-    QModelIndex clientIndex = model.index(0, 0, waylandTopLevelIndex);
-    QVERIFY(clientIndex.isValid());
-    QCOMPARE(model.parent(clientIndex), waylandTopLevelIndex);
-    QVERIFY(model.hasChildren(clientIndex));
-    QVERIFY(model.rowCount(clientIndex) != 0);
-    QCOMPARE(model.columnCount(clientIndex), 2);
+    QModelIndex windowIndex = model.index(0, 0, waylandTopLevelIndex);
+    QVERIFY(windowIndex.isValid());
+    QCOMPARE(model.parent(windowIndex), waylandTopLevelIndex);
+    QVERIFY(model.hasChildren(windowIndex));
+    QVERIFY(model.rowCount(windowIndex) != 0);
+    QCOMPARE(model.columnCount(windowIndex), 2);
     // other indexes are still invalid
     QVERIFY(!model.index(0, 1, waylandTopLevelIndex).isValid());
     QVERIFY(!model.index(0, 2, waylandTopLevelIndex).isValid());
     QVERIFY(!model.index(1, 0, waylandTopLevelIndex).isValid());
 
-    // the clientIndex has children and those are properties
-    for (int i = 0; i < model.rowCount(clientIndex); i++) {
-        const QModelIndex propNameIndex = model.index(i, 0, clientIndex);
+    // the windowIndex has children and those are properties
+    for (int i = 0; i < model.rowCount(windowIndex); i++) {
+        const QModelIndex propNameIndex = model.index(i, 0, windowIndex);
         QVERIFY(propNameIndex.isValid());
-        QCOMPARE(model.parent(propNameIndex), clientIndex);
+        QCOMPARE(model.parent(propNameIndex), windowIndex);
         QVERIFY(!model.hasChildren(propNameIndex));
         QVERIFY(!model.index(0, 0, propNameIndex).isValid());
         QVERIFY(model.data(propNameIndex, Qt::DisplayRole).isValid());
         QCOMPARE(model.data(propNameIndex, Qt::DisplayRole).userType(), int(QMetaType::QString));
 
         // and the value
-        const QModelIndex propValueIndex = model.index(i, 1, clientIndex);
+        const QModelIndex propValueIndex = model.index(i, 1, windowIndex);
         QVERIFY(propValueIndex.isValid());
-        QCOMPARE(model.parent(propValueIndex), clientIndex);
+        QCOMPARE(model.parent(propValueIndex), windowIndex);
         QVERIFY(!model.index(0, 0, propValueIndex).isValid());
         QVERIFY(!model.hasChildren(propValueIndex));
         // TODO: how to test whether the values actually work?
 
         // and on third column we should not get an index any more
-        QVERIFY(!model.index(i, 2, clientIndex).isValid());
+        QVERIFY(!model.index(i, 2, windowIndex).isValid());
     }
     // row after count should be invalid
-    QVERIFY(!model.index(model.rowCount(clientIndex), 0, clientIndex).isValid());
+    QVERIFY(!model.index(model.rowCount(windowIndex), 0, windowIndex).isValid());
 
     // creating a second model should be initialized directly with the X11 child
     DebugConsoleModel model2;
@@ -365,10 +358,9 @@ void DebugConsoleTest::testWaylandClient()
 
     // now close the window again, it should be removed from the model
     QSignalSpy rowsRemovedSpy(&model, &QAbstractItemModel::rowsRemoved);
-    QVERIFY(rowsRemovedSpy.isValid());
 
-    surface->attachBuffer(Buffer::Ptr());
-    surface->commit(Surface::CommitFlag::None);
+    surface->attachBuffer(KWayland::Client::Buffer::Ptr());
+    surface->commit(KWayland::Client::Surface::CommitFlag::None);
     QVERIFY(rowsRemovedSpy.wait());
 
     QCOMPARE(rowsRemovedSpy.count(), 1);
@@ -385,7 +377,10 @@ class HelperWindow : public QRasterWindow
 {
     Q_OBJECT
 public:
-    HelperWindow() : QRasterWindow(nullptr) {}
+    HelperWindow()
+        : QRasterWindow(nullptr)
+    {
+    }
     ~HelperWindow() override = default;
 
 Q_SIGNALS:
@@ -399,8 +394,8 @@ Q_SIGNALS:
     void keyReleased();
 
 protected:
-    void paintEvent(QPaintEvent *event) override {
-        Q_UNUSED(event)
+    void paintEvent(QPaintEvent *event) override
+    {
         QPainter p(this);
         p.fillRect(0, 0, width(), height(), Qt::red);
     }
@@ -416,21 +411,20 @@ void DebugConsoleTest::testInternalWindow()
     // given that we just test whether adding a window works.
 
     QSignalSpy rowsInsertedSpy(&model, &QAbstractItemModel::rowsInserted);
-    QVERIFY(rowsInsertedSpy.isValid());
 
-    QScopedPointer<HelperWindow> w(new HelperWindow);
+    std::unique_ptr<HelperWindow> w(new HelperWindow);
     w->setGeometry(0, 0, 100, 100);
     w->show();
 
     QTRY_COMPARE(rowsInsertedSpy.count(), 1);
     QCOMPARE(rowsInsertedSpy.first().first().value<QModelIndex>(), internalTopLevelIndex);
 
-    QModelIndex clientIndex = model.index(rowsInsertedSpy.first().last().toInt(), 0, internalTopLevelIndex);
-    QVERIFY(clientIndex.isValid());
-    QCOMPARE(model.parent(clientIndex), internalTopLevelIndex);
-    QVERIFY(model.hasChildren(clientIndex));
-    QVERIFY(model.rowCount(clientIndex) != 0);
-    QCOMPARE(model.columnCount(clientIndex), 2);
+    QModelIndex windowIndex = model.index(rowsInsertedSpy.first().last().toInt(), 0, internalTopLevelIndex);
+    QVERIFY(windowIndex.isValid());
+    QCOMPARE(model.parent(windowIndex), internalTopLevelIndex);
+    QVERIFY(model.hasChildren(windowIndex));
+    QVERIFY(model.rowCount(windowIndex) != 0);
+    QCOMPARE(model.columnCount(windowIndex), 2);
     // other indexes are still invalid
     QVERIFY(!model.index(rowsInsertedSpy.first().last().toInt(), 1, internalTopLevelIndex).isValid());
     QVERIFY(!model.index(rowsInsertedSpy.first().last().toInt(), 2, internalTopLevelIndex).isValid());
@@ -439,33 +433,32 @@ void DebugConsoleTest::testInternalWindow()
     // the wayland shell client top level should not have gained this window
     QVERIFY(!model.hasChildren(model.index(2, 0, QModelIndex())));
 
-    // the clientIndex has children and those are properties
-    for (int i = 0; i < model.rowCount(clientIndex); i++) {
-        const QModelIndex propNameIndex = model.index(i, 0, clientIndex);
+    // the windowIndex has children and those are properties
+    for (int i = 0; i < model.rowCount(windowIndex); i++) {
+        const QModelIndex propNameIndex = model.index(i, 0, windowIndex);
         QVERIFY(propNameIndex.isValid());
-        QCOMPARE(model.parent(propNameIndex), clientIndex);
+        QCOMPARE(model.parent(propNameIndex), windowIndex);
         QVERIFY(!model.hasChildren(propNameIndex));
         QVERIFY(!model.index(0, 0, propNameIndex).isValid());
         QVERIFY(model.data(propNameIndex, Qt::DisplayRole).isValid());
         QCOMPARE(model.data(propNameIndex, Qt::DisplayRole).userType(), int(QMetaType::QString));
 
         // and the value
-        const QModelIndex propValueIndex = model.index(i, 1, clientIndex);
+        const QModelIndex propValueIndex = model.index(i, 1, windowIndex);
         QVERIFY(propValueIndex.isValid());
-        QCOMPARE(model.parent(propValueIndex), clientIndex);
+        QCOMPARE(model.parent(propValueIndex), windowIndex);
         QVERIFY(!model.index(0, 0, propValueIndex).isValid());
         QVERIFY(!model.hasChildren(propValueIndex));
         // TODO: how to test whether the values actually work?
 
         // and on third column we should not get an index any more
-        QVERIFY(!model.index(i, 2, clientIndex).isValid());
+        QVERIFY(!model.index(i, 2, windowIndex).isValid());
     }
     // row after count should be invalid
-    QVERIFY(!model.index(model.rowCount(clientIndex), 0, clientIndex).isValid());
+    QVERIFY(!model.index(model.rowCount(windowIndex), 0, windowIndex).isValid());
 
     // now close the window again, it should be removed from the model
     QSignalSpy rowsRemovedSpy(&model, &QAbstractItemModel::rowsRemoved);
-    QVERIFY(rowsRemovedSpy.isValid());
 
     w->hide();
     w.reset();
@@ -481,19 +474,17 @@ void DebugConsoleTest::testClosingDebugConsole()
 
     DebugConsole *console = new DebugConsole;
     QSignalSpy destroyedSpy(console, &QObject::destroyed);
-    QVERIFY(destroyedSpy.isValid());
 
-    QSignalSpy clientAddedSpy(workspace(), &Workspace::internalClientAdded);
-    QVERIFY(clientAddedSpy.isValid());
+    QSignalSpy windowAddedSpy(workspace(), &Workspace::internalWindowAdded);
     console->show();
     QCOMPARE(console->windowHandle()->isVisible(), true);
-    QTRY_COMPARE(clientAddedSpy.count(), 1);
-    InternalClient *c = clientAddedSpy.first().first().value<InternalClient *>();
-    QVERIFY(c->isInternal());
-    QCOMPARE(c->internalWindow(), console->windowHandle());
-    QVERIFY(c->isDecorated());
-    QCOMPARE(c->isMinimizable(), false);
-    c->closeWindow();
+    QTRY_COMPARE(windowAddedSpy.count(), 1);
+    InternalWindow *window = windowAddedSpy.first().first().value<InternalWindow *>();
+    QVERIFY(window->isInternal());
+    QCOMPARE(window->handle(), console->windowHandle());
+    QVERIFY(window->isDecorated());
+    QCOMPARE(window->isMinimizable(), false);
+    window->closeWindow();
     QVERIFY(destroyedSpy.wait());
 }
 

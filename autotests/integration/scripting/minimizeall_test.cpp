@@ -9,11 +9,11 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
-#include "platform.h"
-#include "screens.h"
+#include "core/output.h"
+#include "core/outputbackend.h"
 #include "scripting/scripting.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
 
 #include <KPackage/PackageLoader>
@@ -43,20 +43,18 @@ void MinimizeAllScriptTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<AbstractClient *>();
+    qRegisterMetaType<Window *>();
 
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
-    waylandServer()->initWorkspace();
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
 }
 
 static QString locateMainScript(const QString &pluginName)
@@ -66,8 +64,7 @@ static QString locateMainScript(const QString &pluginName)
         QStringLiteral("kwin/scripts"),
         [&](const KPluginMetaData &metaData) {
             return metaData.pluginId() == pluginName;
-        }
-    );
+        });
     if (offers.isEmpty()) {
         return QString();
     }
@@ -87,7 +84,6 @@ void MinimizeAllScriptTest::init()
     AbstractScript *script = Scripting::self()->findScript(s_scriptName);
     QVERIFY(script);
     QSignalSpy runningChangedSpy(script, &AbstractScript::runningChanged);
-    QVERIFY(runningChangedSpy.isValid());
     script->run();
     QTRY_COMPARE(runningChangedSpy.count(), 1);
 }
@@ -105,51 +101,49 @@ void MinimizeAllScriptTest::testMinimizeUnminimize()
     // This test verifies that all windows are minimized when Meta+Shift+D
     // is pressed, and unminimized when the shortcut is pressed once again.
 
-    using namespace KWayland::Client;
+    // Create a couple of test windows.
+    std::unique_ptr<KWayland::Client::Surface> surface1(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface1(Test::createXdgToplevelSurface(surface1.get()));
+    Window *window1 = Test::renderAndWaitForShown(surface1.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window1);
+    QVERIFY(window1->isActive());
+    QVERIFY(window1->isMinimizable());
 
-    // Create a couple of test clients.
-    QScopedPointer<Surface> surface1(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface1(Test::createXdgShellStableSurface(surface1.data()));
-    AbstractClient *client1 = Test::renderAndWaitForShown(surface1.data(), QSize(100, 50), Qt::blue);
-    QVERIFY(client1);
-    QVERIFY(client1->isActive());
-    QVERIFY(client1->isMinimizable());
-
-    QScopedPointer<Surface> surface2(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface2(Test::createXdgShellStableSurface(surface2.data()));
-    AbstractClient *client2 = Test::renderAndWaitForShown(surface2.data(), QSize(100, 50), Qt::red);
-    QVERIFY(client2);
-    QVERIFY(client2->isActive());
-    QVERIFY(client2->isMinimizable());
+    std::unique_ptr<KWayland::Client::Surface> surface2(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface2(Test::createXdgToplevelSurface(surface2.get()));
+    Window *window2 = Test::renderAndWaitForShown(surface2.get(), QSize(100, 50), Qt::red);
+    QVERIFY(window2);
+    QVERIFY(window2->isActive());
+    QVERIFY(window2->isMinimizable());
 
     // Minimize the windows.
     quint32 timestamp = 1;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_D, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_D, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyPressed(KEY_D, timestamp++);
+    Test::keyboardKeyReleased(KEY_D, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
 
-    QTRY_VERIFY(client1->isMinimized());
-    QTRY_VERIFY(client2->isMinimized());
+    QTRY_VERIFY(window1->isMinimized());
+    QTRY_VERIFY(window2->isMinimized());
 
     // Unminimize the windows.
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_D, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_D, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTMETA, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyPressed(KEY_D, timestamp++);
+    Test::keyboardKeyReleased(KEY_D, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTSHIFT, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTMETA, timestamp++);
 
-    QTRY_VERIFY(!client1->isMinimized());
-    QTRY_VERIFY(!client2->isMinimized());
+    QTRY_VERIFY(!window1->isMinimized());
+    QTRY_VERIFY(!window2->isMinimized());
 
-    // Destroy test clients.
+    // Destroy test windows.
     shellSurface2.reset();
-    QVERIFY(Test::waitForWindowDestroyed(client2));
+    QVERIFY(Test::waitForWindowDestroyed(window2));
     shellSurface1.reset();
-    QVERIFY(Test::waitForWindowDestroyed(client1));
+    QVERIFY(Test::waitForWindowDestroyed(window1));
 }
 
 }

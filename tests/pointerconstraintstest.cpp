@@ -7,20 +7,19 @@
 
 #include <KWayland/Client/compositor.h>
 #include <KWayland/Client/connection_thread.h>
-#include <KWayland/Client/registry.h>
-#include <KWayland/Client/surface.h>
-#include <KWayland/Client/region.h>
-#include <KWayland/Client/seat.h>
 #include <KWayland/Client/pointer.h>
 #include <KWayland/Client/pointerconstraints.h>
+#include <KWayland/Client/region.h>
+#include <KWayland/Client/registry.h>
+#include <KWayland/Client/seat.h>
+#include <KWayland/Client/surface.h>
 
+#include <QCursor>
 #include <QGuiApplication>
 #include <QQmlContext>
 #include <QQmlEngine>
-#include <QCursor>
 
 #include <QDebug>
-#include <QScopedPointer>
 
 #include <xcb/xproto.h>
 
@@ -44,36 +43,31 @@ void WaylandBackend::init(QQuickView *view)
 void WaylandBackend::setupRegistry(Registry *registry)
 {
     connect(registry, &Registry::compositorAnnounced, this,
-        [this, registry](quint32 name, quint32 version) {
-            m_compositor = registry->createCompositor(name, version, this);
-        }
-    );
+            [this, registry](quint32 name, quint32 version) {
+                m_compositor = registry->createCompositor(name, version, this);
+            });
     connect(registry, &Registry::seatAnnounced, this,
-        [this, registry](quint32 name, quint32 version) {
-            m_seat = registry->createSeat(name, version, this);
-            if (m_seat->hasPointer()) {
-                m_pointer = m_seat->createPointer(this);
-            }
-            connect(m_seat, &Seat::hasPointerChanged, this,
-                [this]() {
-                    delete m_pointer;
+            [this, registry](quint32 name, quint32 version) {
+                m_seat = registry->createSeat(name, version, this);
+                if (m_seat->hasPointer()) {
                     m_pointer = m_seat->createPointer(this);
                 }
-            );
-        }
-    );
+                connect(m_seat, &Seat::hasPointerChanged, this,
+                        [this]() {
+                            delete m_pointer;
+                            m_pointer = m_seat->createPointer(this);
+                        });
+            });
     connect(registry, &Registry::pointerConstraintsUnstableV1Announced, this,
-        [this, registry](quint32 name, quint32 version) {
-            m_pointerConstraints = registry->createPointerConstraints(name, version, this);
-        }
-    );
+            [this, registry](quint32 name, quint32 version) {
+                m_pointerConstraints = registry->createPointerConstraints(name, version, this);
+            });
     connect(registry, &Registry::interfacesAnnounced, this,
-        [this] {
-            Q_ASSERT(m_compositor);
-            Q_ASSERT(m_seat);
-            Q_ASSERT(m_pointerConstraints);
-        }
-    );
+            [this] {
+                Q_ASSERT(m_compositor);
+                Q_ASSERT(m_seat);
+                Q_ASSERT(m_pointerConstraints);
+            });
     registry->create(m_connectionThreadObject);
     registry->setup();
 }
@@ -90,8 +84,7 @@ bool WaylandBackend::isConfined()
 
 static PointerConstraints::LifeTime lifeTime(bool persistent)
 {
-    return persistent ? PointerConstraints::LifeTime::Persistent :
-                        PointerConstraints::LifeTime::OneShot;
+    return persistent ? PointerConstraints::LifeTime::Persistent : PointerConstraints::LifeTime::OneShot;
 }
 
 void WaylandBackend::lockRequest(bool persistent, QRect region)
@@ -112,13 +105,13 @@ void WaylandBackend::lockRequest(bool persistent, QRect region)
     }
     qDebug() << "------ Lock requested ------";
     qDebug() << "Persistent:" << persistent << "| Region:" << region;
-    QScopedPointer<Surface> winSurface(Surface::fromWindow(view()));
-    QScopedPointer<Region> wlRegion(m_compositor->createRegion(this));
+    std::unique_ptr<Surface> winSurface(Surface::fromWindow(view()));
+    std::unique_ptr<Region> wlRegion(m_compositor->createRegion(this));
     wlRegion->add(region);
 
-    auto *lockedPointer = m_pointerConstraints->lockPointer(winSurface.data(),
+    auto *lockedPointer = m_pointerConstraints->lockPointer(winSurface.get(),
                                                             m_pointer,
-                                                            wlRegion.data(),
+                                                            wlRegion.get(),
                                                             lifeTime(persistent),
                                                             this);
 
@@ -131,9 +124,9 @@ void WaylandBackend::lockRequest(bool persistent, QRect region)
 
     connect(lockedPointer, &LockedPointer::locked, this, [this]() {
         qDebug() << "------ LOCKED! ------";
-        if(lockHint()) {
+        if (lockHint()) {
             m_lockedPointer->setCursorPositionHint(QPointF(10., 10.));
-            forceSurfaceCommit();
+            Q_EMIT forceSurfaceCommit();
         }
 
         Q_EMIT lockChanged(true);
@@ -185,13 +178,13 @@ void WaylandBackend::confineRequest(bool persistent, QRect region)
     }
     qDebug() << "------ Confine requested ------";
     qDebug() << "Persistent:" << persistent << "| Region:" << region;
-    QScopedPointer<Surface> winSurface(Surface::fromWindow(view()));
-    QScopedPointer<Region> wlRegion(m_compositor->createRegion(this));
+    std::unique_ptr<Surface> winSurface(Surface::fromWindow(view()));
+    std::unique_ptr<Region> wlRegion(m_compositor->createRegion(this));
     wlRegion->add(region);
 
-    auto *confinedPointer = m_pointerConstraints->confinePointer(winSurface.data(),
+    auto *confinedPointer = m_pointerConstraints->confinePointer(winSurface.get(),
                                                                  m_pointer,
-                                                                 wlRegion.data(),
+                                                                 wlRegion.get(),
                                                                  lifeTime(persistent),
                                                                  this);
 
@@ -254,24 +247,21 @@ void XBackend::init(QQuickView *view)
 
 void XBackend::lockRequest(bool persistent, QRect region)
 {
-    Q_UNUSED(persistent);
-    Q_UNUSED(region);
-
     auto winId = view()->winId();
 
     /* Cursor needs to be hidden such that Xwayland emulates warps. */
     QGuiApplication::setOverrideCursor(QCursor(Qt::BlankCursor));
 
     auto cookie = xcb_warp_pointer_checked(m_xcbConn, /* connection */
-                                           XCB_NONE,  /* src_w */
-                                           winId,     /* dest_w */
-                                           0,         /* src_x */
-                                           0,         /* src_y */
-                                           0,         /* src_width */
-                                           0,         /* src_height */
-                                           20,        /* dest_x */
-                                           20         /* dest_y */
-                                           );
+                                           XCB_NONE, /* src_w */
+                                           winId, /* dest_w */
+                                           0, /* src_x */
+                                           0, /* src_y */
+                                           0, /* src_width */
+                                           0, /* src_height */
+                                           20, /* dest_x */
+                                           20 /* dest_y */
+    );
     xcb_flush(m_xcbConn);
 
     xcb_generic_error_t *error = xcb_request_check(m_xcbConn, cookie);
@@ -294,9 +284,6 @@ void XBackend::unlockRequest()
 
 void XBackend::confineRequest(bool persistent, QRect region)
 {
-    Q_UNUSED(persistent);
-    Q_UNUSED(region);
-
     int error;
     if (!tryConfine(error)) {
         qDebug() << "Confine (grab) failed with XCB error:" << error;
@@ -340,7 +327,6 @@ void XBackend::hideAndConfineRequest(bool confineBeforeHide)
     }
     qDebug() << "HIDE AND CONFINE (lock)";
     Q_EMIT confineChanged(true);
-
 }
 
 void XBackend::undoHideRequest()
@@ -353,16 +339,16 @@ bool XBackend::tryConfine(int &error)
 {
     auto winId = view()->winId();
 
-    auto cookie = xcb_grab_pointer(m_xcbConn,             /* display */
-                                   1,                     /* owner_events */
-                                   winId,                 /* grab_window */
-                                   0,                     /* event_mask */
-                                   XCB_GRAB_MODE_ASYNC,   /* pointer_mode */
-                                   XCB_GRAB_MODE_ASYNC,   /* keyboard_mode */
-                                   winId,                 /* confine_to */
-                                   XCB_NONE,              /* cursor */
-                                   XCB_CURRENT_TIME       /* time */
-                                   );
+    auto cookie = xcb_grab_pointer(m_xcbConn, /* display */
+                                   1, /* owner_events */
+                                   winId, /* grab_window */
+                                   0, /* event_mask */
+                                   XCB_GRAB_MODE_ASYNC, /* pointer_mode */
+                                   XCB_GRAB_MODE_ASYNC, /* keyboard_mode */
+                                   winId, /* confine_to */
+                                   XCB_NONE, /* cursor */
+                                   XCB_CURRENT_TIME /* time */
+    );
     xcb_flush(m_xcbConn);
 
     xcb_generic_error_t *e = nullptr;
@@ -391,10 +377,10 @@ int main(int argc, char **argv)
 
     QQuickView view;
 
-    QQmlContext* context = view.engine()->rootContext();
+    QQmlContext *context = view.engine()->rootContext();
     context->setContextProperty(QStringLiteral("org_kde_kwin_tests_pointerconstraints_backend"), backend);
 
-    view.setSource(QUrl::fromLocalFile(QStringLiteral(DIR) +QStringLiteral("/pointerconstraintstest.qml")));
+    view.setSource(QUrl::fromLocalFile(QStringLiteral(DIR) + QStringLiteral("/pointerconstraintstest.qml")));
     view.show();
 
     backend->init(&view);

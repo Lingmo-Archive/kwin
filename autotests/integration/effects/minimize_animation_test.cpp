@@ -9,21 +9,18 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
 #include "composite.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "effectloader.h"
 #include "effects.h"
-#include "platform.h"
-#include "scene.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
-
-#include "effect_builtins.h"
 
 #include <KWayland/Client/plasmashell.h>
 #include <KWayland/Client/plasmawindowmanagement.h>
 #include <KWayland/Client/surface.h>
-#include <KWayland/Client/xdgshell.h>
 
 using namespace KWin;
 
@@ -46,16 +43,14 @@ void MinimizeAnimationTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<KWin::AbstractClient *>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (const QString &name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -67,19 +62,14 @@ void MinimizeAnimationTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 
-    auto scene = Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void MinimizeAnimationTest::init()
 {
     QVERIFY(Test::setupWaylandConnection(
-        Test::AdditionalWaylandInterface::PlasmaShell |
-        Test::AdditionalWaylandInterface::WindowManagement
-    ));
+        Test::AdditionalWaylandInterface::PlasmaShell | Test::AdditionalWaylandInterface::WindowManagement));
 }
 
 void MinimizeAnimationTest::cleanup()
@@ -97,55 +87,52 @@ void MinimizeAnimationTest::testMinimizeUnminimize_data()
     QTest::addColumn<QString>("effectName");
 
     QTest::newRow("Magic Lamp") << QStringLiteral("magiclamp");
-    QTest::newRow("Squash")     << QStringLiteral("kwin4_effect_squash");
+    QTest::newRow("Squash") << QStringLiteral("kwin4_effect_squash");
 }
 
 void MinimizeAnimationTest::testMinimizeUnminimize()
 {
-    // This test verifies that a minimize effect tries to animate a client
+    // This test verifies that a minimize effect tries to animate a window
     // when it's minimized or unminimized.
 
-    using namespace KWayland::Client;
-
-    QSignalSpy plasmaWindowCreatedSpy(Test::waylandWindowManagement(), &PlasmaWindowManagement::windowCreated);
-    QVERIFY(plasmaWindowCreatedSpy.isValid());
+    QSignalSpy plasmaWindowCreatedSpy(Test::waylandWindowManagement(), &KWayland::Client::PlasmaWindowManagement::windowCreated);
 
     // Create a panel at the top of the screen.
     const QRect panelRect = QRect(0, 0, 1280, 36);
-    QScopedPointer<Surface> panelSurface(Test::createSurface());
-    QVERIFY(!panelSurface.isNull());
-    QScopedPointer<XdgShellSurface> panelShellSurface(Test::createXdgShellStableSurface(panelSurface.data()));
-    QVERIFY(!panelShellSurface.isNull());
-    QScopedPointer<PlasmaShellSurface> plasmaPanelShellSurface(Test::waylandPlasmaShell()->createSurface(panelSurface.data()));
-    QVERIFY(!plasmaPanelShellSurface.isNull());
-    plasmaPanelShellSurface->setRole(PlasmaShellSurface::Role::Panel);
+    std::unique_ptr<KWayland::Client::Surface> panelSurface(Test::createSurface());
+    QVERIFY(panelSurface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> panelShellSurface(Test::createXdgToplevelSurface(panelSurface.get()));
+    QVERIFY(panelShellSurface != nullptr);
+    std::unique_ptr<KWayland::Client::PlasmaShellSurface> plasmaPanelShellSurface(Test::waylandPlasmaShell()->createSurface(panelSurface.get()));
+    QVERIFY(plasmaPanelShellSurface != nullptr);
+    plasmaPanelShellSurface->setRole(KWayland::Client::PlasmaShellSurface::Role::Panel);
     plasmaPanelShellSurface->setPosition(panelRect.topLeft());
-    plasmaPanelShellSurface->setPanelBehavior(PlasmaShellSurface::PanelBehavior::AlwaysVisible);
-    AbstractClient *panel = Test::renderAndWaitForShown(panelSurface.data(), panelRect.size(), Qt::blue);
+    plasmaPanelShellSurface->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AlwaysVisible);
+    Window *panel = Test::renderAndWaitForShown(panelSurface.get(), panelRect.size(), Qt::blue);
     QVERIFY(panel);
     QVERIFY(panel->isDock());
     QCOMPARE(panel->frameGeometry(), panelRect);
     QVERIFY(plasmaWindowCreatedSpy.wait());
     QCOMPARE(plasmaWindowCreatedSpy.count(), 1);
 
-    // Create the test client.
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QVERIFY(!surface.isNull());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    QVERIFY(!shellSurface.isNull());
-    AbstractClient *client = Test::renderAndWaitForShown(surface.data(), QSize(100, 50), Qt::red);
-    QVERIFY(client);
+    // Create the test window.
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    QVERIFY(surface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    QVERIFY(shellSurface != nullptr);
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::red);
+    QVERIFY(window);
     QVERIFY(plasmaWindowCreatedSpy.wait());
     QCOMPARE(plasmaWindowCreatedSpy.count(), 2);
 
     // We have to set the minimized geometry because the squash effect needs it,
     // otherwise it won't start animation.
-    auto window = plasmaWindowCreatedSpy.last().first().value<PlasmaWindow *>();
-    QVERIFY(window);
+    auto plasmaWindow = plasmaWindowCreatedSpy.last().first().value<KWayland::Client::PlasmaWindow *>();
+    QVERIFY(plasmaWindow);
     const QRect iconRect = QRect(0, 0, 42, 36);
-    window->setMinimizedGeometry(panelSurface.data(), iconRect);
+    plasmaWindow->setMinimizedGeometry(panelSurface.get(), iconRect);
     Test::flushWaylandConnection();
-    QTRY_COMPARE(client->iconGeometry(), iconRect.translated(panel->frameGeometry().topLeft()));
+    QTRY_COMPARE(window->iconGeometry(), iconRect.translated(panel->frameGeometry().topLeft().toPoint()));
 
     // Load effect that will be tested.
     QFETCH(QString, effectName);
@@ -159,14 +146,14 @@ void MinimizeAnimationTest::testMinimizeUnminimize()
     QVERIFY(!effect->isActive());
 
     // Start the minimize animation.
-    client->minimize();
+    window->minimize();
     QVERIFY(effect->isActive());
 
     // Eventually, the animation will be complete.
     QTRY_VERIFY(!effect->isActive());
 
     // Start the unminimize animation.
-    client->unminimize();
+    window->unminimize();
     QVERIFY(effect->isActive());
 
     // Eventually, the animation will be complete.
@@ -176,9 +163,9 @@ void MinimizeAnimationTest::testMinimizeUnminimize()
     panelSurface.reset();
     QVERIFY(Test::waitForWindowDestroyed(panel));
 
-    // Destroy the test client.
+    // Destroy the test window.
     surface.reset();
-    QVERIFY(Test::waitForWindowDestroyed(client));
+    QVERIFY(Test::waitForWindowDestroyed(window));
 }
 
 WAYLANDTEST_MAIN(MinimizeAnimationTest)

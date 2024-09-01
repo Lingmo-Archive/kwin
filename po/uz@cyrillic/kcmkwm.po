@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-29 02:26+0200\n"
+"POT-Creation-Date: 2022-12-03 00:48+0000\n"
 "PO-Revision-Date: 2008-05-30 17:40+0200\n"
 "Last-Translator: Mashrab Kuvatov <kmashrab@uni-bremen.de>\n"
 "Language-Team: Uzbek <floss-uz-l10n@googlegroups.com>\n"
@@ -34,15 +34,15 @@ msgstr "kmashrab@uni-bremen.de"
 msgid "Inactive Inner Window Actions"
 msgstr "Актив бўлмаган ички ойна"
 
-#. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, label_1)
+#. i18n: ectx: property (text), widget (QLabel, label_5)
 #: actions.ui:26 mouse.ui:177
 #, fuzzy, kde-format
 #| msgid "&Titlebar double-click:"
 msgid "&Left click:"
 msgstr "&Сарлавҳани икки марта босиш:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:39
 #, fuzzy, kde-format
 #| msgid ""
@@ -55,42 +55,42 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг чап тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:43 actions.ui:83 actions.ui:123
 #, fuzzy, kde-format
 #| msgid "Activate, Raise and Move"
 msgid "Activate, raise and pass click"
 msgstr "Активлаштириш, олдинга ва кўчириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:48 actions.ui:88 actions.ui:128
 #, fuzzy, kde-format
 #| msgid "Activate & Raise"
 msgid "Activate and pass click"
 msgstr "Активлаштириш ва олдинга"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:53 actions.ui:93 actions.ui:133 mouse.ui:293 mouse.ui:408
 #: mouse.ui:523
 #, kde-format
 msgid "Activate"
 msgstr "Активлаштириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:58 actions.ui:98 actions.ui:138 mouse.ui:283 mouse.ui:398
 #: mouse.ui:513
 #, fuzzy, kde-format
@@ -98,15 +98,15 @@ msgstr "Активлаштириш"
 msgid "Activate and raise"
 msgstr "Активлаштириш ва олдинга"
 
-#. i18n: ectx: property (text), widget (QLabel, label_6)
 #. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_6)
 #: actions.ui:66 mouse.ui:200
 #, fuzzy, kde-format
 #| msgid "&Titlebar double-click:"
 msgid "&Middle click:"
 msgstr "&Сарлавҳани икки марта босиш:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow2)
 #: actions.ui:79
 #, fuzzy, kde-format
 #| msgid ""
@@ -119,14 +119,14 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг чап тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_7)
 #: actions.ui:106 mouse.ui:213
 #, kde-format
 msgid "&Right click:"
 msgstr ""
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:119
 #, fuzzy, kde-format
 #| msgid ""
@@ -139,15 +139,15 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг чап тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: ectx: property (text), widget (QLabel, label_2)
 #: actions.ui:146 mouse.ui:88
 #, fuzzy, kde-format
 #| msgid "Modifier key + mouse wheel:"
 msgid "Mouse &wheel:"
 msgstr "Тугма ва сичқончанинг ғилдираги:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:159
 #, fuzzy, kde-format
 #| msgid ""
@@ -160,20 +160,20 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг чап тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:163
 #, kde-format
 msgid "Scroll"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:168
 #, fuzzy, kde-format
 #| msgid "Activate & Lower"
 msgid "Activate and scroll"
 msgstr "Активлаштириш ва орқага"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:173
 #, fuzzy, kde-format
 #| msgid "Activate, Raise and Move"
@@ -194,7 +194,7 @@ msgstr "Ички ойна, сарлавҳа ва фрейм"
 msgid "Mo&difier key:"
 msgstr "Тугма:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:205
 #, kde-format
 msgid ""
@@ -202,13 +202,13 @@ msgid ""
 "perform the following actions."
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:209
 #, kde-format
 msgid "Meta"
 msgstr "Мета"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:214
 #, kde-format
 msgid "Alt"
@@ -220,15 +220,15 @@ msgstr "Alt"
 msgid "  + "
 msgstr ""
 
-#. i18n: ectx: property (text), widget (QLabel, label_8)
 #. i18n: ectx: property (text), widget (QLabel, label_7)
+#. i18n: ectx: property (text), widget (QLabel, label_8)
 #: actions.ui:248 mouse.ui:601
 #, fuzzy, kde-format
 #| msgid "&Titlebar double-click:"
 msgid "L&eft click:"
 msgstr "&Сарлавҳани икки марта босиш:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll1)
 #: actions.ui:261
 #, kde-format
 msgid ""
@@ -238,32 +238,32 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг чап тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:265 actions.ui:335 actions.ui:405
 #, kde-format
 msgid "Move"
 msgstr "Кўчириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:270 actions.ui:340 actions.ui:410
 #, fuzzy, kde-format
 #| msgid "Activate, Raise and Move"
 msgid "Activate, raise and move"
 msgstr "Активлаштириш, олдинга ва кўчириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:275 actions.ui:345 actions.ui:415 mouse.ui:246 mouse.ui:308
 #: mouse.ui:361 mouse.ui:423 mouse.ui:476 mouse.ui:538
 #, fuzzy, kde-format
@@ -271,23 +271,23 @@ msgstr "Активлаштириш, олдинга ва кўчириш"
 msgid "Toggle raise and lower"
 msgstr "Олдинга/орқага"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:280 actions.ui:350 actions.ui:420
 #, kde-format
 msgid "Resize"
 msgstr "Ўлчамини ўзгартириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:285 actions.ui:355 actions.ui:425 mouse.ui:236 mouse.ui:298
 #: mouse.ui:351 mouse.ui:413 mouse.ui:466 mouse.ui:528
 #, kde-format
@@ -295,16 +295,16 @@ msgid "Raise"
 msgstr "Олдинга"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:290 actions.ui:360 actions.ui:430 mouse.ui:65 mouse.ui:241
 #: mouse.ui:303 mouse.ui:356 mouse.ui:418 mouse.ui:471 mouse.ui:533
 #, kde-format
@@ -312,34 +312,34 @@ msgid "Lower"
 msgstr "Орқага"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:295 actions.ui:365 actions.ui:435 mouse.ui:55 mouse.ui:251
 #: mouse.ui:313 mouse.ui:366 mouse.ui:428 mouse.ui:481 mouse.ui:543
 #, kde-format
 msgid "Minimize"
 msgstr "Йиғиш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:300 actions.ui:370 actions.ui:440
 #, fuzzy, kde-format
 #| msgid "Change Opacity"
 msgid "Decrease opacity"
 msgstr "Шаффофликни ўзгартириш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:305 actions.ui:375 actions.ui:445
 #, fuzzy, kde-format
 #| msgid "Change Opacity"
@@ -347,18 +347,18 @@ msgid "Increase opacity"
 msgstr "Шаффофликни ўзгартириш"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:310 actions.ui:380 actions.ui:450 actions.ui:505 mouse.ui:80
 #: mouse.ui:132 mouse.ui:271 mouse.ui:333 mouse.ui:386 mouse.ui:448
 #: mouse.ui:501 mouse.ui:563
@@ -374,7 +374,7 @@ msgstr "Ҳеч нарса"
 msgid "Middle &click:"
 msgstr "Ўрта тугма:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll2)
 #: actions.ui:331
 #, kde-format
 msgid ""
@@ -384,14 +384,14 @@ msgstr ""
 "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқончанинг ўрта тугмаси билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), widget (QLabel, label_10)
 #. i18n: ectx: property (text), widget (QLabel, label_9)
+#. i18n: ectx: property (text), widget (QLabel, label_10)
 #: actions.ui:388 mouse.ui:671
 #, kde-format
 msgid "Right clic&k:"
 msgstr ""
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:401
 #, kde-format
 msgid ""
@@ -408,7 +408,7 @@ msgstr ""
 msgid "Mo&use wheel:"
 msgstr "Тугма ва сичқончанинг ғилдираги:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllWheel)
 #: actions.ui:471
 #, fuzzy, kde-format
 #| msgid ""
@@ -421,47 +421,47 @@ msgstr ""
 "Бу ерда маълум бир тугмани босиб туриб сичқонча билан ойнани босиш "
 "натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:475 mouse.ui:102
 #, fuzzy, kde-format
 #| msgid "Raise/Lower"
 msgid "Raise/lower"
 msgstr "Юқорига/Пастга"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:480 mouse.ui:107
 #, kde-format
 msgid "Shade/unshade"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:485 mouse.ui:112
 #, fuzzy, kde-format
 #| msgid "Maximize/Restore"
 msgid "Maximize/restore"
 msgstr "Ёйиш/Қайта тиклаш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:490 mouse.ui:117
 #, fuzzy, kde-format
 #| msgid "Keep Above/Below"
 msgid "Keep above/below"
 msgstr "Юқорига/пастга"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:495 mouse.ui:122
 #, fuzzy, kde-format
 #| msgid "Move to Previous/Next Desktop"
 msgid "Move to previous/next desktop"
 msgstr "Кейинги/олдинги иш столига"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:500 mouse.ui:127
 #, fuzzy, kde-format
 #| msgid "Change Opacity"
@@ -498,9 +498,9 @@ msgid ""
 "pointer goes over the shaded window."
 msgstr ""
 
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ShadeHoverInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_DelayFocusInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AutoRaiseInterval)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ShadeHoverInterval)
 #: advanced.ui:45 focus.ui:85 focus.ui:178
 #, kde-format
 msgid " ms"
@@ -513,7 +513,7 @@ msgstr " мс"
 msgid "Window &placement:"
 msgstr "&Жойлаштириш:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_Placement)
 #: advanced.ui:76
 #, kde-format
 msgid ""
@@ -529,13 +529,10 @@ msgid ""
 "whole screen. It might be useful to selectively affect placement of some "
 "windows using the window-specific settings.</li><li style=\" margin-top:0px; "
 "margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
-"text-indent:0px;\"><span style=\" font-style:italic;\">Cascade</span> will "
-"cascade the windows</li><li style=\" margin-top:0px; margin-bottom:0px; "
+"text-indent:0px;\"><span style=\" font-style:italic;\">Random</span> will "
+"use a random position</li><li style=\" margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-"\"><span style=\" font-style:italic;\">Random</span> will use a random "
-"position</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
-"left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-"style=\" font-style:italic;\">Centered</span> will place the window "
+"\"><span style=\" font-style:italic;\">Centered</span> will place the window "
 "centered</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
 "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
 "style=\" font-style:italic;\">Zero-cornered</span> will place the window in "
@@ -545,75 +542,70 @@ msgid ""
 "window under the pointer</li></ul></body></html>"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
 #, fuzzy, kde-format
 #| msgid "Only &when moving windows"
 msgid "Minimal Overlapping"
 msgstr "&Фақат ойналарни кўчиришда"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:85
 #, fuzzy, kde-format
 #| msgid "Maximize"
 msgid "Maximized"
 msgstr "Ёйиш"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:90
-#, kde-format
-msgid "Cascaded"
-msgstr ""
-
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:95
 #, kde-format
 msgid "Random"
 msgstr "Тасодифий"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:100
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:95
 #, kde-format
 msgid "Centered"
 msgstr "Марказда"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:105
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:100
 #, kde-format
 msgid "In Top-Left Corner"
 msgstr ""
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:110
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:105
 #, fuzzy, kde-format
 #| msgid "Focus Under Mouse"
 msgid "Under mouse"
 msgstr "Фокус сичқонча тагида"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
-#: advanced.ui:118
+#: advanced.ui:113
 #, kde-format
 msgid ""
-"When turned on, KDE apps which are able to remember the positions of their "
+"When turned on, apps which are able to remember the positions of their "
 "windows are allowed to do so. This will override the window placement mode "
 "defined above."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
-#: advanced.ui:121
+#: advanced.ui:116
 #, kde-format
-msgid "Allow KDE apps to remember the positions of their own windows"
+msgid ""
+"Allow apps to remember the positions of their own windows, if they support it"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, specialWindowsLabel)
-#: advanced.ui:128
+#: advanced.ui:123
 #, fuzzy, kde-format
 #| msgid "Windows"
 msgid "&Special windows:"
 msgstr "Ойналар"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_HideUtilityWindowsForInactive)
-#: advanced.ui:138
+#: advanced.ui:133
 #, kde-format
 msgid ""
 "When turned on, utility windows (tool windows, torn-off menus,...) of "
@@ -623,9 +615,46 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUtilityWindowsForInactive)
-#: advanced.ui:141
+#: advanced.ui:136
 #, kde-format
 msgid "Hide utility windows for inactive applications"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyLabel)
+#: advanced.ui:143
+#, kde-format
+msgid "Virtual Desktop behavior:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyDescriptionLabel)
+#: advanced.ui:153
+#, kde-format
+msgid "When activating a window on a different Virtual Desktop:"
+msgstr ""
+
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:160
+#, kde-format
+msgid ""
+"<html><head/><body><p>This setting controls what happens when an open window "
+"located on a Virtual Desktop other than the current one is activated. </"
+"p><p><span style=\" font-style:italic;\">Switch to that Virtual Desktop</"
+"span> will switch to the Virtual Desktop where the window is currently "
+"located. </p><p><span style=\" font-style:italic;\">Bring window to current "
+"Virtual Desktop</span> will cause the window to jump to the active Virtual "
+"Desktop. </p></body></html>"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:164
+#, kde-format
+msgid "Switch to that Virtual Desktop"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:169
+#, kde-format
+msgid "Bring window to current Virtual Desktop"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyLabel)
@@ -701,7 +730,7 @@ msgstr ""
 msgid "Focus &stealing prevention:"
 msgstr ""
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:114
 #, kde-format
 msgid ""
@@ -738,11 +767,11 @@ msgid ""
 msgstr ""
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_WindowSnapZone)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_CenterSnapZone)
-#: focus.ui:118 moving.ui:53 moving.ui:75 moving.ui:97
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
+#: focus.ui:118 moving.ui:33 moving.ui:65 moving.ui:97
 #, fuzzy, kde-format
 #| msgctxt "Focus Stealing Prevention Level"
 #| msgid "None"
@@ -750,7 +779,7 @@ msgid "None"
 msgstr "Йўқ"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:123
 #, fuzzy, kde-format
 #| msgctxt "Focus Stealing Prevention Level"
@@ -759,14 +788,14 @@ msgid "Low"
 msgstr "Паст"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:128
 #, kde-format
 msgid "Medium"
 msgstr ""
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:133
 #, fuzzy, kde-format
 #| msgctxt "Focus Stealing Prevention Level"
@@ -775,7 +804,7 @@ msgid "High"
 msgstr "Юқори"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:138
 #, fuzzy, kde-format
 #| msgctxt "Focus Stealing Prevention Level"
@@ -838,11 +867,9 @@ msgstr ""
 #: focus.ui:203
 #, kde-format
 msgid ""
-"When this option is enabled, the active Xinerama screen (where new windows "
-"appear, for example) is the screen containing the mouse pointer. When "
-"disabled, the active Xinerama screen is the screen containing the focused "
-"window. By default this option is disabled for Click to focus and enabled "
-"for other focus policies."
+"When this option is enabled, the active screen (where new windows appear, "
+"for example) is the screen containing the mouse pointer. When disabled, the "
+"active screen is the screen containing the focused window."
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_ActiveMouseScreen)
@@ -856,7 +883,7 @@ msgstr ""
 #, kde-format
 msgid ""
 "When this option is enabled, focus operations are limited only to the active "
-"Xinerama screen"
+"screen"
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SeparateScreenFocus)
@@ -876,86 +903,86 @@ msgstr ""
 msgid "&Focus"
 msgstr "&Фокуслаш"
 
-#: main.cpp:84
+#: main.cpp:79
 #, fuzzy, kde-format
 #| msgid "&Titlebar Actions"
 msgid "Titlebar A&ctions"
 msgstr "&Сарлавҳанинг амаллари"
 
-#: main.cpp:91
+#: main.cpp:85
 #, fuzzy, kde-format
 #| msgid "Window Actio&ns"
 msgid "W&indow Actions"
 msgstr "Ойнанинг &амаллари"
 
-#: main.cpp:98
+#: main.cpp:91
 #, fuzzy, kde-format
 #| msgid "&Placement:"
 msgid "Mo&vement"
 msgstr "&Жойлаштириш:"
 
-#: main.cpp:105
+#: main.cpp:97
 #, fuzzy, kde-format
 #| msgid "Ad&vanced"
 msgid "Adva&nced"
 msgstr "&Қўшимча"
 
-#: main.cpp:110
+#: main.cpp:101
 #, kde-format
 msgid "Window Behavior Configuration Module"
 msgstr ""
 
-#: main.cpp:112
+#: main.cpp:103
 #, kde-format
 msgid "(c) 1997 - 2002 KWin and KControl Authors"
 msgstr "(C) 1997 - 2002 KWin ва KControl муаллифлари"
 
-#: main.cpp:114
+#: main.cpp:105
 #, kde-format
 msgid "Matthias Ettrich"
 msgstr ""
 
-#: main.cpp:115
+#: main.cpp:106
 #, kde-format
 msgid "Waldo Bastian"
 msgstr ""
 
-#: main.cpp:116
+#: main.cpp:107
 #, kde-format
 msgid "Cristian Tibirna"
 msgstr ""
 
-#: main.cpp:117
+#: main.cpp:108
 #, kde-format
 msgid "Matthias Kalle Dalheimer"
 msgstr ""
 
-#: main.cpp:118
+#: main.cpp:109
 #, kde-format
 msgid "Daniel Molkentin"
 msgstr ""
 
-#: main.cpp:119
+#: main.cpp:110
 #, kde-format
 msgid "Wynn Wilkes"
 msgstr ""
 
-#: main.cpp:120
+#: main.cpp:111
 #, kde-format
 msgid "Pat Dowler"
 msgstr ""
 
-#: main.cpp:121
+#: main.cpp:112
 #, kde-format
 msgid "Bernd Wuebben"
 msgstr ""
 
-#: main.cpp:122
+#: main.cpp:113
 #, kde-format
 msgid "Matthias Hoelzer-Kluepfel"
 msgstr ""
 
-#: main.cpp:167
+#: main.cpp:161
 #, kde-format
 msgid ""
 "<p><h1>Window Behavior</h1> Here you can customize the way windows behave "
@@ -966,12 +993,12 @@ msgid ""
 "documentation for how to customize window behavior.</p>"
 msgstr ""
 
-#: main.cpp:187
+#: main.cpp:202
 #, kde-format
 msgid "&Titlebar Actions"
 msgstr "&Сарлавҳанинг амаллари"
 
-#: main.cpp:193
+#: main.cpp:208
 #, kde-format
 msgid "Window Actio&ns"
 msgstr "Ойнанинг &амаллари"
@@ -990,17 +1017,17 @@ msgstr "&Сарлавҳанинг амаллари"
 msgid "&Double-click:"
 msgstr "&Сарлавҳани икки марта босиш:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:36
 #, kde-format
 msgid "Behavior on <em>double</em> click into the titlebar."
 msgstr "Сарлавҳани <em>икки марта</em> босиш амаллари."
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:40 mouse.ui:615 mouse.ui:650 mouse.ui:685
 #, fuzzy, kde-format
 #| msgid "Maximize"
@@ -1008,33 +1035,33 @@ msgid "Maximize"
 msgstr "Ёйиш"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:45 mouse.ui:620 mouse.ui:655 mouse.ui:690
 #, kde-format
 msgid "Vertically maximize"
 msgstr ""
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:50 mouse.ui:625 mouse.ui:660 mouse.ui:695
 #, kde-format
 msgid "Horizontally maximize"
 msgstr ""
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:60 mouse.ui:256 mouse.ui:318 mouse.ui:371 mouse.ui:433 mouse.ui:486
 #: mouse.ui:548
 #, kde-format
@@ -1042,13 +1069,13 @@ msgid "Shade"
 msgstr "Соялаш"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:70 mouse.ui:261 mouse.ui:323 mouse.ui:376 mouse.ui:438 mouse.ui:491
 #: mouse.ui:553
 #, kde-format
@@ -1056,14 +1083,14 @@ msgid "Close"
 msgstr ""
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:75
 #, fuzzy, kde-format
 #| msgid "On All Desktops"
 msgid "Show on all desktops"
 msgstr "Ҳамма иш столларига"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandTitlebarWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: mouse.ui:98
 #, fuzzy, kde-format
 #| msgid "Behavior on <em>double</em> click into the titlebar."
@@ -1089,9 +1116,9 @@ msgstr "Актив"
 msgid "Inactive"
 msgstr "Актив эмас"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar3)
 #: mouse.ui:232 mouse.ui:347 mouse.ui:462
 #, fuzzy, kde-format
 #| msgid ""
@@ -1104,12 +1131,12 @@ msgstr ""
 "Бу ерда актив ойнанинг сарлавҳасини ёки чегарасини сичқонча билан босиш "
 "натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:266 mouse.ui:328 mouse.ui:381 mouse.ui:443 mouse.ui:496
 #: mouse.ui:558
 #, fuzzy, kde-format
@@ -1117,9 +1144,9 @@ msgstr ""
 msgid "Show actions menu"
 msgstr "Амаллар менюси"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:279 mouse.ui:394 mouse.ui:509
 #, fuzzy, kde-format
 #| msgid ""
@@ -1132,9 +1159,9 @@ msgstr ""
 "Бу ерда актив бўлмаган ойнанинг сарлавҳасини ёки чегарасини сичқонча билан "
 "босиш натижасида бажариладиган амални мослаш мумкин."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:288 mouse.ui:403 mouse.ui:518
 #, fuzzy, kde-format
 #| msgid "Activate & Lower"
@@ -1149,7 +1176,7 @@ msgid "Maximize Button Actions"
 msgstr "Ёйиш тугмаси"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_8)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
 #: mouse.ui:598 mouse.ui:611
 #, fuzzy, kde-format
 #| msgid "Behavior on <em>double</em> click into the titlebar."
@@ -1157,7 +1184,7 @@ msgid "Behavior on <em>left</em> click onto the maximize button."
 msgstr "Сарлавҳани <em>икки марта</em> босиш амаллари."
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_9)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
 #: mouse.ui:633 mouse.ui:646
 #, fuzzy, kde-format
 #| msgid "Behavior on <em>double</em> click into the titlebar."
@@ -1172,44 +1199,22 @@ msgid "Middle c&lick:"
 msgstr "Ўрта тугма:"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_10)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:668 mouse.ui:681
 #, fuzzy, kde-format
 #| msgid "Behavior on <em>double</em> click into the titlebar."
 msgid "Behavior on <em>right</em> click onto the maximize button."
 msgstr "Сарлавҳани <em>икки марта</em> босиш амаллари."
 
-#. i18n: ectx: property (text), widget (QLabel, geometryTipLabel)
-#: moving.ui:20
-#, kde-format
-msgid "Window &geometry:"
-msgstr ""
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_GeometryTip)
-#: moving.ui:30
-#, kde-format
-msgid ""
-"Enable this option if you want a window's geometry to be displayed while it "
-"is being moved or resized. The window position relative to the top-left "
-"corner of the screen is displayed together with its size."
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_GeometryTip)
-#: moving.ui:33
-#, fuzzy, kde-format
-#| msgid "Display window &geometry when moving or resizing"
-msgid "Display when moving or resizing"
-msgstr "Кўчиришда ёки ўлчамини ўзгартиришда ойнанинг &геометриясини кўрсатиш"
-
 #. i18n: ectx: property (text), widget (QLabel, borderSnapLabel)
-#: moving.ui:40
+#: moving.ui:20
 #, fuzzy, kde-format
 #| msgid "Inactive window size:"
 msgid "Screen &edge snap zone:"
 msgstr "Актив бўлмаган ойнанинг ўлчами:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_BorderSnapZone)
-#: moving.ui:50
+#: moving.ui:30
 #, kde-format
 msgid ""
 "Here you can set the snap zone for screen edges, i.e. the 'strength' of the "
@@ -1219,18 +1224,30 @@ msgstr ""
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_WindowSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_CenterSnapZone)
-#: moving.ui:56 moving.ui:78 moving.ui:100
+#: moving.ui:36 moving.ui:68 moving.ui:100
 #, kde-format
 msgid " px"
 msgstr ""
 
+#. i18n: ectx: property (text), widget (QLabel, windowSnapLabel)
+#: moving.ui:52
+#, kde-format
+msgid "&Window snap zone:"
+msgstr ""
+
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_WindowSnapZone)
-#: moving.ui:72
+#: moving.ui:62
 #, kde-format
 msgid ""
 "Here you can set the snap zone for windows, i.e. the 'strength' of the "
 "magnetic field which will make windows snap to each other when they are "
 "moved near another window."
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
+#: moving.ui:84
+#, kde-format
+msgid "&Center snap zone:"
 msgstr ""
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_CenterSnapZone)
@@ -1242,8 +1259,15 @@ msgid ""
 "when moved near it."
 msgstr ""
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
+#. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
 #: moving.ui:113
+#, fuzzy, kde-format
+#| msgid "Inactive windows:"
+msgid "&Snap windows:"
+msgstr "Актив бўлмаган ойналар:"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
+#: moving.ui:123
 #, kde-format
 msgid ""
 "Here you can set that windows will be only snapped if you try to overlap "
@@ -1252,39 +1276,20 @@ msgid ""
 msgstr ""
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
-#: moving.ui:116
+#: moving.ui:126
 #, fuzzy, kde-format
 #| msgid "Only &when moving windows"
 msgid "Only when overlapping"
 msgstr "&Фақат ойналарни кўчиришда"
 
-#. i18n: ectx: property (text), widget (QLabel, windowSnapLabel)
-#: moving.ui:123
-#, kde-format
-msgid "&Window snap zone:"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
-#: moving.ui:133
-#, kde-format
-msgid "&Center snap zone:"
-msgstr ""
-
-#. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
-#: moving.ui:143
-#, fuzzy, kde-format
-#| msgid "Inactive windows:"
-msgid "&Snap windows:"
-msgstr "Актив бўлмаган ойналар:"
-
-#: windows.cpp:87
+#: windows.cpp:97
 #, kde-format
 msgid ""
 "<em>Click to focus:</em> A window becomes active when you click into it. "
 "This behavior is common on other operating systems and likely what you want."
 msgstr ""
 
-#: windows.cpp:91
+#: windows.cpp:101
 #, kde-format
 msgid ""
 "<em>Click to focus (mouse precedence):</em> Mostly the same as <em>Click to "
@@ -1294,7 +1299,7 @@ msgid ""
 "em>."
 msgstr ""
 
-#: windows.cpp:96
+#: windows.cpp:106
 #, kde-format
 msgid ""
 "<em>Focus follows mouse:</em> Moving the mouse onto a window will activate "
@@ -1303,7 +1308,7 @@ msgid ""
 "to focus</em> just without having to actually click."
 msgstr ""
 
-#: windows.cpp:100
+#: windows.cpp:110
 #, kde-format
 msgid ""
 "This is mostly the same as <em>Focus follows mouse</em>. If an active window "
@@ -1312,7 +1317,7 @@ msgid ""
 "if you want a hover controlled focus."
 msgstr ""
 
-#: windows.cpp:105
+#: windows.cpp:115
 #, kde-format
 msgid ""
 "<em>Focus under mouse:</em> The focus always remains on the window under the "
@@ -1322,7 +1327,7 @@ msgid ""
 "precedence)</em> instead!"
 msgstr ""
 
-#: windows.cpp:109
+#: windows.cpp:119
 #, kde-format
 msgid ""
 "<em>Focus strictly under mouse:</em> The focus is always on the window under "
@@ -1332,3 +1337,318 @@ msgid ""
 "activation policy and will not work. You very likely want to use <em>Focus "
 "follows mouse (mouse precedence)</em> instead!"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Display window &geometry when moving or resizing"
+#~ msgid "Display when moving or resizing"
+#~ msgstr ""
+#~ "Кўчиришда ёки ўлчамини ўзгартиришда ойнанинг &геометриясини кўрсатиш"
+
+#~ msgid "Maximize (vertical only)"
+#~ msgstr "Ёйиш (фақат бўйига)"
+
+#~ msgid "Maximize (horizontal only)"
+#~ msgstr "Ёйиш (фақат энига)"
+
+#~ msgid "Maximizing"
+#~ msgstr "Ёйиш"
+
+#, fuzzy
+#~| msgid "Window Actio&ns"
+#~ msgid "Window tabbing:"
+#~ msgstr "Ойнанинг &амаллари"
+
+#, fuzzy
+#~| msgid "Window Actio&ns"
+#~ msgid "Start window tab drag"
+#~ msgstr "Ойнанинг &амаллари"
+
+#, fuzzy
+#~| msgid "Right button:"
+#~ msgid "Ri&ght button:"
+#~ msgstr "Ўнг тугма:"
+
+#, fuzzy
+#~| msgid "Left button:"
+#~ msgid "&Left button:"
+#~ msgstr "Чап тугма:"
+
+#, fuzzy
+#~| msgid "Right button:"
+#~ msgid "&Right button:"
+#~ msgstr "Ўнг тугма:"
+
+#, fuzzy
+#~| msgid "Middle button:"
+#~ msgid "M&iddle button:"
+#~ msgstr "Ўрта тугма:"
+
+#, fuzzy
+#~| msgid "Left button:"
+#~ msgid "Left &button"
+#~ msgstr "Чап тугма:"
+
+#~ msgid "Shading"
+#~ msgstr "Соялаш"
+
+#~ msgid "Dela&y:"
+#~ msgstr "К&ечикиш:"
+
+#, fuzzy
+#~| msgid "Active windows:"
+#~ msgid "Activating windows"
+#~ msgstr "Актив ойналар:"
+
+#, fuzzy
+#~| msgid "&Policy:"
+#~ msgid "Policy"
+#~ msgstr "Қ&оида:"
+
+#~ msgid "&Moving"
+#~ msgstr "&Кўчириш"
+
+#, fuzzy
+#~| msgid "Titlebar wheel event:"
+#~ msgid "Wheel event:"
+#~ msgstr "Сарлавҳада сичқончанинг ғилдирак амали:"
+
+#, fuzzy
+#~| msgid "Titlebar wheel event:"
+#~ msgid "Handle mouse wheel events"
+#~ msgstr "Сарлавҳада сичқончанинг ғилдирак амали:"
+
+#~ msgid ""
+#~ "In this column you can customize mouse clicks into the titlebar or the "
+#~ "frame of an active window."
+#~ msgstr ""
+#~ "Бу ерда актив ойнанинг сарлавҳасини ёки чегарасини сичқонча билан босиш "
+#~ "натижасида бажариладиган амални мослаш мумкин."
+
+#~ msgid ""
+#~ "In this column you can customize mouse clicks into the titlebar or the "
+#~ "frame of an inactive window."
+#~ msgstr ""
+#~ "Бу ерда актив бўлмаган ойнанинг сарлавҳасини ёки чегарасини сичқонча "
+#~ "билан босиш натижасида бажариладиган амални мослаш мумкин."
+
+#~ msgid "Left button:"
+#~ msgstr "Чап тугма:"
+
+#~ msgid "Middle button:"
+#~ msgstr "Ўрта тугма:"
+
+#, fuzzy
+#~| msgid ""
+#~| "In this column you can customize mouse clicks into the titlebar or the "
+#~| "frame of an active window."
+#~ msgid ""
+#~ "Behavior on <em>middle</em> click into the titlebar or frame of an "
+#~ "<em>active</em> window."
+#~ msgstr ""
+#~ "Бу ерда актив ойнанинг сарлавҳасини ёки чегарасини сичқонча билан босиш "
+#~ "натижасида бажариладиган амални мослаш мумкин."
+
+#~ msgid "Right button:"
+#~ msgstr "Ўнг тугма:"
+
+#, fuzzy
+#~| msgid ""
+#~| "In this column you can customize mouse clicks into the titlebar or the "
+#~| "frame of an active window."
+#~ msgid ""
+#~ "Behavior on <em>right</em> click into the titlebar or frame of an "
+#~ "<em>active</em> window."
+#~ msgstr ""
+#~ "Бу ерда актив ойнанинг сарлавҳасини ёки чегарасини сичқонча билан босиш "
+#~ "натижасида бажариладиган амални мослаш мумкин."
+
+#, fuzzy
+#~| msgid "Titlebar && Frame"
+#~ msgid "Titlebar & Frame"
+#~ msgstr "Сарлавҳа ва фрейм"
+
+#, fuzzy
+#~| msgid "&Titlebar Actions"
+#~ msgid "Titlebar"
+#~ msgstr "&Сарлавҳанинг амаллари"
+
+#~ msgid "Windows"
+#~ msgstr "Ойналар"
+
+#~ msgid "kcmkwinoptions"
+#~ msgstr "kcmkwinoptions"
+
+#, fuzzy
+#~| msgid "Display content in &resizing windows"
+#~ msgid "Display borders on &maximized windows"
+#~ msgstr "Ўлчамини ўзгартиришда ойнанинг &таркибини кўрсатиш"
+
+#, fuzzy
+#~| msgid "Minimize"
+#~ msgctxt "@item:inlistbox behavior on double click"
+#~ msgid "Minimize"
+#~ msgstr "Йиғиш"
+
+#~ msgid ""
+#~ "Here you can customize mouse click behavior when clicking on the titlebar "
+#~ "or the frame of a window."
+#~ msgstr ""
+#~ "Бу ерда ойнанинг сарлавҳасини ёки чегарасини сичқонча билан босиш "
+#~ "натижасида бажариладиган амални мослаш мумкин."
+
+#~ msgid ""
+#~ "Here you can customize behavior when clicking on the maximize button."
+#~ msgstr ""
+#~ "Бу ерда ёйиш тугмасини сичқонча билан босиш натижасида бажариладиган "
+#~ "амални мослаш мумкин."
+
+#~ msgid ""
+#~ "Here you can customize KDE's behavior when clicking somewhere into a "
+#~ "window while pressing a modifier key."
+#~ msgstr ""
+#~ "Бу ерда маълум бир тугмани босиб туриб сичқонча билан ойнани босиш "
+#~ "натижасида бажариладиган амални мослаш мумкин."
+
+#, fuzzy
+#~| msgid "none"
+#~ msgctxt "no border snap zone"
+#~ msgid "none"
+#~ msgstr "йўқ"
+
+#, fuzzy
+#~| msgid "none"
+#~ msgctxt "no window snap zone"
+#~ msgid "none"
+#~ msgstr "йўқ"
+
+#, fuzzy
+#~| msgid "none"
+#~ msgctxt "no center snap zone"
+#~ msgid "none"
+#~ msgstr "йўқ"
+
+#, fuzzy
+#~| msgid "Nothing"
+#~ msgctxt "Floating layout, windows aren't tiled at all"
+#~ msgid "Floating"
+#~ msgstr "Ҳеч нарса"
+
+#~ msgid "Di&splay content in moving windows"
+#~ msgstr "Кўчиришда &ойнанинг таркибини кўрсатиш"
+
+#~ msgid "Display content in &resizing windows"
+#~ msgstr "Ўлчамини ўзгартиришда ойнанинг &таркибини кўрсатиш"
+
+#~ msgid "Show window list while switching windows"
+#~ msgstr "Ойнадан-ойнага ўтишда ойналар рўйхатини кўрсатиш"
+
+#~ msgid "&Traverse windows on all desktops"
+#~ msgstr "Ҳамма иш столларидаги &ойналарни ҳисобга олиш"
+
+#~ msgid ""
+#~ "Leave this option disabled if you want to limit walking through windows "
+#~ "to the current desktop."
+#~ msgstr ""
+#~ "Агар белгиланса, ойнадан-ойнага ўтишда ҳамма иш столларидаги ойналар "
+#~ "ҳисобга олинади."
+
+#~ msgid "Popup desktop name on desktop &switch"
+#~ msgstr "Иш столини ўзгартирганда &унинг номини кўрсатиш"
+
+#~ msgid ""
+#~ "Enable this option if you wish to see the current desktop name popup "
+#~ "whenever the current desktop is changed."
+#~ msgstr ""
+#~ "Агар белгиланса, иш столининг улисидан-булисига ўтишда иш столининг номи "
+#~ "кўринади."
+
+#~ msgctxt "Focus Stealing Prevention Level"
+#~ msgid "Normal"
+#~ msgstr "Оддий"
+
+#~ msgid "Active Desktop Borders"
+#~ msgstr "Актив иш столининг чегаралари"
+
+#~ msgid "D&isabled"
+#~ msgstr "Ўчири&лган"
+
+#~ msgid "A&lways enabled"
+#~ msgstr "&Ҳамиша ёқилган"
+
+#~ msgid "Desktop &switch delay:"
+#~ msgstr "Иш столини ўзгартиришда &кечикиш:"
+
+#~ msgid ""
+#~ "Here you can customize KDE's behavior when middle clicking into a window "
+#~ "while pressing the modifier key."
+#~ msgstr ""
+#~ "Бу ерда маълум бир тугмани босиб туриб сичқончанинг ўрта тугмаси билан "
+#~ "ойнани босиш натижасида бажариладиган амални мослаш мумкин."
+
+#~ msgid ""
+#~ "Here you can customize mouse click behavior when double clicking on the "
+#~ "titlebar of a window."
+#~ msgstr ""
+#~ "Бу ерда ойнанинг сарлавҳасини икки марта босиш натижасида бажариладиган "
+#~ "амални мослаш мумкин."
+
+#~ msgid "Modifier key + left button:"
+#~ msgstr "Тугма ва чап сичқон:"
+
+#~ msgid "Modifier key + right button:"
+#~ msgstr "Тугма ва ўнг сичқон:"
+
+#~ msgid "Modifier key + middle button:"
+#~ msgstr "Тугма ва ўрта сичқон:"
+
+#~ msgid "Focus"
+#~ msgstr "Фокуслаш"
+
+#~ msgid "Auto &raise"
+#~ msgstr "А&вто-олдинга"
+
+#~ msgid "Navigation"
+#~ msgstr "Ўтиш"
+
+#, fuzzy
+#~ msgid "Active &mouse screen"
+#~ msgstr "Активлаштириш ва олдинга"
+
+#~ msgid "Anima&te"
+#~ msgstr "&Анимация"
+
+#~ msgid "Slow"
+#~ msgstr "Секин"
+
+#~ msgid "Fast"
+#~ msgstr "Тез"
+
+#~ msgid "&Translucency"
+#~ msgstr "&Шаффофлик"
+
+#~ msgid "Opacity"
+#~ msgstr "Шаффофлик"
+
+#~ msgid "Use shadows"
+#~ msgstr "Сояни ёқиш"
+
+#~ msgid "Active window size:"
+#~ msgstr "Актив ойнанинг ўлчами:"
+
+#~ msgid "Shadow color:"
+#~ msgstr "Соянинг ранги:"
+
+#~ msgid "Remove shadows on move"
+#~ msgstr "Соясиз кўчириш"
+
+#~ msgid "Remove shadows on resize"
+#~ msgstr "Соясиз ўлчамни ўзгартириш"
+
+#~ msgid "Shadows"
+#~ msgstr "Соя"
+
+#~ msgid "Effects"
+#~ msgstr "Эффектлар"
+
+#~ msgid "Use translucency/shadows"
+#~ msgstr "Сшаффофлик ва сояни ёқиш"

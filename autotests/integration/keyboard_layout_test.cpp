@@ -7,13 +7,15 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "abstract_client.h"
+
+#include "core/outputbackend.h"
 #include "keyboard_input.h"
 #include "keyboard_layout.h"
-#include "platform.h"
 #include "virtualdesktops.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
+#include "xkb.h"
 
 #include <KConfigGroup>
 #include <KGlobalAccel>
@@ -29,7 +31,6 @@
 #include <linux/input.h>
 
 using namespace KWin;
-using namespace KWayland::Client;
 
 static const QString s_socketName = QStringLiteral("wayland_test_kwin_keyboard_laout-0");
 
@@ -41,15 +42,13 @@ public:
         : layoutsReconfiguredSpy(this, &KeyboardLayoutTest::layoutListChanged)
         , layoutChangedSpy(this, &KeyboardLayoutTest::layoutChanged)
     {
-        QVERIFY(layoutsReconfiguredSpy.isValid());
-        QVERIFY(layoutChangedSpy.isValid());
 
         QVERIFY(QDBusConnection::sessionBus().connect(QStringLiteral("org.kde.keyboard"), QStringLiteral("/Layouts"), QStringLiteral("org.kde.KeyboardLayouts"), QStringLiteral("layoutListChanged"), this, SIGNAL(layoutListChanged())));
-        QVERIFY(QDBusConnection::sessionBus().connect(QStringLiteral("org.kde.keyboard"), QStringLiteral("/Layouts"), QStringLiteral("org.kde.KeyboardLayouts"), QStringLiteral("currentLayoutChanged"), this, SIGNAL(layoutChanged(QString))));
+        QVERIFY(QDBusConnection::sessionBus().connect(QStringLiteral("org.kde.keyboard"), QStringLiteral("/Layouts"), QStringLiteral("org.kde.KeyboardLayouts"), QStringLiteral("layoutChanged"), this, SIGNAL(layoutChanged(uint))));
     }
 
 Q_SIGNALS:
-    void layoutChanged(const QString &name);
+    void layoutChanged(uint index);
     void layoutListChanged();
 
 private Q_SLOTS:
@@ -69,7 +68,7 @@ private Q_SLOTS:
 private:
     void reconfigureLayouts();
     void resetLayouts();
-    auto changeLayout(const QString &layoutName);
+    auto changeLayout(uint index);
     void callSession(const QString &method);
     QSignalSpy layoutsReconfiguredSpy;
     QSignalSpy layoutChangedSpy;
@@ -109,29 +108,32 @@ void KeyboardLayoutTest::resetLayouts()
     callSession(QStringLiteral("loadSession"));
 }
 
-auto KeyboardLayoutTest::changeLayout(const QString &layoutName) {
-    QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.keyboard"), QStringLiteral("/Layouts"), QStringLiteral("org.kde.KeyboardLayouts"), QStringLiteral("setLayout"));
-    msg << layoutName;
+auto KeyboardLayoutTest::changeLayout(uint index)
+{
+    QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.keyboard"),
+                                                      QStringLiteral("/Layouts"),
+                                                      QStringLiteral("org.kde.KeyboardLayouts"),
+                                                      QStringLiteral("setLayout"));
+    msg << index;
     return QDBusConnection::sessionBus().asyncCall(msg);
 }
 
-void KeyboardLayoutTest::callSession(const QString &method) {
-    QDBusMessage msg = QDBusMessage::createMethodCall(
-                QStringLiteral("org.kde.KWin"),
-                QStringLiteral("/Session"),
-                QStringLiteral("org.kde.KWin.Session"),
-                method);
-    msg << QLatin1String();	// session name
+void KeyboardLayoutTest::callSession(const QString &method)
+{
+    QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("org.kde.KWin"),
+                                                      QStringLiteral("/Session"),
+                                                      QStringLiteral("org.kde.KWin.Session"),
+                                                      method);
+    msg << QLatin1String(); // session name
     QVERIFY(QDBusConnection::sessionBus().call(msg).type() != QDBusMessage::ErrorMessage);
 }
 
 void KeyboardLayoutTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->setConfig(KSharedConfig::openConfig(QString(), KConfig::SimpleConfig));
     kwinApp()->setKxkbConfig(KSharedConfig::openConfig(QString(), KConfig::SimpleConfig));
@@ -141,12 +143,11 @@ void KeyboardLayoutTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 
     // don't get DBus signal on one-layout configuration
-//    QVERIFY(layoutsReconfiguredSpy.wait());
-//    QCOMPARE(layoutsReconfiguredSpy.count(), 1);
-//    layoutsReconfiguredSpy.clear();
+    //    QVERIFY(layoutsReconfiguredSpy.wait());
+    //    QCOMPARE(layoutsReconfiguredSpy.count(), 1);
+    //    layoutsReconfiguredSpy.clear();
 }
 
 void KeyboardLayoutTest::init()
@@ -167,10 +168,8 @@ void KeyboardLayoutTest::testReconfigure()
     auto xkb = input()->keyboard()->xkb();
     QCOMPARE(xkb->numberOfLayouts(), 1u);
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
-    auto layouts = xkb->layoutNames();
-    QCOMPARE(layouts.size(), 1);
-    QVERIFY(layouts.contains(0));
-    QCOMPARE(layouts[0], QStringLiteral("English (US)"));
+    QCOMPARE(xkb->numberOfLayouts(), 1);
+    QCOMPARE(xkb->layoutName(0), QStringLiteral("English (US)"));
 
     // create a new keymap
     KConfigGroup layoutGroup = kwinApp()->kxkbConfig()->group("Layout");
@@ -182,18 +181,21 @@ void KeyboardLayoutTest::testReconfigure()
     QCOMPARE(xkb->numberOfLayouts(), 2u);
     // default layout is German
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
-    layouts = xkb->layoutNames();
-    QCOMPARE(layouts.size(), 2);
-    QVERIFY(layouts.contains(0));
-    QVERIFY(layouts.contains(1));
-    QCOMPARE(layouts[0], QStringLiteral("German"));
-    QCOMPARE(layouts[1], QStringLiteral("English (US)"));
+    QCOMPARE(xkb->numberOfLayouts(), 2);
+    QCOMPARE(xkb->layoutName(0), QStringLiteral("German"));
+    QCOMPARE(xkb->layoutName(1), QStringLiteral("English (US)"));
 }
 
 void KeyboardLayoutTest::testChangeLayoutThroughDBus()
 {
     // this test verifies that the layout can be changed through DBus
     // first configure layouts
+    enum Layout {
+        de,
+        us,
+        de_neo,
+        bad,
+    };
     layoutGroup.writeEntry("LayoutList", QStringLiteral("de,us,de(neo)"));
     layoutGroup.sync();
     reconfigureLayouts();
@@ -211,7 +213,7 @@ void KeyboardLayoutTest::testChangeLayoutThroughDBus()
     QVERIFY(!layoutGroup.hasKey("LayoutDefaultFoo"));
 
     // now change through DBus to English
-    auto reply = changeLayout(QStringLiteral("English (US)"));
+    auto reply = changeLayout(Layout::us);
     reply.waitForFinished();
     QVERIFY(!reply.isError());
     QCOMPARE(reply.reply().arguments().first().toBool(), true);
@@ -221,34 +223,32 @@ void KeyboardLayoutTest::testChangeLayoutThroughDBus()
 
     // layout should persist after reset
     resetLayouts();
-
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
+    QVERIFY(layoutChangedSpy.wait());
+    QCOMPARE(layoutChangedSpy.count(), 1);
+    layoutChangedSpy.clear();
 
     // switch to a layout which does not exist
-    reply = changeLayout(QStringLiteral("French"));
+    reply = changeLayout(Layout::bad);
     QVERIFY(!reply.isError());
     QCOMPARE(reply.reply().arguments().first().toBool(), false);
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
     QVERIFY(!layoutChangedSpy.wait(1000));
-    QVERIFY(layoutChangedSpy.isEmpty());
 
     // switch to another layout should work
-    reply = changeLayout(QStringLiteral("German"));
+    reply = changeLayout(Layout::de);
     QVERIFY(!reply.isError());
     QCOMPARE(reply.reply().arguments().first().toBool(), true);
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
-    // FIXME: need to pass
-//    QVERIFY(layoutChangedSpy.wait(1000));
-//    QCOMPARE(layoutChangedSpy.count(), 1);
-//    layoutChangedSpy.clear();
+    QVERIFY(layoutChangedSpy.wait(1000));
+    QCOMPARE(layoutChangedSpy.count(), 1);
 
     // switching to same layout should also work
-    reply = changeLayout(QStringLiteral("German"));
+    reply = changeLayout(Layout::de);
     QVERIFY(!reply.isError());
     QCOMPARE(reply.reply().arguments().first().toBool(), true);
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
     QVERIFY(!layoutChangedSpy.wait(1000));
-    QVERIFY(layoutChangedSpy.isEmpty());
 }
 
 void KeyboardLayoutTest::testPerLayoutShortcut()
@@ -263,12 +263,12 @@ void KeyboardLayoutTest::testPerLayoutShortcut()
     QAction *a = new QAction(this);
     a->setObjectName(QStringLiteral("Switch keyboard layout to English (US)"));
     a->setProperty("componentName", componentName);
-    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>{Qt::CTRL+Qt::ALT+Qt::Key_1}, KGlobalAccel::NoAutoloading);
+    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>{Qt::CTRL | Qt::ALT | Qt::Key_1}, KGlobalAccel::NoAutoloading);
     delete a;
     a = new QAction(this);
     a->setObjectName(QStringLiteral("Switch keyboard layout to German"));
     a->setProperty("componentName", componentName);
-    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>{Qt::CTRL+Qt::ALT+Qt::Key_2}, KGlobalAccel::NoAutoloading);
+    KGlobalAccel::self()->setShortcut(a, QList<QKeySequence>{Qt::CTRL | Qt::ALT | Qt::Key_2}, KGlobalAccel::NoAutoloading);
     delete a;
 
     // now we should have three layouts
@@ -281,22 +281,22 @@ void KeyboardLayoutTest::testPerLayoutShortcut()
 
     // now switch to English through the global shortcut
     quint32 timestamp = 1;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTCTRL, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_LEFTALT, timestamp++);
-    kwinApp()->platform()->keyboardKeyPressed(KEY_2, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTCTRL, timestamp++);
+    Test::keyboardKeyPressed(KEY_LEFTALT, timestamp++);
+    Test::keyboardKeyPressed(KEY_2, timestamp++);
     QVERIFY(layoutChangedSpy.wait());
     // now layout should be German
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
     // release keys again
-    kwinApp()->platform()->keyboardKeyReleased(KEY_2, timestamp++);
+    Test::keyboardKeyReleased(KEY_2, timestamp++);
     // switch back to English
-    kwinApp()->platform()->keyboardKeyPressed(KEY_1, timestamp++);
+    Test::keyboardKeyPressed(KEY_1, timestamp++);
     QVERIFY(layoutChangedSpy.wait());
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
     // release keys again
-    kwinApp()->platform()->keyboardKeyReleased(KEY_1, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTALT, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_LEFTCTRL, timestamp++);
+    Test::keyboardKeyReleased(KEY_1, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTALT, timestamp++);
+    Test::keyboardKeyReleased(KEY_LEFTCTRL, timestamp++);
 }
 
 void KeyboardLayoutTest::testDBusServiceExport()
@@ -354,7 +354,7 @@ void KeyboardLayoutTest::testVirtualDesktopPolicy()
         QCOMPARE(xkb->currentLayout(), 0);
         // change first desktop to German
         layout = (desktop + 1) % xkb->numberOfLayouts();
-        changeLayout(xkb->layoutNames()[layout]).waitForFinished();
+        changeLayout(layout).waitForFinished();
         QCOMPARE(xkb->currentLayout(), layout);
     }
 
@@ -362,18 +362,19 @@ void KeyboardLayoutTest::testVirtualDesktopPolicy()
     resetLayouts();
 
     // check layout set on desktop switching as intended
-    for(--desktop;;) {
+    for (--desktop;;) {
         QCOMPARE(desktops.at(desktop), VirtualDesktopManager::self()->currentDesktop());
         layout = (desktop + 1) % xkb->numberOfLayouts();
         QCOMPARE(xkb->currentLayout(), layout);
-        if (--desktop >= VirtualDesktopManager::self()->count())	// overflow
+        if (--desktop >= VirtualDesktopManager::self()->count()) { // overflow
             break;
+        }
         VirtualDesktopManager::self()->setCurrent(desktops.at(desktop));
     }
 
     // remove virtual desktops
     desktop = 0;
-    const KWin::VirtualDesktop* deletedDesktop = desktops.last();
+    const KWin::VirtualDesktop *deletedDesktop = desktops.last();
     VirtualDesktopManager::self()->setCount(1);
     QCOMPARE(xkb->currentLayout(), layout = (desktop + 1) % xkb->numberOfLayouts());
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
@@ -389,14 +390,19 @@ void KeyboardLayoutTest::testVirtualDesktopPolicy()
 
     // check there are no more layouts left in config than the last actual non-default layouts number
     QSignalSpy deletedDesktopSpy(deletedDesktop, &VirtualDesktop::aboutToBeDestroyed);
-    QVERIFY(deletedDesktopSpy.isValid());
     QVERIFY(deletedDesktopSpy.wait());
     resetLayouts();
-    QCOMPARE(layoutGroup.keyList().filter( QStringLiteral("LayoutDefault") ).count(), 1);
+    QCOMPARE(layoutGroup.keyList().filter(QStringLiteral("LayoutDefault")).count(), 1);
 }
 
 void KeyboardLayoutTest::testWindowPolicy()
 {
+    enum Layout {
+        us,
+        de,
+        de_neo,
+        bad,
+    };
     layoutGroup.writeEntry("LayoutList", QStringLiteral("us,de,de(neo)"));
     layoutGroup.writeEntry("SwitchMode", QStringLiteral("Window"));
     layoutGroup.sync();
@@ -406,38 +412,43 @@ void KeyboardLayoutTest::testWindowPolicy()
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
 
     // create a window
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    auto c1 = Test::renderAndWaitForShown(surface.data(), QSize(100, 100), Qt::blue);
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    auto c1 = Test::renderAndWaitForShown(surface.get(), QSize(100, 100), Qt::blue);
     QVERIFY(c1);
 
     // now switch layout
-    auto reply = changeLayout(QStringLiteral("German"));
+    auto reply = changeLayout(Layout::de);
     reply.waitForFinished();
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
 
     // create a second window
-    QScopedPointer<Surface> surface2(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface2(Test::createXdgShellStableSurface(surface2.data()));
-    auto c2 = Test::renderAndWaitForShown(surface2.data(), QSize(100, 100), Qt::red);
+    std::unique_ptr<KWayland::Client::Surface> surface2(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface2(Test::createXdgToplevelSurface(surface2.get()));
+    auto c2 = Test::renderAndWaitForShown(surface2.get(), QSize(100, 100), Qt::red);
     QVERIFY(c2);
     // this should have switched back to English
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
     // now change to another layout
-    reply = changeLayout(QStringLiteral("German (Neo 2)"));
+    reply = changeLayout(Layout::de_neo);
     reply.waitForFinished();
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
 
     // activate other window
-    workspace()->activateClient(c1);
+    workspace()->activateWindow(c1);
     QCOMPARE(xkb->layoutName(), QStringLiteral("German"));
-    workspace()->activateClient(c2);
+    workspace()->activateWindow(c2);
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
 }
 
 void KeyboardLayoutTest::testApplicationPolicy()
 {
+    enum Layout {
+        us,
+        de,
+        de_neo,
+        bad,
+    };
     layoutGroup.writeEntry("LayoutList", QStringLiteral("us,de,de(neo)"));
     layoutGroup.writeEntry("SwitchMode", QStringLiteral("WinClass"));
     layoutGroup.sync();
@@ -447,39 +458,40 @@ void KeyboardLayoutTest::testApplicationPolicy()
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
 
     // create a window
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface(Test::createXdgShellStableSurface(surface.data()));
-    shellSurface->setAppId(QByteArrayLiteral("org.kde.foo"));
-    auto c1 = Test::renderAndWaitForShown(surface.data(), QSize(100, 100), Qt::blue);
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    shellSurface->set_app_id(QStringLiteral("org.kde.foo"));
+    auto c1 = Test::renderAndWaitForShown(surface.get(), QSize(100, 100), Qt::blue);
     QVERIFY(c1);
 
     // create a second window
-    QScopedPointer<Surface> surface2(Test::createSurface());
-    QScopedPointer<XdgShellSurface> shellSurface2(Test::createXdgShellStableSurface(surface2.data()));
-    shellSurface2->setAppId(QByteArrayLiteral("org.kde.foo"));
-    auto c2 = Test::renderAndWaitForShown(surface2.data(), QSize(100, 100), Qt::red);
+    std::unique_ptr<KWayland::Client::Surface> surface2(Test::createSurface());
+    std::unique_ptr<Test::XdgToplevel> shellSurface2(Test::createXdgToplevelSurface(surface2.get()));
+    shellSurface2->set_app_id(QStringLiteral("org.kde.foo"));
+    auto c2 = Test::renderAndWaitForShown(surface2.get(), QSize(100, 100), Qt::red);
     QVERIFY(c2);
     // now switch layout
     layoutChangedSpy.clear();
-    changeLayout(QStringLiteral("German (Neo 2)"));
+    changeLayout(Layout::de_neo);
+    QVERIFY(layoutChangedSpy.wait());
+    QCOMPARE(layoutChangedSpy.count(), 1);
+    layoutChangedSpy.clear();
+    QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
+
+    resetLayouts();
+    // to trigger layout application for current client
+    workspace()->activateWindow(c1);
+    workspace()->activateWindow(c2);
     QVERIFY(layoutChangedSpy.wait());
     QCOMPARE(layoutChangedSpy.count(), 1);
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
 
-    resetLayouts();
-    // to trigger layout apply for current client
-    workspace()->activateClient(c1);
-    workspace()->activateClient(c2);
-
-    QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
-
     // activate other window
-    workspace()->activateClient(c1);
+    workspace()->activateWindow(c1);
     // it is the same application and should not switch the layout
     QVERIFY(!layoutChangedSpy.wait(1000));
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
-    workspace()->activateClient(c2);
+    workspace()->activateWindow(c2);
     QVERIFY(!layoutChangedSpy.wait(1000));
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
 
@@ -490,7 +502,7 @@ void KeyboardLayoutTest::testApplicationPolicy()
     QCOMPARE(xkb->layoutName(), QStringLiteral("German (Neo 2)"));
 
     resetLayouts();
-    QCOMPARE(layoutGroup.keyList().filter( QStringLiteral("LayoutDefault") ).count(), 1);
+    QCOMPARE(layoutGroup.keyList().filter(QStringLiteral("LayoutDefault")).count(), 1);
 }
 
 void KeyboardLayoutTest::testNumLock()
@@ -505,16 +517,16 @@ void KeyboardLayoutTest::testNumLock()
     QCOMPARE(xkb->layoutName(), QStringLiteral("English (US)"));
 
     // by default not set
-    QVERIFY(!xkb->leds().testFlag(Xkb::LED::NumLock));
+    QVERIFY(!xkb->leds().testFlag(LED::NumLock));
     quint32 timestamp = 0;
-    kwinApp()->platform()->keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
+    Test::keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
+    Test::keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
     // now it should be on
-    QVERIFY(xkb->leds().testFlag(Xkb::LED::NumLock));
+    QVERIFY(xkb->leds().testFlag(LED::NumLock));
     // and back to off
-    kwinApp()->platform()->keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
-    QVERIFY(!xkb->leds().testFlag(Xkb::LED::NumLock));
+    Test::keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
+    Test::keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
+    QVERIFY(!xkb->leds().testFlag(LED::NumLock));
 
     // let's reconfigure to enable through config
     auto group = InputConfig::self()->inputConfig()->group("Keyboard");
@@ -522,22 +534,22 @@ void KeyboardLayoutTest::testNumLock()
     group.sync();
     xkb->reconfigure();
     // now it should be on
-    QVERIFY(xkb->leds().testFlag(Xkb::LED::NumLock));
+    QVERIFY(xkb->leds().testFlag(LED::NumLock));
     // pressing should result in it being off
-    kwinApp()->platform()->keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
-    QVERIFY(!xkb->leds().testFlag(Xkb::LED::NumLock));
+    Test::keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
+    Test::keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
+    QVERIFY(!xkb->leds().testFlag(LED::NumLock));
 
     // pressing again should enable it
-    kwinApp()->platform()->keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
-    kwinApp()->platform()->keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
-    QVERIFY(xkb->leds().testFlag(Xkb::LED::NumLock));
+    Test::keyboardKeyPressed(KEY_NUMLOCK, timestamp++);
+    Test::keyboardKeyReleased(KEY_NUMLOCK, timestamp++);
+    QVERIFY(xkb->leds().testFlag(LED::NumLock));
 
     // now reconfigure to disable on load
     group.writeEntry("NumLock", 1);
     group.sync();
     xkb->reconfigure();
-    QVERIFY(!xkb->leds().testFlag(Xkb::LED::NumLock));
+    QVERIFY(!xkb->leds().testFlag(LED::NumLock));
 }
 
 WAYLANDTEST_MAIN(KeyboardLayoutTest)

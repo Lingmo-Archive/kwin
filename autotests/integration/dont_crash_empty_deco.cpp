@@ -7,15 +7,15 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "platform.h"
-#include "x11client.h"
+
 #include "composite.h"
+#include "core/output.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "cursor.h"
-#include "scene.h"
-#include "screenedge.h"
-#include "screens.h"
 #include "wayland_server.h"
 #include "workspace.h"
+#include "x11window.h"
 #include <kwineffects.h>
 
 #include <KDecoration2/Decoration>
@@ -38,31 +38,27 @@ private Q_SLOTS:
 
 void DontCrashEmptyDecorationTest::initTestCase()
 {
-    qRegisterMetaType<KWin::AbstractClient*>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
-    QMetaObject::invokeMethod(kwinApp()->platform(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(int, 2));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     // this test needs to enforce OpenGL compositing to get into the crashy condition
     qputenv("KWIN_COMPOSE", QByteArrayLiteral("O2"));
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    QCOMPARE(screens()->count(), 2);
-    QCOMPARE(screens()->geometry(0), QRect(0, 0, 1280, 1024));
-    QCOMPARE(screens()->geometry(1), QRect(1280, 0, 1280, 1024));
+    const auto outputs = workspace()->outputs();
+    QCOMPARE(outputs.count(), 2);
+    QCOMPARE(outputs[0]->geometry(), QRect(0, 0, 1280, 1024));
+    QCOMPARE(outputs[1]->geometry(), QRect(1280, 0, 1280, 1024));
     setenv("QT_QPA_PLATFORM", "wayland", true);
-    waylandServer()->initWorkspace();
 
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void DontCrashEmptyDecorationTest::init()
 {
-    screens()->setCurrent(0);
+    workspace()->setActiveOutput(QPoint(640, 512));
     Cursors::self()->mouse()->setPos(QPoint(640, 512));
 }
 
@@ -76,32 +72,30 @@ void DontCrashEmptyDecorationTest::testBug361551()
     xcb_connection_t *c = xcb_connect(nullptr, nullptr);
     QVERIFY(!xcb_connection_has_error(c));
 
-    xcb_window_t w = xcb_generate_id(c);
-    xcb_create_window(c, XCB_COPY_FROM_PARENT, w, rootWindow(), 0, 0, 10, 10, 0, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, 0, nullptr);
-    xcb_map_window(c, w);
+    xcb_window_t windowId = xcb_generate_id(c);
+    xcb_create_window(c, XCB_COPY_FROM_PARENT, windowId, rootWindow(), 0, 0, 10, 10, 0, XCB_WINDOW_CLASS_INPUT_OUTPUT, XCB_COPY_FROM_PARENT, 0, nullptr);
+    xcb_map_window(c, windowId);
     xcb_flush(c);
 
-    // we should get a client for it
-    QSignalSpy windowCreatedSpy(workspace(), &Workspace::clientAdded);
-    QVERIFY(windowCreatedSpy.isValid());
+    // we should get a window for it
+    QSignalSpy windowCreatedSpy(workspace(), &Workspace::windowAdded);
     QVERIFY(windowCreatedSpy.wait());
-    X11Client *client = windowCreatedSpy.first().first().value<X11Client *>();
-    QVERIFY(client);
-    QCOMPARE(client->window(), w);
-    QVERIFY(client->isDecorated());
+    X11Window *window = windowCreatedSpy.first().first().value<X11Window *>();
+    QVERIFY(window);
+    QCOMPARE(window->window(), windowId);
+    QVERIFY(window->isDecorated());
 
     // let's set a stupid geometry
-    client->setFrameGeometry({0, 0, 0, 0});
-    QCOMPARE(client->frameGeometry(), QRect(0, 0, 0, 0));
+    window->moveResize({0, 0, 0, 0});
+    QCOMPARE(window->frameGeometry(), QRect(0, 0, 0, 0));
 
     // and destroy the window again
-    xcb_unmap_window(c, w);
-    xcb_destroy_window(c, w);
+    xcb_unmap_window(c, windowId);
+    xcb_destroy_window(c, windowId);
     xcb_flush(c);
     xcb_disconnect(c);
 
-    QSignalSpy windowClosedSpy(client, &X11Client::windowClosed);
-    QVERIFY(windowClosedSpy.isValid());
+    QSignalSpy windowClosedSpy(window, &X11Window::windowClosed);
     QVERIFY(windowClosedSpy.wait());
 }
 

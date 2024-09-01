@@ -6,18 +6,22 @@
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
-#include "mock_tabboxhandler.h"
-#include "clientmodel.h"
 #include "../testutils.h"
+#include "clientmodel.h"
+#include "mock_tabboxhandler.h"
 #include <QtTest>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
+#endif
 
 using namespace KWin;
 
 class TestTabBoxHandler : public QObject
 {
     Q_OBJECT
-private slots:
+private Q_SLOTS:
     void initTestCase();
     /**
      * Test to verify that update outline does not crash
@@ -31,7 +35,7 @@ private slots:
 
 void TestTabBoxHandler::initTestCase()
 {
-    qApp->setProperty("x11Connection", QVariant::fromValue<void*>(QX11Info::connection()));
+    qApp->setProperty("x11Connection", QVariant::fromValue<void *>(QX11Info::connection()));
 }
 
 void TestTabBoxHandler::testDontCrashUpdateOutlineNullClient()

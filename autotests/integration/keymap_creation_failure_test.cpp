@@ -7,12 +7,13 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "kwin_wayland_test.h"
-#include "abstract_client.h"
+
+#include "core/outputbackend.h"
 #include "keyboard_input.h"
 #include "keyboard_layout.h"
-#include "platform.h"
 #include "virtualdesktops.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
 
 #include <KConfigGroup>
@@ -21,7 +22,6 @@
 #include <linux/input.h>
 
 using namespace KWin;
-using namespace KWayland::Client;
 
 static const QString s_socketName = QStringLiteral("wayland_test_kwin_keymap_creation_failure-0");
 
@@ -46,11 +46,10 @@ void KeymapCreationFailureTest::initTestCase()
     qputenv("XKB_DEFAULT_VARIANT", "no");
     qputenv("XKB_DEFAULT_OPTIONS", "no");
 
-    qRegisterMetaType<KWin::AbstractClient*>();
+    qRegisterMetaType<KWin::Window *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     kwinApp()->setConfig(KSharedConfig::openConfig(QString(), KConfig::SimpleConfig));
     kwinApp()->setKxkbConfig(KSharedConfig::openConfig(QString(), KConfig::SimpleConfig));
@@ -62,7 +61,6 @@ void KeymapCreationFailureTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 }
 
 void KeymapCreationFailureTest::init()
@@ -82,8 +80,8 @@ void KeymapCreationFailureTest::testPointerButton()
 
     // now create the crashing condition
     // which is sending in a pointer event
-    kwinApp()->platform()->pointerButtonPressed(BTN_LEFT, 0);
-    kwinApp()->platform()->pointerButtonReleased(BTN_LEFT, 1);
+    Test::pointerButtonPressed(BTN_LEFT, 0);
+    Test::pointerButtonReleased(BTN_LEFT, 1);
 }
 
 WAYLANDTEST_MAIN(KeymapCreationFailureTest)

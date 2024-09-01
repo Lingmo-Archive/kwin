@@ -7,8 +7,9 @@
     SPDX-License-Identifier: GPL-2.0-or-later
 */
 #include "mock_libinput.h"
-#include "../../libinput/device.h"
-#include "../../libinput/events.h"
+
+#include "backends/libinput/device.h"
+#include "backends/libinput/events.h"
 
 #include <QtTest>
 
@@ -17,6 +18,7 @@
 Q_DECLARE_METATYPE(KWin::LibInput::SwitchEvent::State)
 
 using namespace KWin::LibInput;
+using namespace std::literals;
 
 class TestLibinputSwitchEvent : public QObject
 {
@@ -70,18 +72,16 @@ void TestLibinputSwitchEvent::testToggled()
     default:
         Q_UNREACHABLE();
     }
-    nativeEvent->time = 23;
-    nativeEvent->timeMicroseconds = 23456789;
+    nativeEvent->time = 23456789us;
 
-    QScopedPointer<Event> event(Event::create(nativeEvent));
-    auto se = dynamic_cast<SwitchEvent*>(event.data());
+    std::unique_ptr<Event> event(Event::create(nativeEvent));
+    auto se = dynamic_cast<SwitchEvent *>(event.get());
     QVERIFY(se);
     QCOMPARE(se->device(), m_device.get());
     QCOMPARE(se->nativeDevice(), m_nativeDevice.get());
     QCOMPARE(se->type(), LIBINPUT_EVENT_SWITCH_TOGGLE);
     QCOMPARE(se->state(), state);
-    QCOMPARE(se->time(), 23u);
-    QCOMPARE(se->timeMicroseconds(), 23456789u);
+    QCOMPARE(se->time(), 23456789us);
 }
 
 QTEST_GUILESS_MAIN(TestLibinputSwitchEvent)

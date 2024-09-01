@@ -1,21 +1,21 @@
 # translation of kcmkwinrules.po to Swedish
 # Copyright (C) 2004, 2005, 2007, 2008, 2009 Free Software Foundation, Inc.
 #
-# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2004, 2005, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2017, 2018, 2019, 2020.
+# Stefan Asserhäll <stefan.asserhall@bredband.net>, 2004, 2005, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2015, 2017, 2018, 2019, 2020, 2021, 2022, 2023.
 # Mattias Newzella <newzella@linux.nu>, 2004.
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinrules\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-11-03 08:14+0100\n"
-"PO-Revision-Date: 2020-11-10 20:19+0100\n"
+"POT-Creation-Date: 2023-03-25 02:43+0000\n"
+"PO-Revision-Date: 2023-07-26 11:27+0200\n"
 "Last-Translator: Stefan Asserhäll <stefan.asserhall@bredband.net>\n"
 "Language-Team: Swedish <kde-i18n-doc@kde.org>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.04.3\n"
+"X-Generator: Lokalize 20.08.1\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #, kde-format
@@ -58,89 +58,78 @@ msgstr ""
 "fönsterhanterare. Om du använder en annan fönsterhanterare, se dess "
 "dokumentation om hur fönsterbeteende kan anpassas.</p>"
 
-#: main.cpp:91
+#: kcmrules.cpp:243
+#, kde-format
+msgid "Copy of %1"
+msgstr "Kopia av %1"
+
+#: kcmrules.cpp:423
 #, kde-format
 msgid "Application settings for %1"
 msgstr "Programinställningar för %1"
 
-#: main.cpp:111 rulesmodel.cpp:216
+#: kcmrules.cpp:445 rulesmodel.cpp:215
 #, kde-format
 msgid "Window settings for %1"
 msgstr "Fönsterinställningar för %1"
 
-#: main.cpp:163
+#: main.cpp:31
+#, kde-format
+msgid "KWinRules KCM launcher"
+msgstr "Startprogram för Kwin-regelinställningsmodul"
+
+#: main.cpp:32
+#, kde-format
+msgid "KWin id of the window for special window settings."
+msgstr "Fönsteridentifikation i Kwin för särskilda fönsterinställningar."
+
+#: main.cpp:33
+#, kde-format
+msgid "Whether the settings should affect all windows of the application."
+msgstr "Om inställningarna ska påverka alla programmets fönster."
+
+#: main.cpp:40
+#, kde-format
+msgid "This helper utility is not supposed to be called directly."
+msgstr "Det här hjälpverktyget är inte avsett att anropas direkt."
+
+#: main.cpp:44
 #, kde-format
 msgctxt "Window caption for the application wide rules dialog"
 msgid "Edit Application-Specific Settings"
 msgstr "Redigera programspecifika inställningar"
 
-#: main.cpp:197
+#: main.cpp:45
 #, kde-format
-msgid "KWin"
-msgstr "Kwin"
+msgid "Edit Window-Specific Settings"
+msgstr "Redigera fönsterspecifika inställningar"
 
-#: main.cpp:204
-#, kde-format
-msgid "KWin helper utility"
-msgstr "Kwin-hjälpverktyg"
-
-#: main.cpp:205
-#, kde-format
-msgid "KWin id of the window for special window settings."
-msgstr "Fönsteridentifikation i Kwin för särskilda fönsterinställningar."
-
-#: main.cpp:206
-#, kde-format
-msgid "Whether the settings should affect all windows of the application."
-msgstr "Om inställningarna ska påverka alla programmets fönster."
-
-#: main.cpp:215
-#, kde-format
-msgid "This helper utility is not supposed to be called directly."
-msgstr "Det här hjälpverktyget är inte avsett att anropas direkt."
-
-#: optionsmodel.cpp:145
+#: optionsmodel.cpp:198
 #, kde-format
 msgid "Unimportant"
 msgstr "Oviktig"
 
-#: optionsmodel.cpp:146
+#: optionsmodel.cpp:199
 #, kde-format
 msgid "Exact Match"
 msgstr "Matcha exakt"
 
-#: optionsmodel.cpp:147
+#: optionsmodel.cpp:200
 #, kde-format
 msgid "Substring Match"
 msgstr "Matcha delsträng"
 
-#: optionsmodel.cpp:148
+#: optionsmodel.cpp:201
 #, kde-format
 msgid "Regular Expression"
 msgstr "Reguljärt uttryck"
 
-#: optionsmodel.cpp:153
-#, kde-format
-msgid "Do Not Affect"
-msgstr "Påverka inte"
-
-#: optionsmodel.cpp:154
-#, kde-format
-msgid ""
-"The window property will not be affected and therefore the default handling "
-"for it will be used.\n"
-"Specifying this will block more generic window settings from taking effect."
-msgstr ""
-"Fönsteregenskapen påverkas inte och därför kommer standardhanteringen "
-"användas för den.\n"
-"Att ange det blockerar mer generella fönsterinställningar från att få effekt."
-
-#: optionsmodel.cpp:157
+#: optionsmodel.cpp:205
 #, kde-format
 msgid "Apply Initially"
 msgstr "Tillämpa från början"
 
-#: optionsmodel.cpp:158
+#: optionsmodel.cpp:206
 #, kde-format
 msgid ""
 "The window property will be only set to the given value after the window is "
@@ -151,36 +140,12 @@ msgstr ""
 "skapats.\n"
 "Inga ytterligare ändringar påverkas."
 
-#: optionsmodel.cpp:161
-#, kde-format
-msgid "Remember"
-msgstr "Kom ihåg"
-
-#: optionsmodel.cpp:162
-#, kde-format
-msgid ""
-"The value of the window property will be remembered and, every time the "
-"window is created, the last remembered value will be applied."
-msgstr ""
-"Fönsteregenskapens värde blir ihågkommet, och varje gång fönstret skapas, "
-"används det senaste ihågkomna värdet."
-
-#: optionsmodel.cpp:165
-#, kde-format
-msgid "Force"
-msgstr "Tvinga"
-
-#: optionsmodel.cpp:166
-#, kde-format
-msgid "The window property will be always forced to the given value."
-msgstr "Fönsteregenskapen tvingas alltid till det angivna värdet."
-
-#: optionsmodel.cpp:168
+#: optionsmodel.cpp:209
 #, kde-format
 msgid "Apply Now"
 msgstr "Tillämpa nu"
 
-#: optionsmodel.cpp:169
+#: optionsmodel.cpp:210
 #, kde-format
 msgid ""
 "The window property will be set to the given value immediately and will not "
@@ -191,12 +156,52 @@ msgstr ""
 "senare\n"
 "(åtgärden tas därefter bort)."
 
-#: optionsmodel.cpp:172
+#: optionsmodel.cpp:213
+#, kde-format
+msgid "Remember"
+msgstr "Kom ihåg"
+
+#: optionsmodel.cpp:214
+#, kde-format
+msgid ""
+"The value of the window property will be remembered and, every time the "
+"window is created, the last remembered value will be applied."
+msgstr ""
+"Fönsteregenskapens värde blir ihågkommet, och varje gång fönstret skapas, "
+"används det senaste ihågkomna värdet."
+
+#: optionsmodel.cpp:217
+#, kde-format
+msgid "Do Not Affect"
+msgstr "Påverka inte"
+
+#: optionsmodel.cpp:218
+#, kde-format
+msgid ""
+"The window property will not be affected and therefore the default handling "
+"for it will be used.\n"
+"Specifying this will block more generic window settings from taking effect."
+msgstr ""
+"Fönsteregenskapen påverkas inte och därför kommer standardhanteringen "
+"användas för den.\n"
+"Att ange det blockerar mer generella fönsterinställningar från att få effekt."
+
+#: optionsmodel.cpp:221
+#, kde-format
+msgid "Force"
+msgstr "Tvinga"
+
+#: optionsmodel.cpp:222
+#, kde-format
+msgid "The window property will be always forced to the given value."
+msgstr "Fönsteregenskapen tvingas alltid till det angivna värdet."
+
+#: optionsmodel.cpp:224
 #, kde-format
 msgid "Force Temporarily"
 msgstr "Tvinga tillfälligt"
 
-#: optionsmodel.cpp:173
+#: optionsmodel.cpp:225
 #, kde-format
 msgid ""
 "The window property will be forced to the given value until it is hidden\n"
@@ -215,174 +220,198 @@ msgstr "Välj fil"
 msgid "KWin Rules (*.kwinrule)"
 msgstr "Kwin-regler (*.kwinrule)"
 
-#: package/contents/ui/OptionsComboBox.qml:32
+#: package/contents/ui/main.qml:59
+#, kde-format
+msgid "No rules for specific windows are currently set"
+msgstr "Inga regler för specifika fönster är för närvarande inställda"
+
+#: package/contents/ui/main.qml:60
+#, kde-kuit-format
+msgctxt "@info"
+msgid "Click the <interface>Add New...</interface> button below to add some"
+msgstr ""
+"Klicka på knappen <interface>Lägg till ny...</interface> nedan för att lägga "
+"till några"
+
+#: package/contents/ui/main.qml:68
+#, kde-format
+msgid "Select the rules to export"
+msgstr "Markera reglerna att exportera"
+
+#: package/contents/ui/main.qml:72
+#, kde-format
+msgid "Unselect All"
+msgstr "Avmarkera alla"
+
+#: package/contents/ui/main.qml:72
+#, kde-format
+msgid "Select All"
+msgstr "Markera alla"
+
+#: package/contents/ui/main.qml:86
+#, kde-format
+msgid "Save Rules"
+msgstr "Spara regler"
+
+#: package/contents/ui/main.qml:97
+#, kde-format
+msgid "Add New..."
+msgstr "Lägg till ny..."
+
+#: package/contents/ui/main.qml:108
+#, kde-format
+msgid "Import..."
+msgstr "Importera..."
+
+#: package/contents/ui/main.qml:116
+#, kde-format
+msgid "Cancel Export"
+msgstr "Avbryt export"
+
+#: package/contents/ui/main.qml:116
+#, kde-format
+msgid "Export..."
+msgstr "Exportera..."
+
+#: package/contents/ui/main.qml:206
+#, kde-format
+msgid "Edit"
+msgstr "Redigera"
+
+#: package/contents/ui/main.qml:215
+#, kde-format
+msgid "Duplicate"
+msgstr "Dubblett"
+
+#: package/contents/ui/main.qml:224
+#, kde-format
+msgid "Delete"
+msgstr "Ta bort"
+
+#: package/contents/ui/main.qml:237
+#, kde-format
+msgid "Import Rules"
+msgstr "Importera regler"
+
+#: package/contents/ui/main.qml:249
+#, kde-format
+msgid "Export Rules"
+msgstr "Exportera regler"
+
+#: package/contents/ui/OptionsComboBox.qml:35
 #, kde-format
 msgid "None selected"
 msgstr "Ingen vald"
 
-#: package/contents/ui/OptionsComboBox.qml:37
+#: package/contents/ui/OptionsComboBox.qml:41
 #, kde-format
 msgid "All selected"
 msgstr "Alla valda"
 
-#: package/contents/ui/OptionsComboBox.qml:39
+#: package/contents/ui/OptionsComboBox.qml:43
 #, kde-format
 msgid "%1 selected"
 msgid_plural "%1 selected"
 msgstr[0] "%1 vald"
 msgstr[1] "%1 valda"
 
-#: package/contents/ui/RulesEditor.qml:48
-#: package/contents/ui/RulesEditor.qml:67
+#: package/contents/ui/RulesEditor.qml:63
 #, kde-format
-msgid "Add Properties..."
-msgstr "Lägg till egenskaper..."
+msgid "No window properties changed"
+msgstr "Inga fönsteregenskaper ändrade"
 
-#: package/contents/ui/RulesEditor.qml:67
+#: package/contents/ui/RulesEditor.qml:64
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"Click the <interface>Add Property...</interface> button below to add some "
+"window properties that will be affected by the rule"
+msgstr ""
+"Klicka på knappen <interface>Lägg till egenskap...</interface> nedan för att "
+"lägga till några fönsteregenskaper som ska påverkas av regeln"
+
+#: package/contents/ui/RulesEditor.qml:85
 #, kde-format
 msgid "Close"
 msgstr "Stäng"
 
-#: package/contents/ui/RulesEditor.qml:80
+#: package/contents/ui/RulesEditor.qml:85
+#, kde-format
+msgid "Add Property..."
+msgstr "Lägg till egenskap..."
+
+#: package/contents/ui/RulesEditor.qml:98
 #, kde-format
 msgid "Detect Window Properties"
 msgstr "Identifiera fönsteregenskaper"
 
-#: package/contents/ui/RulesEditor.qml:93
+#: package/contents/ui/RulesEditor.qml:114
+#: package/contents/ui/RulesEditor.qml:121
 #, kde-format
 msgid "Instantly"
 msgstr "Omedelbart"
 
-#: package/contents/ui/RulesEditor.qml:94
+#: package/contents/ui/RulesEditor.qml:115
+#: package/contents/ui/RulesEditor.qml:126
 #, kde-format
 msgid "After %1 second"
 msgid_plural "After %1 seconds"
 msgstr[0] "Efter %1 sekund"
 msgstr[1] "Efter %1 sekunder"
 
-#: package/contents/ui/RulesEditor.qml:113
+#: package/contents/ui/RulesEditor.qml:175
 #, kde-format
-msgid "Select properties"
-msgstr "Välj egenskaper"
+msgid "Add property to the rule"
+msgstr "Lägg till egenskap i regeln"
 
-#: package/contents/ui/RulesEditor.qml:205
-#: package/contents/ui/ValueEditor.qml:53
+#: package/contents/ui/RulesEditor.qml:273
+#: package/contents/ui/ValueEditor.qml:54
 #, kde-format
 msgid "Yes"
 msgstr "Ja"
 
-#: package/contents/ui/RulesEditor.qml:205
-#: package/contents/ui/ValueEditor.qml:59
+#: package/contents/ui/RulesEditor.qml:273
+#: package/contents/ui/ValueEditor.qml:60
 #, kde-format
 msgid "No"
 msgstr "Nej"
 
-#: package/contents/ui/RulesEditor.qml:207
-#: package/contents/ui/ValueEditor.qml:127
-#: package/contents/ui/ValueEditor.qml:134
+#: package/contents/ui/RulesEditor.qml:275
+#: package/contents/ui/ValueEditor.qml:168
+#: package/contents/ui/ValueEditor.qml:175
 #, kde-format
 msgid "%1 %"
 msgstr "%1 %"
 
-#: package/contents/ui/RulesEditor.qml:209
+#: package/contents/ui/RulesEditor.qml:277
 #, kde-format
 msgctxt "Coordinates (x, y)"
 msgid "(%1, %2)"
 msgstr "(%1, %2)"
 
-#: package/contents/ui/RulesEditor.qml:211
+#: package/contents/ui/RulesEditor.qml:279
 #, kde-format
 msgctxt "Size (width, height)"
 msgid "(%1, %2)"
 msgstr "(%1, %2)"
 
-#: package/contents/ui/RulesList.qml:61
-#, kde-format
-msgid "No rules for specific windows are currently set"
-msgstr "Inga regler för specifika fönster är för närvarande inställda"
-
-#: package/contents/ui/RulesList.qml:69
-#, kde-format
-msgid "Select the rules to export"
-msgstr "Markera reglerna att exportera"
-
-#: package/contents/ui/RulesList.qml:73
-#, kde-format
-msgid "Unselect All"
-msgstr "Avmarkera alla"
-
-#: package/contents/ui/RulesList.qml:73
-#, kde-format
-msgid "Select All"
-msgstr "Markera alla"
-
-#: package/contents/ui/RulesList.qml:87
-#, kde-format
-msgid "Save Rules"
-msgstr "Spara regler"
-
-#: package/contents/ui/RulesList.qml:98
-#, kde-format
-msgid "Add New..."
-msgstr "Lägg till ny..."
-
-#: package/contents/ui/RulesList.qml:109
-#, kde-format
-msgid "Import..."
-msgstr "Importera..."
-
-#: package/contents/ui/RulesList.qml:117
-#, kde-format
-msgid "Cancel Export"
-msgstr "Avbryt export"
-
-#: package/contents/ui/RulesList.qml:117
-#, kde-format
-msgid "Export..."
-msgstr "Exportera..."
-
-#: package/contents/ui/RulesList.qml:198
-#, kde-format
-msgid "Edit"
-msgstr "Redigera"
-
-#: package/contents/ui/RulesList.qml:207
-#, kde-format
-msgid "Delete"
-msgstr "Ta bort"
-
-#: package/contents/ui/RulesList.qml:220
-#, kde-format
-msgid "Import Rules"
-msgstr "Importera regler"
-
-#: package/contents/ui/RulesList.qml:232
-#, kde-format
-msgid "Export Rules"
-msgstr "Exportera regler"
-
-#: package/contents/ui/ValueEditor.qml:162
+#: package/contents/ui/ValueEditor.qml:203
 #, kde-format
 msgctxt "(x, y) coordinates separator in size/position"
 msgid "x"
 msgstr "x"
 
-#: rulesdialog.cpp:28
-#, kde-format
-msgid "Edit Window-Specific Settings"
-msgstr "Redigera fönsterspecifika inställningar"
-
-#: rulesmodel.cpp:219
+#: rulesmodel.cpp:218
 #, kde-format
 msgid "Settings for %1"
 msgstr "Inställningar för %1"
 
-#: rulesmodel.cpp:222
+#: rulesmodel.cpp:221
 #, kde-format
 msgid "New window settings"
 msgstr "Nya fönsterinställningar"
 
-#: rulesmodel.cpp:236
+#: rulesmodel.cpp:237
 #, kde-format
 msgid ""
 "You have specified the window class as unimportant.\n"
@@ -396,121 +425,137 @@ msgstr ""
 "du verkligen vill skapa en generell inställning rekommenderas du att "
 "åtminstone begränsa fönstertyper för att undvika specialtyper."
 
-#: rulesmodel.cpp:366
+#: rulesmodel.cpp:244
+#, kde-format
+msgid ""
+"Some applications set their own geometry after starting, overriding your "
+"initial settings for size and position. To enforce these settings, also "
+"force the property \"%1\" to \"Yes\"."
+msgstr ""
+"Vissa program ställer in sin egen storlek och position efter start, och "
+"överskrider de ursprungliga inställningarna. För att tvinga att "
+"inställningarna används, sätt också egenskapen \"%1\" till \"Yes\"."
+
+#: rulesmodel.cpp:359
 #, kde-format
 msgid "Description"
 msgstr "Beskrivning"
 
-#: rulesmodel.cpp:366 rulesmodel.cpp:374 rulesmodel.cpp:382 rulesmodel.cpp:389
-#: rulesmodel.cpp:395 rulesmodel.cpp:403 rulesmodel.cpp:408 rulesmodel.cpp:414
+#: rulesmodel.cpp:359 rulesmodel.cpp:367 rulesmodel.cpp:375 rulesmodel.cpp:382
+#: rulesmodel.cpp:388 rulesmodel.cpp:396 rulesmodel.cpp:401 rulesmodel.cpp:407
 #, kde-format
 msgid "Window matching"
 msgstr "Fönstermatchning"
 
-#: rulesmodel.cpp:374
+#: rulesmodel.cpp:367
 #, kde-format
 msgid "Window class (application)"
 msgstr "Fönsterklass (program)"
 
-#: rulesmodel.cpp:382
+#: rulesmodel.cpp:375
 #, kde-format
 msgid "Match whole window class"
 msgstr "Matcha hel fönsterklass"
 
-#: rulesmodel.cpp:389
+#: rulesmodel.cpp:382
 #, kde-format
 msgid "Whole window class"
 msgstr "Hel fönsterklass"
 
-#: rulesmodel.cpp:395
+#: rulesmodel.cpp:388
 #, kde-format
 msgid "Window types"
 msgstr "Fönstertyper"
 
-#: rulesmodel.cpp:403
+#: rulesmodel.cpp:396
 #, kde-format
 msgid "Window role"
 msgstr "Fönsterroll"
 
-#: rulesmodel.cpp:408
+#: rulesmodel.cpp:401
 #, kde-format
 msgid "Window title"
 msgstr "Fönsterrubrik"
 
-#: rulesmodel.cpp:414
+#: rulesmodel.cpp:407
 #, kde-format
 msgid "Machine (hostname)"
 msgstr "Dator (värddatornamn)"
 
-#: rulesmodel.cpp:420
+#: rulesmodel.cpp:413
 #, kde-format
 msgid "Position"
 msgstr "Position"
 
-#: rulesmodel.cpp:420 rulesmodel.cpp:425 rulesmodel.cpp:430 rulesmodel.cpp:435
-#: rulesmodel.cpp:440 rulesmodel.cpp:453 rulesmodel.cpp:467 rulesmodel.cpp:472
-#: rulesmodel.cpp:477 rulesmodel.cpp:482 rulesmodel.cpp:487 rulesmodel.cpp:493
-#: rulesmodel.cpp:502 rulesmodel.cpp:507 rulesmodel.cpp:512
+#: rulesmodel.cpp:413 rulesmodel.cpp:419 rulesmodel.cpp:425 rulesmodel.cpp:430
+#: rulesmodel.cpp:438 rulesmodel.cpp:444 rulesmodel.cpp:463 rulesmodel.cpp:479
+#: rulesmodel.cpp:484 rulesmodel.cpp:489 rulesmodel.cpp:494 rulesmodel.cpp:499
+#: rulesmodel.cpp:506 rulesmodel.cpp:516 rulesmodel.cpp:521 rulesmodel.cpp:526
 #, kde-format
 msgid "Size & Position"
 msgstr "Storlek och position"
 
-#: rulesmodel.cpp:425
+#: rulesmodel.cpp:419
 #, kde-format
 msgid "Size"
 msgstr "Storlek"
 
-#: rulesmodel.cpp:430
+#: rulesmodel.cpp:425
 #, kde-format
 msgid "Maximized horizontally"
 msgstr "Horisontellt maximerat"
 
-#: rulesmodel.cpp:435
+#: rulesmodel.cpp:430
 #, kde-format
 msgid "Maximized vertically"
 msgstr "Vertikalt maximerat"
 
-#: rulesmodel.cpp:440
+#: rulesmodel.cpp:438
 #, kde-format
 msgid "Virtual Desktop"
 msgstr "Virtuellt skrivbord"
 
-#: rulesmodel.cpp:453
+#: rulesmodel.cpp:444
 #, kde-format
-msgid "Activity"
-msgstr "Aktivitet"
+msgid "Virtual Desktops"
+msgstr "Virtuella skrivbord"
 
-#: rulesmodel.cpp:467
+#: rulesmodel.cpp:463
+#, kde-format
+msgid "Activities"
+msgstr "Aktiviteter"
+
+#: rulesmodel.cpp:479
 #, kde-format
 msgid "Screen"
 msgstr "Skärm"
 
-#: rulesmodel.cpp:472
+#: rulesmodel.cpp:484
 #, kde-format
 msgid "Fullscreen"
 msgstr "Fullskärm"
 
-#: rulesmodel.cpp:477
+#: rulesmodel.cpp:489
 #, kde-format
 msgid "Minimized"
 msgstr "Minimerat"
 
-#: rulesmodel.cpp:482
+#: rulesmodel.cpp:494
 #, kde-format
 msgid "Shaded"
 msgstr "Upprullat"
 
-#: rulesmodel.cpp:487
+#: rulesmodel.cpp:499
 #, kde-format
 msgid "Initial placement"
 msgstr "Ursprunglig placering"
 
-#: rulesmodel.cpp:493
+#: rulesmodel.cpp:506
 #, kde-format
 msgid "Ignore requested geometry"
 msgstr "Ignorera begärd geometri"
 
-#: rulesmodel.cpp:495
+#: rulesmodel.cpp:508
 #, kde-format
 msgid ""
 "Windows can ask to appear in a certain position.\n"
@@ -523,22 +568,22 @@ msgstr ""
 "kan vara otrevligt om klienten missbrukar funktionen\n"
 "för att ovillkorligt dyka upp mitt på skärmen."
 
-#: rulesmodel.cpp:502
+#: rulesmodel.cpp:516
 #, kde-format
 msgid "Minimum Size"
 msgstr "Minimal storlek"
 
-#: rulesmodel.cpp:507
+#: rulesmodel.cpp:521
 #, kde-format
 msgid "Maximum Size"
 msgstr "Maximal storlek"
 
-#: rulesmodel.cpp:512
+#: rulesmodel.cpp:526
 #, kde-format
 msgid "Obey geometry restrictions"
 msgstr "Lyd geometribegränsningar"
 
-#: rulesmodel.cpp:514
+#: rulesmodel.cpp:528
 #, kde-format
 msgid ""
 "Eg. terminals or video players can ask to keep a certain aspect ratio\n"
@@ -553,90 +598,90 @@ msgstr ""
 "Det kan vara meningslöst och begränsningen förhindrar godtyckliga\n"
 "dimensioner, såsom hela skärmens storlek."
 
-#: rulesmodel.cpp:523
+#: rulesmodel.cpp:537
 #, kde-format
-msgid "Keep above"
-msgstr "Behåll över"
+msgid "Keep above other windows"
+msgstr "Behåll över andra fönster"
 
-#: rulesmodel.cpp:523 rulesmodel.cpp:528 rulesmodel.cpp:533 rulesmodel.cpp:539
-#: rulesmodel.cpp:545 rulesmodel.cpp:551
+#: rulesmodel.cpp:537 rulesmodel.cpp:542 rulesmodel.cpp:547 rulesmodel.cpp:553
+#: rulesmodel.cpp:559 rulesmodel.cpp:565
 #, kde-format
 msgid "Arrangement & Access"
 msgstr "Arrangemang och åtkomst"
 
-#: rulesmodel.cpp:528
+#: rulesmodel.cpp:542
 #, kde-format
-msgid "Keep below"
-msgstr "Behåll under"
+msgid "Keep below other windows"
+msgstr "Behåll under andra fönster"
 
-#: rulesmodel.cpp:533
+#: rulesmodel.cpp:547
 #, kde-format
 msgid "Skip taskbar"
 msgstr "Hoppa över aktivitetsfält"
 
-#: rulesmodel.cpp:535
+#: rulesmodel.cpp:549
 #, kde-format
 msgid "Window shall (not) appear in the taskbar."
 msgstr "Fönster får (inte) synas i aktivitetsfältet."
 
-#: rulesmodel.cpp:539
+#: rulesmodel.cpp:553
 #, kde-format
 msgid "Skip pager"
 msgstr "Hoppa över skrivbordsvisning"
 
-#: rulesmodel.cpp:541
+#: rulesmodel.cpp:555
 #, kde-format
 msgid "Window shall (not) appear in the manager for virtual desktops"
 msgstr "Fönster får (inte) synas i hanteringen av virtuella skrivbord"
 
-#: rulesmodel.cpp:545
+#: rulesmodel.cpp:559
 #, kde-format
 msgid "Skip switcher"
 msgstr "Hoppa över programbyte"
 
-#: rulesmodel.cpp:547
+#: rulesmodel.cpp:561
 #, kde-format
 msgid "Window shall (not) appear in the Alt+Tab list"
 msgstr "Fönster får (inte) synas i Alt+Tabulator-listan"
 
-#: rulesmodel.cpp:551
+#: rulesmodel.cpp:565
 #, kde-format
 msgid "Shortcut"
 msgstr "Genväg"
 
-#: rulesmodel.cpp:557
+#: rulesmodel.cpp:571
 #, kde-format
 msgid "No titlebar and frame"
 msgstr "Ingen namnlist och ram"
 
-#: rulesmodel.cpp:557 rulesmodel.cpp:562 rulesmodel.cpp:568 rulesmodel.cpp:573
-#: rulesmodel.cpp:578 rulesmodel.cpp:589 rulesmodel.cpp:600 rulesmodel.cpp:608
-#: rulesmodel.cpp:621 rulesmodel.cpp:626 rulesmodel.cpp:632 rulesmodel.cpp:637
+#: rulesmodel.cpp:571 rulesmodel.cpp:576 rulesmodel.cpp:582 rulesmodel.cpp:587
+#: rulesmodel.cpp:592 rulesmodel.cpp:603 rulesmodel.cpp:614 rulesmodel.cpp:622
+#: rulesmodel.cpp:635 rulesmodel.cpp:640 rulesmodel.cpp:646 rulesmodel.cpp:651
 #, kde-format
 msgid "Appearance & Fixes"
 msgstr "Utseende och korrigeringar"
 
-#: rulesmodel.cpp:562
+#: rulesmodel.cpp:576
 #, kde-format
 msgid "Titlebar color scheme"
 msgstr "Namnlistens färgschema"
 
-#: rulesmodel.cpp:568
+#: rulesmodel.cpp:582
 #, kde-format
 msgid "Active opacity"
 msgstr "Aktiv ogenomskinlighet"
 
-#: rulesmodel.cpp:573
+#: rulesmodel.cpp:587
 #, kde-format
 msgid "Inactive opacity"
 msgstr "Inaktiv ogenomskinlighet"
 
-#: rulesmodel.cpp:578
+#: rulesmodel.cpp:592
 #, kde-format
 msgid "Focus stealing prevention"
 msgstr "Förhindra att fokus stjäls"
 
-#: rulesmodel.cpp:580
+#: rulesmodel.cpp:594
 #, kde-format
 msgid ""
 "KWin tries to prevent windows from taking the focus\n"
@@ -651,12 +696,12 @@ msgstr ""
 "\"Ingen\" tillåter ovillkorligt att fönstret får fokus medan\n"
 "\"Extrem\" helt förhindrar det från att få fokus."
 
-#: rulesmodel.cpp:589
+#: rulesmodel.cpp:603
 #, kde-format
 msgid "Focus protection"
 msgstr "Fokusskydd"
 
-#: rulesmodel.cpp:591
+#: rulesmodel.cpp:605
 #, kde-format
 msgid ""
 "This controls the focus protection of the currently active window.\n"
@@ -671,12 +716,12 @@ msgstr ""
 "Annars inflätas det med förhindrandet av stöld tilldelat\n"
 "till fönstret som vill ha fokus."
 
-#: rulesmodel.cpp:600
+#: rulesmodel.cpp:614
 #, kde-format
 msgid "Accept focus"
 msgstr "Acceptera fokus"
 
-#: rulesmodel.cpp:602
+#: rulesmodel.cpp:616
 #, kde-format
 msgid ""
 "Windows may prevent to get the focus (activate) when being clicked.\n"
@@ -687,12 +732,12 @@ msgstr ""
 "Å andra sidan kanske man vill förhindra att ett fönster får\n"
 "fokus vid ett musklick."
 
-#: rulesmodel.cpp:608
+#: rulesmodel.cpp:622
 #, kde-format
 msgid "Ignore global shortcuts"
 msgstr "Ignorera globala genvägar"
 
-#: rulesmodel.cpp:610
+#: rulesmodel.cpp:624
 #, kde-format
 msgid ""
 "When used, a window will receive\n"
@@ -713,153 +758,522 @@ msgstr ""
 "några andra globala genvägar (såsom Alt+F2 för att visa Kör program)\n"
 "när detta är aktivt."
 
-#: rulesmodel.cpp:621
+#: rulesmodel.cpp:635
 #, kde-format
 msgid "Closeable"
 msgstr "Stängningsbart"
 
-#: rulesmodel.cpp:626
+#: rulesmodel.cpp:640
 #, kde-format
 msgid "Set window type"
 msgstr "Ange fönstertyp"
 
-#: rulesmodel.cpp:632
+#: rulesmodel.cpp:646
 #, kde-format
 msgid "Desktop file name"
 msgstr "Skrivbordsfilnamn"
 
-#: rulesmodel.cpp:637
+#: rulesmodel.cpp:651
 #, kde-format
 msgid "Block compositing"
 msgstr "Blockera skrivbordseffekter"
 
-#: rulesmodel.cpp:717
+#: rulesmodel.cpp:703
+#, kde-format
+msgid "Window class not available"
+msgstr "Fönsterklass inte tillgänglig"
+
+#: rulesmodel.cpp:704
+#, kde-kuit-format
+msgctxt "@info"
+msgid ""
+"This application is not providing a class for the window, so KWin cannot use "
+"it to match and apply any rules. If you still want to apply some rules to "
+"it, try to match other properties like the window title instead.<nl/><nl/"
+">Please consider reporting this bug to the application's developers."
+msgstr ""
+"Programmet tillhandahåller inte en klass för fönster, så Kwin kan inte "
+"använda den för att matcha och tillämpa några regler. Om du ändå vill "
+"tillämpa regler för det, försök att matcha andra egenskaper som "
+"fönsterrubriken istället.<nl/><nl/>Överväg gärna att rapportera felet till "
+"programmets utvecklare."
+
+#: rulesmodel.cpp:738
+#, kde-format
+msgid "All Window Types"
+msgstr "Alla fönstertyper"
+
+#: rulesmodel.cpp:739
 #, kde-format
 msgid "Normal Window"
 msgstr "Normalt fönster"
 
-#: rulesmodel.cpp:718
+#: rulesmodel.cpp:740
 #, kde-format
 msgid "Dialog Window"
 msgstr "Dialogruta"
 
-#: rulesmodel.cpp:719
+#: rulesmodel.cpp:741
 #, kde-format
 msgid "Utility Window"
 msgstr "Verktygsfönster"
 
-#: rulesmodel.cpp:720
+#: rulesmodel.cpp:742
 #, kde-format
 msgid "Dock (panel)"
 msgstr "Dockat (panel)"
 
-#: rulesmodel.cpp:721
+#: rulesmodel.cpp:743
 #, kde-format
 msgid "Toolbar"
 msgstr "Verktygsrad"
 
-#: rulesmodel.cpp:722
+#: rulesmodel.cpp:744
 #, kde-format
 msgid "Torn-Off Menu"
 msgstr "Avriven meny"
 
-#: rulesmodel.cpp:723
+#: rulesmodel.cpp:745
 #, kde-format
 msgid "Splash Screen"
 msgstr "Startskärm"
 
-#: rulesmodel.cpp:724
+#: rulesmodel.cpp:746
 #, kde-format
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#. i18n("Unmanaged Window")   },  deprecated
-#: rulesmodel.cpp:726
+#. i18n("Unmanaged Window")},  deprecated
+#: rulesmodel.cpp:748
 #, kde-format
 msgid "Standalone Menubar"
 msgstr "Fristående menyrad"
 
-#: rulesmodel.cpp:741
+#: rulesmodel.cpp:749
+#, kde-format
+msgid "On Screen Display"
+msgstr "Skärmvisning"
+
+#: rulesmodel.cpp:759
 #, kde-format
 msgid "All Desktops"
 msgstr "Alla skrivbord"
 
-#: rulesmodel.cpp:754
+#: rulesmodel.cpp:761
+#, kde-format
+msgctxt "@info:tooltip in the virtual desktop list"
+msgid "Make the window available on all desktops"
+msgstr "Gör fönstret tillgängligt på alla skrivbord"
+
+#: rulesmodel.cpp:780
 #, kde-format
 msgid "All Activities"
 msgstr "Alla aktiviteter"
 
-#: rulesmodel.cpp:775
+#: rulesmodel.cpp:782
+#, kde-format
+msgctxt "@info:tooltip in the activity list"
+msgid "Make the window available on all activities"
+msgstr "Gör fönstret tillgängligt i alla aktiviteter"
+
+#: rulesmodel.cpp:803
 #, kde-format
 msgid "Default"
 msgstr "Förval"
 
-#: rulesmodel.cpp:776
+#: rulesmodel.cpp:804
 #, kde-format
 msgid "No Placement"
 msgstr "Ingen placering"
 
-#: rulesmodel.cpp:777
+#: rulesmodel.cpp:805
 #, kde-format
 msgid "Minimal Overlapping"
 msgstr "Minimal överlappning"
 
-#: rulesmodel.cpp:778
+#: rulesmodel.cpp:806
 #, kde-format
 msgid "Maximized"
 msgstr "Maximerad"
 
-#: rulesmodel.cpp:779
-#, kde-format
-msgid "Cascaded"
-msgstr "Kaskad"
-
-#: rulesmodel.cpp:780
+#: rulesmodel.cpp:807
 #, kde-format
 msgid "Centered"
 msgstr "Centrerad"
 
-#: rulesmodel.cpp:781
+#: rulesmodel.cpp:808
 #, kde-format
 msgid "Random"
 msgstr "Slumpmässig"
 
-#: rulesmodel.cpp:782
+#: rulesmodel.cpp:809
 #, kde-format
 msgid "In Top-Left Corner"
 msgstr "I övre vänstra hörnet"
 
-#: rulesmodel.cpp:783
+#: rulesmodel.cpp:810
 #, kde-format
 msgid "Under Mouse"
 msgstr "Under musen"
 
-#: rulesmodel.cpp:784
+#: rulesmodel.cpp:811
 #, kde-format
 msgid "On Main Window"
 msgstr "På huvudfönster"
 
-#: rulesmodel.cpp:792
+#: rulesmodel.cpp:818
 #, kde-format
 msgid "None"
 msgstr "Ingen"
 
-#: rulesmodel.cpp:793
+#: rulesmodel.cpp:819
 #, kde-format
 msgid "Low"
 msgstr "Låg"
 
-#: rulesmodel.cpp:794
+#: rulesmodel.cpp:820
 #, kde-format
 msgid "Normal"
 msgstr "Normal"
 
-#: rulesmodel.cpp:795
+#: rulesmodel.cpp:821
 #, kde-format
 msgid "High"
 msgstr "Hög"
 
-#: rulesmodel.cpp:796
+#: rulesmodel.cpp:822
 #, kde-format
 msgid "Extreme"
 msgstr "Extrem"
+
+#: rulesmodel.cpp:865
+#, kde-format
+msgid "Unmanaged window"
+msgstr "Ohanterat fönster"
+
+#: rulesmodel.cpp:866
+#, kde-format
+msgid "Could not detect window properties. The window is not managed by KWin."
+msgstr ""
+"Kunde inte detektera fönsteregenskaper. Fönstret hanteras inte av Kwin."
+
+#~ msgid "Error"
+#~ msgstr "Fel"
+
+#~ msgid "Cascaded"
+#~ msgstr "Kaskad"
+
+#~ msgid "Keep above"
+#~ msgstr "Behåll över"
+
+#~ msgid "Keep below"
+#~ msgstr "Behåll under"
+
+#~ msgid "KWin"
+#~ msgstr "Kwin"
+
+#~ msgid "KWin helper utility"
+#~ msgstr "Kwin-hjälpverktyg"
+
+#~ msgid "Activity"
+#~ msgstr "Aktivitet"
+
+#~ msgid "Select properties"
+#~ msgstr "Välj egenskaper"
+
+#~ msgid "Override Type"
+#~ msgstr "Överskridningstyp"
+
+#~ msgid "Unknown - will be treated as Normal Window"
+#~ msgstr "Okänt: Hanteras som normalt fönster"
+
+#~ msgid "Information About Selected Window"
+#~ msgstr "Information om markerat fönster"
+
+#~ msgid "Class:"
+#~ msgstr "Klass:"
+
+#~ msgid "Role:"
+#~ msgstr "Roll:"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
+
+#~ msgid "Title:"
+#~ msgstr "Titel:"
+
+#~ msgid "Machine:"
+#~ msgstr "Dator:"
+
+#~ msgid "Match by primary class name and"
+#~ msgstr "Matcha enligt primärt klassnamn och"
+
+#~ msgid "Secondary class name  (resulting in term in brackets)"
+#~ msgstr "Sekundärt klassnamn (ger begreppet inom hakparenteser)"
+
+#~ msgid "Window role (can be used to select windows by function)"
+#~ msgstr "Fönsterroll (kan användas för att välja fönster enligt funktion)"
+
+#~ msgid "Window type (eg. all dialogs, but not the main windows)"
+#~ msgstr "Fönstertyp (t.ex. alla dialogrutor, men inte huvudfönstren)"
+
+#~ msgid ""
+#~ "Window title (very specific, can fail due to content changes or "
+#~ "translation)"
+#~ msgstr ""
+#~ "Fönstertitel (mycket specifik, kan misslyckas på grund av "
+#~ "innehållsändringar eller översättning)"
+
+#~ msgid ""
+#~ "A single shortcut can be easily assigned or cleared using the two "
+#~ "buttons. Only shortcuts with modifiers can be used.<p>\n"
+#~ "It is possible to have several possible shortcuts, and the first "
+#~ "available shortcut will be used. The shortcuts are specified using "
+#~ "shortcut sets separated by \" - \". One set is specified as <i>base</i>"
+#~ "+(<i>list</i>), where base are modifiers and list is a list of keys.<br>\n"
+#~ "For example \"<b>Shift+Alt+(123) Shift+Ctrl+(ABC)</b>\" will first try "
+#~ "<b>Shift+Alt+1</b>, then others with <b>Shift+Ctrl+C</b> as the last one."
+#~ msgstr ""
+#~ "En enkel genväg kan snabbt skapas eller tas bort med de två knapparna. "
+#~ "Bara genvägar med väljartangenter kan användas.<p>\n"
+#~ "Det är möjligt att ha flera tänkbara genvägar, och då används den första "
+#~ "tillgängliga genvägen. Genvägarna anges med genvägsuppsättningar åtskilda "
+#~ "av \"-\". En uppsättning anges som <i>bas</i>+(<i>lista</i>), där basen "
+#~ "är väljartangenter och listan är en lista med tangenter.<br>\n"
+#~ "Exempelvis gör \"<b>Skift+Alt+(123) Skift+Ctrl+(ABC)</b>\" först ett "
+#~ "försök med <b>Skift+Alt+1</b>, följt av de övriga med <b>Skift+Ctrl+A</b> "
+#~ "som den sista."
+
+#~ msgid "&Single Shortcut"
+#~ msgstr "&Enkel genväg"
+
+#~ msgid "C&lear"
+#~ msgstr "&Rensa"
+
+#~ msgid "Window-Specific Settings Configuration Module"
+#~ msgstr "Inställningsmodul för fönsterspecifika inställningar"
+
+#~ msgid "(c) 2004 KWin and KControl Authors"
+#~ msgstr "© 2004 Upphovsmännen till Kwin och Kcontrol"
+
+#~ msgid "Lubos Lunak"
+#~ msgstr "Lubos Lunak"
+
+#~ msgid "Remember settings separately for every window"
+#~ msgstr "Kom ihåg inställningar separat för varje fönster"
+
+#~ msgid "Show internal settings for remembering"
+#~ msgstr "Visa interna inställningar för att komma ihåg"
+
+#~ msgid "Internal setting for remembering"
+#~ msgstr "Interna inställningar för att komma ihåg"
+
+#~ msgid "&Modify..."
+#~ msgstr "&Ändra..."
+
+#~ msgid "Move &Up"
+#~ msgstr "Flytta &upp"
+
+#~ msgid "Move &Down"
+#~ msgstr "Flytta &ner"
+
+#~ msgid ""
+#~ "Enable this checkbox to alter this window property for the specified "
+#~ "window(s)."
+#~ msgstr ""
+#~ "Aktivera kryssrutan för att ändra fönsteregenskapen för det angivna "
+#~ "fönstret eller fönstren."
+
+#~ msgid ""
+#~ "Specify how the window property should be affected:<ul><li><em>Do Not "
+#~ "Affect:</em> The window property will not be affected and therefore the "
+#~ "default handling for it will be used. Specifying this will block more "
+#~ "generic window settings from taking effect.</li><li><em>Apply Initially:</"
+#~ "em> The window property will be only set to the given value after the "
+#~ "window is created. No further changes will be affected.</"
+#~ "li><li><em>Remember:</em> The value of the window property will be "
+#~ "remembered and every time the window is created, the last remembered "
+#~ "value will be applied.</li><li><em>Force:</em> The window property will "
+#~ "be always forced to the given value.</li><li><em>Apply Now:</em> The "
+#~ "window property will be set to the given value immediately and will not "
+#~ "be affected later (this action will be deleted afterwards).</"
+#~ "li><li><em>Force temporarily:</em> The window property will be forced to "
+#~ "the given value until it is hidden (this action will be deleted after the "
+#~ "window is hidden).</li></ul>"
+#~ msgstr ""
+#~ "Ange hur fönsteregenskapen ska påverkas:<ul><li><em>Påverka inte:</em> "
+#~ "Fönsteregenskapen påverkas inte och därför används standardhanteringen "
+#~ "för den. Att ange detta förhindrar mer generella fönsterinställningar "
+#~ "från att få någon effekt.</li><li><em>Tillämpa från början:</em> "
+#~ "Fönsteregenskapen ställs bara in till angivet värde när fönstret skapas. "
+#~ "Inga senare ändringar påverkas.</li><li><em>Kom ihåg:</em> "
+#~ "Fönsteregenskapens värde kommer att kommas ihåg och varje gång fönstret "
+#~ "skapas, tillämpas det senaste ihågkomna värdet.</li><li><em>Tvinga:</em> "
+#~ "Fönsteregenskapen tvingas alltid till det givna värdet.</"
+#~ "li><li><em>Tillämpa nu:</em> Fönsteregenskapen ställs omedelbart in till "
+#~ "angivet värde och påverkas inte senare (åtgärden tas bort efteråt).</"
+#~ "li><li><em>Tvinga tillfälligt:</em> Fönsteregenskapen tvingas till det "
+#~ "givna värdet till den döljs (åtgärden tas bort efter fönstret har dolts)."
+#~ "</li></ul>"
+
+#~ msgid ""
+#~ "Specify how the window property should be affected:<ul><li><em>Do Not "
+#~ "Affect:</em> The window property will not be affected and therefore the "
+#~ "default handling for it will be used. Specifying this will block more "
+#~ "generic window settings from taking effect.</li><li><em>Force:</em> The "
+#~ "window property will be always forced to the given value.</"
+#~ "li><li><em>Force temporarily:</em> The window property will be forced to "
+#~ "the given value until it is hidden (this action will be deleted after the "
+#~ "window is hidden).</li></ul>"
+#~ msgstr ""
+#~ "Ange hur fönsteregenskapen ska påverkas:<ul><li><em>Påverka inte:</em> "
+#~ "Fönsteregenskapen påverkas inte och därför används standardhanteringen "
+#~ "för den. Att ange detta förhindrar mer generella fönsterinställningar "
+#~ "från att få någon effekt.</li><li><em>Tvinga:</em> Fönsteregenskapen "
+#~ "tvingas alltid till det givna värdet.</li><li><em>Tvinga tillfälligt</em> "
+#~ "Fönsteregenskapen tvingas till det givna värdet till den döljs (åtgärden "
+#~ "tas bort efter fönstret har dolts).</li></ul>"
+
+#~ msgid "Unnamed entry"
+#~ msgstr "Namnlöst objekt"
+
+#~ msgid ""
+#~ "This configuration dialog allows altering settings only for the selected "
+#~ "window or application. Find the setting you want to affect, enable the "
+#~ "setting using the checkbox, select in what way the setting should be "
+#~ "affected and to which value."
+#~ msgstr ""
+#~ "Den här inställningsdialogrutan gör det möjligt att ändra inställningar "
+#~ "bara för det valda fönstret eller programmet. Hitta inställningen du vill "
+#~ "påverka, aktivera inställningen med kryssrutan, och välj på vilket sätt "
+#~ "inställningen ska påverkas och till vilket värde."
+
+#~ msgid "Consult the documentation for more details."
+#~ msgstr "Rådfråga dokumentationen för mer information."
+
+#~ msgid "Edit Shortcut"
+#~ msgstr "Redigera genväg"
+
+#~ msgid "s delay"
+#~ msgstr " s fördröjning"
+
+#~ msgid "x,y"
+#~ msgstr "x,y"
+
+#~ msgid "0123456789-+,xX:"
+#~ msgstr "0123456789-+,xX:"
+
+#~ msgid "width,height"
+#~ msgstr "bredd,höjd"
+
+#~ msgid "&Desktop"
+#~ msgstr "&Skrivbord"
+
+#~ msgid "Edit..."
+#~ msgstr "Redigera..."
+
+#~ msgid "Autog&roup in foreground"
+#~ msgstr "G&ruppera automatiskt i förgrunden"
+
+#~ msgid "Autogroup by I&D"
+#~ msgstr "Gruppera automatiskt enligt i&dentifikation"
+
+#~ msgid "Autogroup with &identical"
+#~ msgstr "Gruppera automatiskt med &identiska"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "org.kde.kwin"
+#~ msgstr "org.kde.kwin"
+
+#~ msgid "Smart"
+#~ msgstr "Smart"
+
+#~ msgid "kcmkwinrules"
+#~ msgstr "IM Fönsterregler"
+
+#~ msgid "Opaque"
+#~ msgstr "Ogenomskinligt"
+
+#~ msgid "Transparent"
+#~ msgstr "Genomskinligt"
+
+#~ msgid "&Moving/resizing"
+#~ msgstr "&Förflyttning och storleksändring"
+
+#~ msgid "T&iling"
+#~ msgstr "&Sida vid sida"
+
+#~ msgid "Tiled"
+#~ msgstr "Sida vid sida"
+
+#~ msgid "Floating"
+#~ msgstr "Fritt"
+
+#~ msgid "Match Strategy"
+#~ msgstr "Matchningsstrategi"
+
+#~ msgid ""
+#~ "For selecting all windows belonging to a specific application, selecting "
+#~ "only window class should usually work."
+#~ msgstr ""
+#~ "För att välja alla fönster som hör till ett specifikt program, fungerar "
+#~ "det oftast att bara välja fönsterklass."
+
+#~ msgid "Use window &class (whole application)"
+#~ msgstr "Använd fönster&klass (helt program)"
+
+#~ msgid ""
+#~ "For selecting a specific window in an application, both window class and "
+#~ "window role should be selected. Window class will determine the "
+#~ "application, and window role the specific window in the application; many "
+#~ "applications do not provide useful window roles though."
+#~ msgstr ""
+#~ "För att välja ett specifikt fönster i ett program, ska både fönsterklass "
+#~ "och fönsterroll väljas. Fönsterklassen avgör programmet och fönsterrollen "
+#~ "det specifika fönstret i programmet. Många program tillhandahåller dock "
+#~ "inte användbara fönsterroller."
+
+#~ msgid "Use window class and window &role (specific window)"
+#~ msgstr "Använd fönsterklass och fönster&roll (specifikt fönster)"
+
+#~ msgid ""
+#~ "With some (non-KDE) applications whole window class can be sufficient for "
+#~ "selecting a specific window in an application, as they set whole window "
+#~ "class to contain both application and window role."
+#~ msgstr ""
+#~ "Med vissa program (som inte tillhör KDE) kan programmets hela "
+#~ "fönsterklass vara tillräcklig för att välja ett specifikt fönster i "
+#~ "programmet, eftersom de ställer in hela fönsterklassen att innehålla både "
+#~ "program och fönsterroll."
+
+#~ msgid "Use &whole window class (specific window)"
+#~ msgstr "Använd &hel fönsterklass (specifikt fönster)"
+
+#~ msgid "Match also window &title"
+#~ msgstr "Matcha också fönster&titel"
+
+#~ msgid "Extra role:"
+#~ msgstr "Extra roll:"
+
+#~ msgid "Window &Extra"
+#~ msgstr "Fönster&extra"
+
+#~ msgid "&Geometry"
+#~ msgstr "&Geometri"
+
+#~ msgid "&Preferences"
+#~ msgstr "In&ställningar"
+
+#~ msgid "&No border"
+#~ msgstr "I&ngen kant"
+
+#~ msgid "0123456789"
+#~ msgstr "0123456789"
+
+#~ msgid "W&orkarounds"
+#~ msgstr "&Undvika problem"
+
+#~ msgid "Strictly obey geometry"
+#~ msgstr "Lyd geometri strikt"

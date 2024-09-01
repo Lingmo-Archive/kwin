@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwm\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-29 02:26+0200\n"
-"PO-Revision-Date: 2020-10-27 21:29+0100\n"
+"POT-Creation-Date: 2022-12-03 00:48+0000\n"
+"PO-Revision-Date: 2020-10-27 21:33+0100\n"
 "Last-Translator: Mihkel Tõnnov <mihhkel@gmail.com>\n"
 "Language-Team: Estonian <>\n"
 "Language: et\n"
@@ -37,14 +37,14 @@ msgstr "hasso@linux.ee"
 msgid "Inactive Inner Window Actions"
 msgstr "Mitteaktiivse sisemise akna toimingud"
 
-#. i18n: ectx: property (text), widget (QLabel, label_5)
 #. i18n: ectx: property (text), widget (QLabel, label_1)
+#. i18n: ectx: property (text), widget (QLabel, label_5)
 #: actions.ui:26 mouse.ui:177
 #, kde-format
 msgid "&Left click:"
 msgstr "&Vasakklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow1)
 #: actions.ui:39
 #, kde-format
 msgid ""
@@ -55,54 +55,54 @@ msgstr ""
 "klõpsatakse mitteaktiivse akna sees ('sees' tähendab: mitte tiitliribal ega "
 "raamil)."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:43 actions.ui:83 actions.ui:123
 #, kde-format
 msgid "Activate, raise and pass click"
 msgstr "Aktiveerib, tõstab ja arvestab klõpsu"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:48 actions.ui:88 actions.ui:128
 #, kde-format
 msgid "Activate and pass click"
 msgstr "Aktiveerib ja arvestab klõpsu"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:53 actions.ui:93 actions.ui:133 mouse.ui:293 mouse.ui:408
 #: mouse.ui:523
 #, kde-format
 msgid "Activate"
 msgstr "Aktiveerib"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:58 actions.ui:98 actions.ui:138 mouse.ui:283 mouse.ui:398
 #: mouse.ui:513
 #, kde-format
 msgid "Activate and raise"
 msgstr "Aktiveerib ja tõstab"
 
-#. i18n: ectx: property (text), widget (QLabel, label_6)
 #. i18n: ectx: property (text), widget (QLabel, label_2)
+#. i18n: ectx: property (text), widget (QLabel, label_6)
 #: actions.ui:66 mouse.ui:200
 #, kde-format
 msgid "&Middle click:"
 msgstr "&Keskklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow2)
 #: actions.ui:79
 #, kde-format
 msgid ""
@@ -113,14 +113,14 @@ msgstr ""
 "klõpsatakse mitteaktiivse akna sees ('sees' tähendab: mitte tiitliribal ega "
 "raamil)."
 
-#. i18n: ectx: property (text), widget (QLabel, label_7)
 #. i18n: ectx: property (text), widget (QLabel, label_3)
+#. i18n: ectx: property (text), widget (QLabel, label_7)
 #: actions.ui:106 mouse.ui:213
 #, kde-format
 msgid "&Right click:"
 msgstr "&Paremklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindow3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindow3)
 #: actions.ui:119
 #, kde-format
 msgid ""
@@ -131,14 +131,14 @@ msgstr ""
 "klõpsatakse mitteaktiivse akna sees ('sees' tähendab: mitte tiitliribal ega "
 "raamil)."
 
-#. i18n: ectx: property (text), widget (QLabel, label_2)
 #. i18n: ectx: property (text), widget (QLabel, label_4)
+#. i18n: ectx: property (text), widget (QLabel, label_2)
 #: actions.ui:146 mouse.ui:88
 #, kde-format
 msgid "Mouse &wheel:"
 msgstr "&Hiireratas:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:159
 #, kde-format
 msgid ""
@@ -148,19 +148,19 @@ msgstr ""
 "Selles reas saab kohandada käitumist hiirega kerimisel mitteaktiivse akna "
 "sees ('sees' tähendab: mitte tiitliribal ega raamil)."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:163
 #, kde-format
 msgid "Scroll"
 msgstr "Kerib"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:168
 #, kde-format
 msgid "Activate and scroll"
 msgstr "Aktiveerib ja kerib"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandWindowWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandWindowWheel)
 #: actions.ui:173
 #, kde-format
 msgid "Activate, raise and scroll"
@@ -178,7 +178,7 @@ msgstr "Sisemise akna, tiitliriba ja raami toimingud"
 msgid "Mo&difier key:"
 msgstr "Muutekla&hv:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:205
 #, kde-format
 msgid ""
@@ -186,13 +186,13 @@ msgid ""
 "perform the following actions."
 msgstr "Siin saab valida, kas tegevusi lubavaks klahviks on Meta või ALT."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:209
 #, kde-format
 msgid "Meta"
 msgstr "Meta"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllKey)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllKey)
 #: actions.ui:214
 #, kde-format
 msgid "Alt"
@@ -204,14 +204,14 @@ msgstr "Alt"
 msgid "  + "
 msgstr "  + "
 
-#. i18n: ectx: property (text), widget (QLabel, label_8)
 #. i18n: ectx: property (text), widget (QLabel, label_7)
+#. i18n: ectx: property (text), widget (QLabel, label_8)
 #: actions.ui:248 mouse.ui:601
 #, kde-format
 msgid "L&eft click:"
 msgstr "V&asakklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll1)
 #: actions.ui:261
 #, kde-format
 msgid ""
@@ -221,54 +221,54 @@ msgstr ""
 "Selles reas saab kohandada käitumist hiire vasaku nupu klõpsu puhul, kui "
 "klõpsatakse tiitliribal või raamil."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:265 actions.ui:335 actions.ui:405
 #, kde-format
 msgid "Move"
 msgstr "Liigutab"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:270 actions.ui:340 actions.ui:410
 #, kde-format
 msgid "Activate, raise and move"
 msgstr "Aktiveerib, tõstab ja liigutab"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:275 actions.ui:345 actions.ui:415 mouse.ui:246 mouse.ui:308
 #: mouse.ui:361 mouse.ui:423 mouse.ui:476 mouse.ui:538
 #, kde-format
 msgid "Toggle raise and lower"
 msgstr "Lülitab tõstmise ja langetamise vahel"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:280 actions.ui:350 actions.ui:420
 #, kde-format
 msgid "Resize"
 msgstr "Muudab suurust"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:285 actions.ui:355 actions.ui:425 mouse.ui:236 mouse.ui:298
 #: mouse.ui:351 mouse.ui:413 mouse.ui:466 mouse.ui:528
 #, kde-format
@@ -276,16 +276,16 @@ msgid "Raise"
 msgstr "Tõstab"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:290 actions.ui:360 actions.ui:430 mouse.ui:65 mouse.ui:241
 #: mouse.ui:303 mouse.ui:356 mouse.ui:418 mouse.ui:471 mouse.ui:533
 #, kde-format
@@ -293,51 +293,51 @@ msgid "Lower"
 msgstr "Langetab"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:295 actions.ui:365 actions.ui:435 mouse.ui:55 mouse.ui:251
 #: mouse.ui:313 mouse.ui:366 mouse.ui:428 mouse.ui:481 mouse.ui:543
 #, kde-format
 msgid "Minimize"
 msgstr "Minimeerib"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:300 actions.ui:370 actions.ui:440
 #, kde-format
 msgid "Decrease opacity"
 msgstr "Suurendab läbipaistvust"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:305 actions.ui:375 actions.ui:445
 #, kde-format
 msgid "Increase opacity"
 msgstr "Vähendab läbipaistvust"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAll3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: actions.ui:310 actions.ui:380 actions.ui:450 actions.ui:505 mouse.ui:80
 #: mouse.ui:132 mouse.ui:271 mouse.ui:333 mouse.ui:386 mouse.ui:448
 #: mouse.ui:501 mouse.ui:563
@@ -351,7 +351,7 @@ msgstr "Ei tee midagi"
 msgid "Middle &click:"
 msgstr "Ke&skklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll2)
 #: actions.ui:331
 #, kde-format
 msgid ""
@@ -361,14 +361,14 @@ msgstr ""
 "Selles reas saab kohandada käitumist hiire keskmise nupu klõpsu puhul, kui "
 "klõpsatakse tiitliribal või raamil."
 
-#. i18n: ectx: property (text), widget (QLabel, label_10)
 #. i18n: ectx: property (text), widget (QLabel, label_9)
+#. i18n: ectx: property (text), widget (QLabel, label_10)
 #: actions.ui:388 mouse.ui:671
 #, kde-format
 msgid "Right clic&k:"
 msgstr "Pa&remklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAll3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAll3)
 #: actions.ui:401
 #, kde-format
 msgid ""
@@ -384,7 +384,7 @@ msgstr ""
 msgid "Mo&use wheel:"
 msgstr "&Hiireratas:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandAllWheel)
 #: actions.ui:471
 #, kde-format
 msgid ""
@@ -394,43 +394,43 @@ msgstr ""
 "Siin saab kohandada KDE käitumist, kui keritakse hiirerattaga kusagil aknas, "
 "hoides samal ajal all muuteklahvi."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:475 mouse.ui:102
 #, kde-format
 msgid "Raise/lower"
 msgstr "Tõstab/langetab"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:480 mouse.ui:107
 #, kde-format
 msgid "Shade/unshade"
 msgstr "Varjab/taastab"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:485 mouse.ui:112
 #, kde-format
 msgid "Maximize/restore"
 msgstr "Maksimeerib/taastab"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:490 mouse.ui:117
 #, kde-format
 msgid "Keep above/below"
 msgstr "Hoiab teiste peal/all"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:495 mouse.ui:122
 #, kde-format
 msgid "Move to previous/next desktop"
 msgstr "Liigutab eelmisele/järgmisele töölauale"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandTitlebarWheel)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandAllWheel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: actions.ui:500 mouse.ui:127
 #, kde-format
 msgid "Change opacity"
@@ -470,9 +470,9 @@ msgstr ""
 "Viivituse seadmine millisekundites hiirekursori liikumisest varjatud aknale "
 "kuni akna varjatud oleku tühistamiseni."
 
-#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ShadeHoverInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_DelayFocusInterval)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_AutoRaiseInterval)
+#. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ShadeHoverInterval)
 #: advanced.ui:45 focus.ui:85 focus.ui:178
 #, kde-format
 msgid " ms"
@@ -484,9 +484,37 @@ msgstr " msek."
 msgid "Window &placement:"
 msgstr "Uute akende asukoht:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_Placement)
 #: advanced.ui:76
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "<html><head/><body><p>The placement policy determines where a new window "
+#| "will appear on the desktop.</p><ul style=\"margin-top: 0px; margin-"
+#| "bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;"
+#| "\"><li style=\" margin-top:12px; margin-bottom:0px; margin-left:0px; "
+#| "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+#| "font-style:italic;\">Smart</span> will try to achieve a minimum overlap "
+#| "of windows</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
+#| "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
+#| "style=\" font-style:italic;\">Maximizing</span> will try to maximize "
+#| "every window to fill the whole screen. It might be useful to selectively "
+#| "affect placement of some windows using the window-specific settings.</"
+#| "li><li style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; "
+#| "margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" "
+#| "font-style:italic;\">Cascade</span> will cascade the windows</li><li "
+#| "style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-"
+#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#| "style:italic;\">Random</span> will use a random position</li><li style=\" "
+#| "margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-"
+#| "block-indent:0; text-indent:0px;\"><span style=\" font-style:italic;"
+#| "\">Centered</span> will place the window centered</li><li style=\" margin-"
+#| "top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-"
+#| "indent:0; text-indent:0px;\"><span style=\" font-style:italic;\">Zero-"
+#| "cornered</span> will place the window in the top-left corner</li><li "
+#| "style=\" margin-top:0px; margin-bottom:12px; margin-left:0px; margin-"
+#| "right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-"
+#| "style:italic;\">Under mouse</span> will place the window under the "
+#| "pointer</li></ul></body></html>"
 msgid ""
 "<html><head/><body><p>The placement policy determines where a new window "
 "will appear on the desktop.</p><ul style=\"margin-top: 0px; margin-bottom: "
@@ -500,13 +528,10 @@ msgid ""
 "whole screen. It might be useful to selectively affect placement of some "
 "windows using the window-specific settings.</li><li style=\" margin-top:0px; "
 "margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; "
-"text-indent:0px;\"><span style=\" font-style:italic;\">Cascade</span> will "
-"cascade the windows</li><li style=\" margin-top:0px; margin-bottom:0px; "
+"text-indent:0px;\"><span style=\" font-style:italic;\">Random</span> will "
+"use a random position</li><li style=\" margin-top:0px; margin-bottom:0px; "
 "margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-"\"><span style=\" font-style:italic;\">Random</span> will use a random "
-"position</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
-"left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
-"style=\" font-style:italic;\">Centered</span> will place the window "
+"\"><span style=\" font-style:italic;\">Centered</span> will place the window "
 "centered</li><li style=\" margin-top:0px; margin-bottom:0px; margin-"
 "left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span "
 "style=\" font-style:italic;\">Zero-cornered</span> will place the window in "
@@ -542,74 +567,68 @@ msgstr ""
 "\"><span style=\" font-style:italic;\">Hiire all</span> seab akna kursori "
 "asukohta</li></ul></body></html>"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:80
 #, kde-format
 msgid "Minimal Overlapping"
 msgstr "Minimaalselt kattuv"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:85
 #, kde-format
 msgid "Maximized"
 msgstr "Maksimeeritud"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
 #: advanced.ui:90
-#, kde-format
-msgid "Cascaded"
-msgstr "Kaskaadis"
-
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:95
 #, kde-format
 msgid "Random"
 msgstr "Juhuslik"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:100
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:95
 #, kde-format
 msgid "Centered"
 msgstr "Keskjoondatud"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:105
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:100
 #, kde-format
 msgid "In Top-Left Corner"
 msgstr "Üleval vasakus nurgas"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_Placement)
-#: advanced.ui:110
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_Placement)
+#: advanced.ui:105
 #, kde-format
 msgid "Under mouse"
 msgstr "Hiire all"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
-#: advanced.ui:118
+#: advanced.ui:113
 #, kde-format
 msgid ""
-"When turned on, KDE apps which are able to remember the positions of their "
+"When turned on, apps which are able to remember the positions of their "
 "windows are allowed to do so. This will override the window placement mode "
 "defined above."
 msgstr ""
-"Kui see on sisse lülitatud, lubatakse vastava toega KDE rakendustel mäletada "
-"oma akende asukohti. See alistab ülalmääratud uute akende paigutamise "
-"režiimi."
+"Kui see on sisse lülitatud, lubatakse vastava toega rakendustel mäletada oma "
+"akende asukohti. See alistab ülalmääratud uute akende paigutamise režiimi."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_AllowKDEAppsToRememberWindowPositions)
-#: advanced.ui:121
+#: advanced.ui:116
 #, kde-format
-msgid "Allow KDE apps to remember the positions of their own windows"
-msgstr "KDE rakendustel lubatakse mäletada oma akende asukohti"
+msgid ""
+"Allow apps to remember the positions of their own windows, if they support it"
+msgstr "Ühilduvatel rakendustel lubatakse mäletada oma akende asukohti"
 
 #. i18n: ectx: property (text), widget (QLabel, specialWindowsLabel)
-#: advanced.ui:128
+#: advanced.ui:123
 #, kde-format
 msgid "&Special windows:"
 msgstr "&Spetsiaalaknad:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_HideUtilityWindowsForInactive)
-#: advanced.ui:138
+#: advanced.ui:133
 #, kde-format
 msgid ""
 "When turned on, utility windows (tool windows, torn-off menus,...) of "
@@ -624,10 +643,47 @@ msgstr ""
 "ei toimi."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_HideUtilityWindowsForInactive)
-#: advanced.ui:141
+#: advanced.ui:136
 #, kde-format
 msgid "Hide utility windows for inactive applications"
 msgstr "Mitteaktiivsete rakenduste lisaaknad peidetakse"
+
+#. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyLabel)
+#: advanced.ui:143
+#, kde-format
+msgid "Virtual Desktop behavior:"
+msgstr ""
+
+#. i18n: ectx: property (text), widget (QLabel, activationDesktopPolicyDescriptionLabel)
+#: advanced.ui:153
+#, kde-format
+msgid "When activating a window on a different Virtual Desktop:"
+msgstr ""
+
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:160
+#, kde-format
+msgid ""
+"<html><head/><body><p>This setting controls what happens when an open window "
+"located on a Virtual Desktop other than the current one is activated. </"
+"p><p><span style=\" font-style:italic;\">Switch to that Virtual Desktop</"
+"span> will switch to the Virtual Desktop where the window is currently "
+"located. </p><p><span style=\" font-style:italic;\">Bring window to current "
+"Virtual Desktop</span> will cause the window to jump to the active Virtual "
+"Desktop. </p></body></html>"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:164
+#, kde-format
+msgid "Switch to that Virtual Desktop"
+msgstr ""
+
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ActivationDesktopPolicy)
+#: advanced.ui:169
+#, kde-format
+msgid "Bring window to current Virtual Desktop"
+msgstr ""
 
 #. i18n: ectx: property (text), widget (QLabel, windowFocusPolicyLabel)
 #: focus.ui:22
@@ -700,7 +756,7 @@ msgstr ""
 msgid "Focus &stealing prevention:"
 msgstr "Fook&use röövimise vältimine:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:114
 #, kde-format
 msgid ""
@@ -769,38 +825,38 @@ msgstr ""
 "p></body></html>"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_WindowSnapZone)
 #. i18n: ectx: property (specialValueText), widget (QSpinBox, kcfg_CenterSnapZone)
-#: focus.ui:118 moving.ui:53 moving.ui:75 moving.ui:97
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
+#: focus.ui:118 moving.ui:33 moving.ui:65 moving.ui:97
 #, kde-format
 msgid "None"
 msgstr "Puudub"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:123
 #, kde-format
 msgid "Low"
 msgstr "Madal"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:128
 #, kde-format
 msgid "Medium"
 msgstr "Keskmine"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:133
 #, kde-format
 msgid "High"
 msgstr "Kõrge"
 
 #. i18n: Focus Stealing Prevention Level
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_FocusStealingPreventionLevel)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_FocusStealingPreventionLevel)
 #: focus.ui:138
 #, kde-format
 msgid "Extreme"
@@ -864,13 +920,17 @@ msgstr "Käitumine mitme ekraani korral:"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_ActiveMouseScreen)
 #: focus.ui:203
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "When this option is enabled, the active Xinerama screen (where new "
+#| "windows appear, for example) is the screen containing the mouse pointer. "
+#| "When disabled, the active Xinerama screen is the screen containing the "
+#| "focused window. By default this option is disabled for Click to focus and "
+#| "enabled for other focus policies."
 msgid ""
-"When this option is enabled, the active Xinerama screen (where new windows "
-"appear, for example) is the screen containing the mouse pointer. When "
-"disabled, the active Xinerama screen is the screen containing the focused "
-"window. By default this option is disabled for Click to focus and enabled "
-"for other focus policies."
+"When this option is enabled, the active screen (where new windows appear, "
+"for example) is the screen containing the mouse pointer. When disabled, the "
+"active screen is the screen containing the focused window."
 msgstr ""
 "Sisselülitamisel on aktiivseks Xinerama ekraaniks (kus näiteks avatakse uued "
 "aknad) see ekraan, millel töötab hiirekursor. Kui see pole sisse lülitatud, "
@@ -886,10 +946,13 @@ msgstr "Aktiivne ekraan &järgib hiirt"
 
 #. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SeparateScreenFocus)
 #: focus.ui:213
-#, kde-format
+#, fuzzy, kde-format
+#| msgid ""
+#| "When this option is enabled, focus operations are limited only to the "
+#| "active Xinerama screen"
 msgid ""
 "When this option is enabled, focus operations are limited only to the active "
-"Xinerama screen"
+"screen"
 msgstr ""
 "Sisselülitamisel piirduvad fookusetoimingud ainult aktiivse Xinerama "
 "ekraaniga"
@@ -911,82 +974,82 @@ msgstr "Akna aktiveerimise reegli kirjeldus"
 msgid "&Focus"
 msgstr "&Fookus"
 
-#: main.cpp:84
+#: main.cpp:79
 #, kde-format
 msgid "Titlebar A&ctions"
 msgstr "&Tiitliriba toimingud"
 
-#: main.cpp:91
+#: main.cpp:85
 #, kde-format
 msgid "W&indow Actions"
 msgstr "Ak&na toimingud"
 
-#: main.cpp:98
+#: main.cpp:91
 #, kde-format
 msgid "Mo&vement"
 msgstr "Lii&gutamine"
 
-#: main.cpp:105
+#: main.cpp:97
 #, kde-format
 msgid "Adva&nced"
 msgstr "&Muud"
 
-#: main.cpp:110
+#: main.cpp:101
 #, kde-format
 msgid "Window Behavior Configuration Module"
 msgstr "Akende käitumise juhtimismoodul"
 
-#: main.cpp:112
+#: main.cpp:103
 #, kde-format
 msgid "(c) 1997 - 2002 KWin and KControl Authors"
 msgstr "(c) 1997 - 2002: KWin ja KControl autorid"
 
-#: main.cpp:114
+#: main.cpp:105
 #, kde-format
 msgid "Matthias Ettrich"
 msgstr "Matthias Ettrich"
 
-#: main.cpp:115
+#: main.cpp:106
 #, kde-format
 msgid "Waldo Bastian"
 msgstr "Waldo Bastian"
 
-#: main.cpp:116
+#: main.cpp:107
 #, kde-format
 msgid "Cristian Tibirna"
 msgstr "Cristian Tibirna"
 
-#: main.cpp:117
+#: main.cpp:108
 #, kde-format
 msgid "Matthias Kalle Dalheimer"
 msgstr "Matthias Kalle Dalheimer"
 
-#: main.cpp:118
+#: main.cpp:109
 #, kde-format
 msgid "Daniel Molkentin"
 msgstr "Daniel Molkentin"
 
-#: main.cpp:119
+#: main.cpp:110
 #, kde-format
 msgid "Wynn Wilkes"
 msgstr "Wynn Wilkes"
 
-#: main.cpp:120
+#: main.cpp:111
 #, kde-format
 msgid "Pat Dowler"
 msgstr "Pat Dowler"
 
-#: main.cpp:121
+#: main.cpp:112
 #, kde-format
 msgid "Bernd Wuebben"
 msgstr "Bernd Wuebben"
 
-#: main.cpp:122
+#: main.cpp:113
 #, kde-format
 msgid "Matthias Hoelzer-Kluepfel"
 msgstr "Matthias Hoelzer-Kluepfel"
 
-#: main.cpp:167
+#: main.cpp:161
 #, kde-format
 msgid ""
 "<p><h1>Window Behavior</h1> Here you can customize the way windows behave "
@@ -1002,12 +1065,12 @@ msgstr ""
 "<p>Arvesta, et kõik see toimib ainult siis, kui kasutad KWin'i aknahaldurit. "
 "Kui kasutad mõnda muud, siis loe konkreetse aknahalduri dokumentatsiooni.</p>"
 
-#: main.cpp:187
+#: main.cpp:202
 #, kde-format
 msgid "&Titlebar Actions"
 msgstr "&Tiitliriba toimingud"
 
-#: main.cpp:193
+#: main.cpp:208
 #, kde-format
 msgid "Window Actio&ns"
 msgstr "Ak&na toimingud"
@@ -1024,50 +1087,50 @@ msgstr "Tiitliriba toimingud"
 msgid "&Double-click:"
 msgstr "&Topeltklõps:"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:36
 #, kde-format
 msgid "Behavior on <em>double</em> click into the titlebar."
 msgstr "Käitumine <em>topeltklõpsu</em> puhul tiitliribal."
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:40 mouse.ui:615 mouse.ui:650 mouse.ui:685
 #, kde-format
 msgid "Maximize"
 msgstr "Maksimeerib"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:45 mouse.ui:620 mouse.ui:655 mouse.ui:690
 #, kde-format
 msgid "Vertically maximize"
 msgstr "Maksimeerib püstsuunas"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:50 mouse.ui:625 mouse.ui:660 mouse.ui:695
 #, kde-format
 msgid "Horizontally maximize"
 msgstr "Maksimeerib rõhtsuunas"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:60 mouse.ui:256 mouse.ui:318 mouse.ui:371 mouse.ui:433 mouse.ui:486
 #: mouse.ui:548
 #, kde-format
@@ -1075,13 +1138,13 @@ msgid "Shade"
 msgstr "Varjab"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:70 mouse.ui:261 mouse.ui:323 mouse.ui:376 mouse.ui:438 mouse.ui:491
 #: mouse.ui:553
 #, kde-format
@@ -1089,13 +1152,13 @@ msgid "Close"
 msgstr "Sulgeb"
 
 #. i18n: @item:inlistbox behavior on double click
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_TitlebarDoubleClickCommand)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_TitlebarDoubleClickCommand)
 #: mouse.ui:75
 #, kde-format
 msgid "Show on all desktops"
 msgstr "Näitab kõigil töölaudadel"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandTitlebarWheel)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandTitlebarWheel)
 #: mouse.ui:98
 #, kde-format
 msgid "Behavior on <em>mouse wheel</em> scroll over the titlebar."
@@ -1119,9 +1182,9 @@ msgstr "Aktiivne"
 msgid "Inactive"
 msgstr "Mitteaktiivne"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandActiveTitlebar3)
 #: mouse.ui:232 mouse.ui:347 mouse.ui:462
 #, kde-format
 msgid ""
@@ -1131,21 +1194,21 @@ msgstr ""
 "Käitumine <em>vasaku</em> hiirenupu klõpsu puhul <em>aktiivse</em> akna "
 "tiitliribal või raamil."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandActiveTitlebar3)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandActiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:266 mouse.ui:328 mouse.ui:381 mouse.ui:443 mouse.ui:496
 #: mouse.ui:558
 #, kde-format
 msgid "Show actions menu"
 msgstr "Näitab toimingute menüüd"
 
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:279 mouse.ui:394 mouse.ui:509
 #, kde-format
 msgid ""
@@ -1155,9 +1218,9 @@ msgstr ""
 "Käitumine <em>vasaku</em> hiirenupu klõpsu puhul <em>mitteaktiivse</em> akna "
 "tiitliribal või raamil."
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar1)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar2)
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_CommandInactiveTitlebar3)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar1)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar2)
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_CommandInactiveTitlebar3)
 #: mouse.ui:288 mouse.ui:403 mouse.ui:518
 #, kde-format
 msgid "Activate and lower"
@@ -1170,14 +1233,14 @@ msgid "Maximize Button Actions"
 msgstr "Maksimeerimisnupu toimingud"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_8)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonLeftClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonLeftClickCommand)
 #: mouse.ui:598 mouse.ui:611
 #, kde-format
 msgid "Behavior on <em>left</em> click onto the maximize button."
 msgstr "Käitumine <em>vasaku</em> nupu klõpsu puhul maksimeerimisnupule."
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_9)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonMiddleClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonMiddleClickCommand)
 #: mouse.ui:633 mouse.ui:646
 #, kde-format
 msgid "Behavior on <em>middle</em> click onto the maximize button."
@@ -1190,44 +1253,20 @@ msgid "Middle c&lick:"
 msgstr "Ke&skklõps:"
 
 #. i18n: ectx: property (whatsThis), widget (QLabel, label_10)
-#. i18n: ectx: property (whatsThis), widget (KComboBox, kcfg_MaximizeButtonRightClickCommand)
+#. i18n: ectx: property (whatsThis), widget (QComboBox, kcfg_MaximizeButtonRightClickCommand)
 #: mouse.ui:668 mouse.ui:681
 #, kde-format
 msgid "Behavior on <em>right</em> click onto the maximize button."
 msgstr "Käitumine <em>parema</em> nupu klõpsu puhul maksimeerimisnupule."
 
-#. i18n: ectx: property (text), widget (QLabel, geometryTipLabel)
-#: moving.ui:20
-#, kde-format
-msgid "Window &geometry:"
-msgstr "Akna &geomeetria:"
-
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_GeometryTip)
-#: moving.ui:30
-#, kde-format
-msgid ""
-"Enable this option if you want a window's geometry to be displayed while it "
-"is being moved or resized. The window position relative to the top-left "
-"corner of the screen is displayed together with its size."
-msgstr ""
-"Lülita see sisse, kui soovid, et akna liigutamisel või suuruse muutmisel "
-"näidatakse ka selle geomeetriat. Näidatakse akna suhtelist asukohta ülemise "
-"vasaku nurga suhtes ning selle suurust."
-
-#. i18n: ectx: property (text), widget (QCheckBox, kcfg_GeometryTip)
-#: moving.ui:33
-#, kde-format
-msgid "Display when moving or resizing"
-msgstr "Näidatakse liigutamisel või suuruse muutmisel"
-
 #. i18n: ectx: property (text), widget (QLabel, borderSnapLabel)
-#: moving.ui:40
+#: moving.ui:20
 #, kde-format
 msgid "Screen &edge snap zone:"
 msgstr "Ek&raani serva haaramistsoon:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_BorderSnapZone)
-#: moving.ui:50
+#: moving.ui:30
 #, kde-format
 msgid ""
 "Here you can set the snap zone for screen edges, i.e. the 'strength' of the "
@@ -1240,13 +1279,19 @@ msgstr ""
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_BorderSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_WindowSnapZone)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_CenterSnapZone)
-#: moving.ui:56 moving.ui:78 moving.ui:100
+#: moving.ui:36 moving.ui:68 moving.ui:100
 #, kde-format
 msgid " px"
 msgstr " px"
 
+#. i18n: ectx: property (text), widget (QLabel, windowSnapLabel)
+#: moving.ui:52
+#, kde-format
+msgid "&Window snap zone:"
+msgstr "&Akna haaramistsoon:"
+
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_WindowSnapZone)
-#: moving.ui:72
+#: moving.ui:62
 #, kde-format
 msgid ""
 "Here you can set the snap zone for windows, i.e. the 'strength' of the "
@@ -1256,6 +1301,12 @@ msgstr ""
 "Siin saad seada akna piirete haaramistsooni, so. \"magnetvälja tugevust\", "
 "mis paneb aknad üksteise vastu tõmbuma, kui neid teineteise lähedale "
 "liigutada."
+
+#. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
+#: moving.ui:84
+#, kde-format
+msgid "&Center snap zone:"
+msgstr "&Keskkoha haaramistsoon:"
 
 #. i18n: ectx: property (whatsThis), widget (QSpinBox, kcfg_CenterSnapZone)
 #: moving.ui:94
@@ -1269,8 +1320,14 @@ msgstr ""
 "\", mis paneb aknad ekraani keskkohta tõmbuma, kui aken nende lähedale "
 "liigutada."
 
-#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
+#. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
 #: moving.ui:113
+#, kde-format
+msgid "&Snap windows:"
+msgstr "Akende &haaramine:"
+
+#. i18n: ectx: property (whatsThis), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
+#: moving.ui:123
 #, kde-format
 msgid ""
 "Here you can set that windows will be only snapped if you try to overlap "
@@ -1282,30 +1339,12 @@ msgstr ""
 "ainult üksteise lähedale."
 
 #. i18n: ectx: property (text), widget (QCheckBox, kcfg_SnapOnlyWhenOverlapping)
-#: moving.ui:116
+#: moving.ui:126
 #, kde-format
 msgid "Only when overlapping"
 msgstr "Ainult kattuvuse korral"
 
-#. i18n: ectx: property (text), widget (QLabel, windowSnapLabel)
-#: moving.ui:123
-#, kde-format
-msgid "&Window snap zone:"
-msgstr "&Akna haaramistsoon:"
-
-#. i18n: ectx: property (text), widget (QLabel, centerSnaplabel)
-#: moving.ui:133
-#, kde-format
-msgid "&Center snap zone:"
-msgstr "&Keskkoha haaramistsoon:"
-
-#. i18n: ectx: property (text), widget (QLabel, OverlapSnapLabel)
-#: moving.ui:143
-#, kde-format
-msgid "&Snap windows:"
-msgstr "Akende &haaramine:"
-
-#: windows.cpp:87
+#: windows.cpp:97
 #, kde-format
 msgid ""
 "<em>Click to focus:</em> A window becomes active when you click into it. "
@@ -1315,7 +1354,7 @@ msgstr ""
 "on teisteski operatsioonisüsteemides levinud käitumine ja arvatavasti just "
 "see, mida vajad."
 
-#: windows.cpp:91
+#: windows.cpp:101
 #, kde-format
 msgid ""
 "<em>Click to focus (mouse precedence):</em> Mostly the same as <em>Click to "
@@ -1330,7 +1369,7 @@ msgstr ""
 "all. See on ebatavaline, aga siiski võimalik <em>fookus klõpsuga</em> "
 "variant."
 
-#: windows.cpp:96
+#: windows.cpp:106
 #, kde-format
 msgid ""
 "<em>Focus follows mouse:</em> Moving the mouse onto a window will activate "
@@ -1343,7 +1382,7 @@ msgstr ""
 "tavapärane <em>fookuse röövimise vältimine</em>. Seda võib pidada <em>fookus "
 "klõpsuga</em> variandiks, kus klõpsama ei peagi."
 
-#: windows.cpp:100
+#: windows.cpp:110
 #, kde-format
 msgid ""
 "This is mostly the same as <em>Focus follows mouse</em>. If an active window "
@@ -1356,7 +1395,7 @@ msgstr ""
 "eelistatakse akent, mille kohal asub hiir. Selle valimisel saab fookust "
 "määrata hiirega."
 
-#: windows.cpp:105
+#: windows.cpp:115
 #, kde-format
 msgid ""
 "<em>Focus under mouse:</em> The focus always remains on the window under the "
@@ -1371,7 +1410,7 @@ msgstr ""
 "Pigem on usutav, et soovid kasutada hoopis valikut <em>fookus järgib hiirt "
 "(eelistus hiirel)</em>!"
 
-#: windows.cpp:109
+#: windows.cpp:119
 #, kde-format
 msgid ""
 "<em>Focus strictly under mouse:</em> The focus is always on the window under "
@@ -1387,3 +1426,688 @@ msgstr ""
 "<em>Fookuse röövimise vältimine</em> ja <em>aknavahetaja (\"Alt+Tab\")</em> "
 "on sellega vastuolus ning ei tööta. Pigem on usutav, et soovid kasutada "
 "hoopis valikut <em>fookus järgib hiirt (eelistus hiirel)</em>!"
+
+#~ msgid "Cascaded"
+#~ msgstr "Kaskaadis"
+
+#~ msgid "Window &geometry:"
+#~ msgstr "Akna &geomeetria:"
+
+#~ msgid ""
+#~ "Enable this option if you want a window's geometry to be displayed while "
+#~ "it is being moved or resized. The window position relative to the top-"
+#~ "left corner of the screen is displayed together with its size."
+#~ msgstr ""
+#~ "Lülita see sisse, kui soovid, et akna liigutamisel või suuruse muutmisel "
+#~ "näidatakse ka selle geomeetriat. Näidatakse akna suhtelist asukohta "
+#~ "ülemise vasaku nurga suhtes ning selle suurust."
+
+#~ msgid "Display when moving or resizing"
+#~ msgstr "Näidatakse liigutamisel või suuruse muutmisel"
+
+#~ msgid "Maximize (vertical only)"
+#~ msgstr "Maksimeerib (ainult vertikaalselt)"
+
+#~ msgid "Maximize (horizontal only)"
+#~ msgstr "Maksimeerib (ainult horisontaalselt)"
+
+#~ msgid "Smart"
+#~ msgstr "Kaval"
+
+#~ msgid "Maximizing"
+#~ msgstr "Maksimaalne"
+
+#, fuzzy
+#~| msgid "Zero-Cornered"
+#~ msgid "Zero-cornered"
+#~ msgstr "Nullnurgas"
+
+#, fuzzy
+#~| msgid "Switch to Window Tab to the Left/Right"
+#~ msgid "Switch to window tab to the left/right"
+#~ msgstr "Lülitumine vasakpoolsele/parempoolsele aknakaardile"
+
+#, fuzzy
+#~| msgid "Window Tabbing"
+#~ msgid "Window tabbing:"
+#~ msgstr "Aknad kaartidena"
+
+#~ msgid ""
+#~ "When turned on immediately switch to any new window tabs that were "
+#~ "automatically added to the current group."
+#~ msgstr ""
+#~ "Sisselülitamisel lülitutakse kohe uutele aknakaartidele, mis lisati "
+#~ "automaatselt aktiivsesse rühma."
+
+#, fuzzy
+#~| msgid "Switch to automatically grouped windows immediately"
+#~ msgid "&Switch to automatically grouped windows immediately"
+#~ msgstr "Kohene lülitumine automaatselt rühmitatud akendele"
+
+#~ msgid "When turned on hide all tabs that are not active from the taskbar."
+#~ msgstr "Sisselülitamisel ei näidata tegumiribal kaarte, mis pole aktiivsed."
+
+#, fuzzy
+#~| msgid "Hide inactive window tabs from the taskbar"
+#~ msgid "&Hide inactive window tabs from the taskbar"
+#~ msgstr "Mitteaktiivsete aknakaartide peitmine tegumiribal"
+
+#~ msgid ""
+#~ "When turned on attempt to automatically detect when a newly opened window "
+#~ "is related to an existing one and place them in the same window group."
+#~ msgstr ""
+#~ "Sisselülitamisel püütakse automaatselt tuvastada, kas uus aken on seotud "
+#~ "mõne olemasolevaga ja kui on, siis asetada see samasse aknarühma."
+
+#, fuzzy
+#~| msgid "Start Window Tab Drag"
+#~ msgid "Start window tab drag"
+#~ msgstr "Alustab aknakaardi lohistamist"
+
+#~ msgid "Ri&ght button:"
+#~ msgstr "&Parem nupp:"
+
+#~ msgid "&Wheel"
+#~ msgstr "R&atas"
+
+#~ msgid "&Left button:"
+#~ msgstr "&Vasak nupp:"
+
+#~ msgid "&Right button:"
+#~ msgstr "Pa&rem nupp:"
+
+#~ msgid "M&iddle button:"
+#~ msgstr "Keskm&ine nupp:"
+
+#~ msgid "Left &button"
+#~ msgstr "Vasak &nupp"
+
+#~ msgid "Automatically group similar windows"
+#~ msgstr "Sarnaste akende automaatne rühmitamine"
+
+#~ msgid ""
+#~ "The placement policy determines where a new window will appear on the "
+#~ "desktop.<br><ul>\n"
+#~ "<li><em>Smart</em> will try to achieve a minimum overlap of windows</li>\n"
+#~ "<li><em>Maximizing</em> will try to maximize every window to fill the "
+#~ "whole screen. It might be useful to selectively affect placement of some "
+#~ "windows using the window-specific settings.</li>\n"
+#~ "<li><em>Cascade</em> will cascade the windows</li>\n"
+#~ "<li><em>Random</em> will use a random position</li>\n"
+#~ "<li><em>Centered</em> will place the window centered</li>\n"
+#~ "<li><em>Zero-Cornered</em> will place the window in the top-left corner</"
+#~ "li>\n"
+#~ "<li><em>Under Mouse</em> will place the window under the pointer</li>\n"
+#~ "</ul>"
+#~ msgstr ""
+#~ "Paigutamise reegel määrab koha, kuhu ilmub töölaual uus aken.<br><ul>\n"
+#~ "<li><em>Kaval</em> proovib paigutada aknad nii, et nende kattumine oleks "
+#~ "minimaalne</li>\n"
+#~ "<li><em>Maksimaalne</em> proovib maksimeerida kõik aknad, et need "
+#~ "täidaksid kogu ekraani. See võib olla kasuks näiteks valikuliselt teatud "
+#~ "akende asukoha kontrollimiseks aknaspetsiifiliste seadistuste abil.</li>\n"
+#~ "<li><em>Kaskaad</em> asetab aknad kaskaadi</li>\n"
+#~ "<li><em>Juhuslik</em> asetab aknad töölaual juhuslikku kohta</li>\n"
+#~ "<li><em>Keskjoondatud</em> asetab akna igati keskele</li>\n"
+#~ "<li><em>Nullnurgas</em> asetab akna ülemisse vasakusse nurka</li>\n"
+#~ "<li><em>Hiire all</em> asetab akna osutusseadme alla</li>\n"
+#~ "</ul>"
+
+#~ msgid "Shading"
+#~ msgstr "Varjamine"
+
+#~ msgid "Dela&y:"
+#~ msgstr "&Viivitus:"
+
+#~ msgid "&Enable hover"
+#~ msgstr "Hov&eri lubamine"
+
+#~ msgid "Activating windows"
+#~ msgstr "Akende aktiveerimine"
+
+#~ msgid "Policy"
+#~ msgstr "Reegel"
+
+#~ msgid "Click"
+#~ msgstr "Klõpsuga"
+
+#~ msgid "Hover"
+#~ msgstr "Hiirekursori all"
+
+#~ msgid "&Moving"
+#~ msgstr "&Liigutamine"
+
+#~ msgid "Wheel event:"
+#~ msgstr "Hiirerattasündmus:"
+
+#~ msgid "Handle mouse wheel events"
+#~ msgstr "Hiirerattasündmuste käsitlemine"
+
+#~ msgid ""
+#~ "In this column you can customize mouse clicks into the titlebar or the "
+#~ "frame of an active window."
+#~ msgstr ""
+#~ "Selles tulbas on võimalik kohandada hiireklõpse tiitliribal või aktiivse "
+#~ "akna raamil."
+
+#~ msgid ""
+#~ "In this column you can customize mouse clicks into the titlebar or the "
+#~ "frame of an inactive window."
+#~ msgstr ""
+#~ "Selles tulbas on võimalik kohandada hiireklõpse tiitliribal või "
+#~ "mitteaktiivse akna raamil."
+
+#~ msgid "Left button:"
+#~ msgstr "Vasak nupp:"
+
+#~ msgid "Middle button:"
+#~ msgstr "Keskmine nupp:"
+
+#~ msgid ""
+#~ "Behavior on <em>middle</em> click into the titlebar or frame of an "
+#~ "<em>active</em> window."
+#~ msgstr ""
+#~ "Käitumine <em>keskmise</em> hiirenupu klõpsu puhul <em>aktiivse</em> akna "
+#~ "tiitliribal või raamil."
+
+#~ msgid "Right button:"
+#~ msgstr "Parem nupp:"
+
+#~ msgid ""
+#~ "Behavior on <em>right</em> click into the titlebar or frame of an "
+#~ "<em>active</em> window."
+#~ msgstr ""
+#~ "Käitumine <em>parema</em> hiirenupu klõpsu puhul <em>aktiivse</em> akna "
+#~ "tiitliribal või raamil."
+
+#~ msgid "Titlebar & Frame"
+#~ msgstr "Tiitliriba ja raam"
+
+#~ msgid "Titlebar"
+#~ msgstr "Tiitliriba"
+
+#~ msgid "no center snap zone"
+#~ msgstr "keskkoha haaramistsoon puudub"
+
+#~ msgid "no window snap zone"
+#~ msgstr "akna haaramistsoon puudub"
+
+#~ msgid "no border snap zone"
+#~ msgstr "piirde haaramistsoon puudub"
+
+#~ msgid "Windows"
+#~ msgstr "Aknad"
+
+#~ msgid "Snap Zones"
+#~ msgstr "Haaramistsoonid"
+
+#~ msgid "kcmkwinoptions"
+#~ msgstr "kcmkwinoptions"
+
+#, fuzzy
+#~| msgid ""
+#~| "The focus policy is used to determine the active window, i.e. the window "
+#~| "you can work in. <ul> <li><em>Click to focus:</em> A window becomes "
+#~| "active when you click into it. This is the behavior you might know from "
+#~| "other operating systems.</li> <li><em>Focus follows mouse:</em> Moving "
+#~| "the mouse pointer actively on to a normal window activates it. New "
+#~| "windows will receive the focus, without you having to point the mouse at "
+#~| "them explicitly. Very practical if you are using the mouse a lot.</li> "
+#~| "<li><em>Focus under mouse:</em> The window that happens to be under the "
+#~| "mouse pointer is active. If the mouse points nowhere, the last window "
+#~| "that was under the mouse has focus. New windows will not automatically "
+#~| "receive the focus.</li> <li><em>Focus strictly under mouse:</em> Only "
+#~| "the window under the mouse pointer is active. If the mouse points "
+#~| "nowhere, nothing has focus.</li> </ul>Note that 'Focus under mouse' and "
+#~| "'Focus strictly under mouse' prevent certain features such as the Alt"
+#~| "+Tab walk through windows dialog in the KDE mode from working properly."
+#~ msgid ""
+#~ "The focus policy is used to determine the active window, i.e. the window "
+#~ "you can work in. <ul>\n"
+#~ "<li><em>Click to focus:</em> A window becomes active when you click into "
+#~ "it. This is the behavior you might know from other operating systems.</"
+#~ "li> <li><em>Focus follows mouse:</em> Moving the mouse pointer actively "
+#~ "on to a normal window activates it. New windows will receive the focus, "
+#~ "without you having to point the mouse at them explicitly. Very practical "
+#~ "if you are using the mouse a lot.</li>\n"
+#~ "<li><em>Focus under mouse:</em> The window that happens to be under the "
+#~ "mouse pointer is active. If the mouse points nowhere, the last window "
+#~ "that was under the mouse has focus. New windows will not automatically "
+#~ "receive the focus.</li>\n"
+#~ "<li><em>Focus strictly under mouse:</em> Only the window under the mouse "
+#~ "pointer is active. If the mouse points nowhere, nothing has focus.</li>\n"
+#~ "</ul>\n"
+#~ "Note that 'Focus under mouse' and 'Focus strictly under mouse' prevent "
+#~ "certain features such as the Alt+Tab walk through windows dialog in the "
+#~ "KDE mode from working properly."
+#~ msgstr ""
+#~ "Fookuse reeglit kasutatakse aktiivse akna määramiseks, so. akna, millega "
+#~ "sa parasjagu töötad. <ul> <li><em>Fokuseerimiseks vajalik hiireklõps:</"
+#~ "em> aken muutub aktiivseks pärast seda, kui oled sellel klõpsanud. "
+#~ "Selline käitumine võib olla sulle juba tuttav teistest "
+#~ "operatsioonisüsteemidest. </li> <li><em>Fookus jälgib hiirt:</em> hiire "
+#~ "liigutamine aknale aktiveerib selle. Uued aknad saavad fookuse, ilma et "
+#~ "peaks konkreetselt hiirt nende kohale viima. See on praktiline juhul, kui "
+#~ "töötad palju hiirega.</li> <li><em>Fookus hiire all:</em> aken, mis "
+#~ "juhtub olema parajasti hiire all, saab aktiivseks. Kui hiir ei asu ühegi "
+#~ "akna peal, on aktiivne viimane aken, millel hiir asus. Uued aknad saavad "
+#~ "fookuse automaatselt.</li> <li><em>Fookus rangelt hiire all:</em> see on "
+#~ "veel hullem variant kui \"Fookus hiire all\". Aktiivne saab olla ainult "
+#~ "aken, mis asub hiire all. Kui hiir ei asu ühegi akna kohal, ei ole ka "
+#~ "ükski aken aktiivne.</li> </ul> Teadmiseks, et valikud \"Fookus hiire all"
+#~ "\" ja \"Fookus rangelt  hiire all\" ei ole tavaliselt eriti mõttekad. Nad "
+#~ "on siin ainult vanamoelistele UNIX-i gurudele ;-)."
+
+#~ msgid "&Raise, with the following delay:"
+#~ msgstr "Akna &tõstmine viivitusega:"
+
+#~ msgid ""
+#~ "When enabled, this feature activates the border of maximized windows and "
+#~ "allows you to move or resize them, just like for normal windows"
+#~ msgstr ""
+#~ "Kui see valik on sisse lülitatud, aktiveeritakse maksimeeritud akendel "
+#~ "piirded ning see võimaldab neid liigutada ning nende suurust muuta "
+#~ "täpselt nagu tavaliste akende korral."
+
+#~ msgid "Display borders on &maximized windows"
+#~ msgstr "&Maksimeeritud akende piirete näitamine"
+
+#~ msgctxt "@item:inlistbox behavior on double click"
+#~ msgid "Minimize"
+#~ msgstr "Minimeerib"
+
+#~ msgctxt "@item:inlistbox behavior on double click"
+#~ msgid "Close"
+#~ msgstr "Sulgeb"
+
+#~ msgid ""
+#~ "Here you can customize mouse click behavior when clicking on the titlebar "
+#~ "or the frame of a window."
+#~ msgstr ""
+#~ "Siin saab kohandada hiireklõpsude mõju, kui klõpsad tiitliribal või akna "
+#~ "raamil."
+
+#~ msgid ""
+#~ "Behavior on <em>right</em> click into the titlebar or frame of an "
+#~ "<em>inactive</em> window."
+#~ msgstr ""
+#~ "Käitumine <em>parema</em> hiirenupu klõpsu puhul <em>mitteaktiivse</em> "
+#~ "akna tiitliribal või raamil."
+
+#~ msgid ""
+#~ "Behavior on <em>middle</em> click into the titlebar or frame of an "
+#~ "<em>inactive</em> window."
+#~ msgstr ""
+#~ "Käitumine <em>keskmise</em> hiirenupu klõpsu puhul <em>mitteaktiivse</em> "
+#~ "akna tiitliribal või raamil."
+
+#~ msgid ""
+#~ "Here you can customize behavior when clicking on the maximize button."
+#~ msgstr ""
+#~ "Siin saab kohandada akna käitumist klõpsu puhul maksimeerimisnupule."
+
+#~ msgid ""
+#~ "Here you can customize mouse click behavior when clicking on an inactive "
+#~ "inner window ('inner' means: not titlebar, not frame)."
+#~ msgstr ""
+#~ "Siin saab kohandada hiireklõpsude mõju, kui klõpsatakse mitteaktiivse "
+#~ "akna sees ('sees' tähendab: mitte tiitliribal ega raamil)."
+
+#~ msgid ""
+#~ "Here you can customize KDE's behavior when clicking somewhere into a "
+#~ "window while pressing a modifier key."
+#~ msgstr ""
+#~ "Siin saab kohandada KDE käitumist, kui klõpsatakse kusagil aknas, hoides "
+#~ "samal ajal all ALT klahvi."
+
+#~ msgctxt "no border snap zone"
+#~ msgid "none"
+#~ msgstr "puudub"
+
+#~ msgctxt "no window snap zone"
+#~ msgid "none"
+#~ msgstr "puudub"
+
+#~ msgctxt "no center snap zone"
+#~ msgid "none"
+#~ msgstr "puudub"
+
+#~ msgid "Tiling"
+#~ msgstr "Paanimine"
+
+#~ msgid "Enable Tiling"
+#~ msgstr "Paanimise lubamine"
+
+#~ msgid ""
+#~ "A tiling window manager lays out all the windows in a non-overlapping "
+#~ "manner. This way all windows are always visible."
+#~ msgstr ""
+#~ "Paanimist kasutav aknahaldur paigutab kõik aknad nii, et nad üksteist ei "
+#~ "kataks. Sel moel on kõik aknad alati näha."
+
+#~ msgid "Default Tiling &Layout"
+#~ msgstr "&Vaikimisi paanimise paigutus"
+
+#~ msgctxt "Spiral tiling layout"
+#~ msgid "Spiral"
+#~ msgstr "Spiraal"
+
+#~ msgctxt "Two-column horizontal tiling layout"
+#~ msgid "Columns"
+#~ msgstr "Veerud"
+
+#~ msgctxt "Floating layout, windows aren't tiled at all"
+#~ msgid "Floating"
+#~ msgstr "Hõljuv"
+
+#~ msgid "Floating &Windows Raising"
+#~ msgstr "&Hõljuvate akende esiletõstmine"
+
+#~ msgctxt "Window Raising Policy"
+#~ msgid "Raise/Lower all floating windows"
+#~ msgstr "Kõigi hõljuvate akende tõstmine/langetamine"
+
+#~ msgctxt "Window Raising Policy"
+#~ msgid "Raise/Lower current window only"
+#~ msgstr "Ainult aktiivse akna tõstmine/langetamine"
+
+#~ msgctxt "Window Raising Policy"
+#~ msgid "Floating windows are always on top"
+#~ msgstr "Hõljuvad aknad on alati pealmised"
+
+#~ msgid ""
+#~ "The window raising policy determines how floating windows are stacked "
+#~ "<ul> <li><em>Raise/Lower all</em> will raise all floating windows when a "
+#~ "floating window is activated.</li> <li><em>Raise/Lower current</em> will "
+#~ "raise only the current window.</li> <li><em>Floating windows on top</em> "
+#~ "will always keep floating windows on top, even when a tiled window is "
+#~ "activated.</ul>"
+#~ msgstr ""
+#~ "Akende esiletõstmise reegel määrab, kuidas seatakse pinusse hõljuvad "
+#~ "aknad <ul> <li><em>Kõigi tõstmine/langetamine</em> tõstab esile kõik "
+#~ "hõljuvad aknad, kui aktiveeritakse hõljuv aken.</li> <li><em>Aktiivse "
+#~ "tõstmine/langetamine</em> tõstab esile ainult aktiivse akna.</li> "
+#~ "<li><em>Hõljuvad aknad peal</em> hoiab hõljuvad aknad alati pealmistena "
+#~ "isegi siis, kui aktiveeritakse paanitud aken.</ul>"
+
+#~ msgid ""
+#~ "When this option is enabled, there will be a delay after which the window "
+#~ "the mouse pointer is over will become active (receive focus)."
+#~ msgstr ""
+#~ "Selle sisselülitamisel kasutatakse teatud viivitust, pärast mida saab "
+#~ "aken, mille peal on hiirekursor, fookuse (muutub aktiivseks)."
+
+#~ msgid "Di&splay content in moving windows"
+#~ msgstr "Akna liigutami&sel näidatakse selle sisu"
+
+#~ msgid ""
+#~ "Enable this option if you want a window's content to be fully shown while "
+#~ "moving it, instead of just showing a window 'skeleton'. The result may "
+#~ "not be satisfying on slow machines without graphic acceleration."
+#~ msgstr ""
+#~ "Lülita see valik sisse, kui soovid, et akna liigutamisel näidatakse ka "
+#~ "selle sisu, vastasel juhul näidatakse ainult selle \"skeletti\". Tulemus "
+#~ "ei pruugi sind rahuldada, kui kasutad aeglast arvutit ilma "
+#~ "graafikakiirendita."
+
+#~ msgid "Display content in &resizing windows"
+#~ msgstr "Akna suu&ruse muutmisel näidatakse selle sisu"
+
+#~ msgid ""
+#~ "Enable this option if you want a window's content to be shown while "
+#~ "resizing it, instead of just showing a window 'skeleton'. The result may "
+#~ "not be satisfying on slow machines."
+#~ msgstr ""
+#~ "Lülita see valik sisse, kui soovid, et akna suuruse muutmisel näidatakse "
+#~ "ka selle sisu, vastasel juhul näidatakse ainult selle \"skeletti\". "
+#~ "Tulemus ei pruugi sind rahuldada, kui kasutad aeglast arvutit ilma "
+#~ "graafikakiirendita."
+
+#~ msgid "Allow moving and resizing o&f maximized windows"
+#~ msgstr "&Maksimeeritud akende liigutamine ja suuruse muutmine"
+
+#~ msgid "Show window list while switching windows"
+#~ msgstr "Akende vahetamisel näidatakse akende nimekirja"
+
+#~ msgid ""
+#~ "Hold down the Alt key and press the Tab key repeatedly to walk through "
+#~ "the windows on the current desktop (the Alt+Tab combination can be "
+#~ "reconfigured).\n"
+#~ "\n"
+#~ "If this checkbox is checked a popup widget is shown, displaying the icons "
+#~ "of all windows to walk through and the title of the currently selected "
+#~ "one.\n"
+#~ "\n"
+#~ "Otherwise, the focus is passed to a new window each time Tab is pressed, "
+#~ "with no popup widget.  In addition, the previously activated window will "
+#~ "be sent to the back in this mode."
+#~ msgstr ""
+#~ "Aktiivse töölaua \"läbijalutamiseks\" hoia all Alt klahvi ning vajuta "
+#~ "korduvalt TAB klahvi (seda klahvikombinatsiooni on võimalik muuta).\n"
+#~ "\n"
+#~ "Kui see kast on märgitud, näidatakse hüpikakent koos kõigi akende "
+#~ "ikoonidega ja aktiivse akna pealdisega.\n"
+#~ "Kui see ei ole märgitud, antakse iga kord, kui vajutad TAB klahvi, fookus "
+#~ "lihtsalt uuele aknale ja mingit hüpikakent ei näidata. Lisaks sellele "
+#~ "saadetakse sel juhul ka varem aktiivne aken automaatselt teiste taha."
+
+#~ msgid "&Traverse windows on all desktops"
+#~ msgstr "Kõigi &töölaudade akende läbijalutamine"
+
+#~ msgid ""
+#~ "Leave this option disabled if you want to limit walking through windows "
+#~ "to the current desktop."
+#~ msgstr ""
+#~ "Jäta see väljalülitatuks, kui soovid akende läbijalutamist piirata ainult "
+#~ "aktiivse töölauaga."
+
+#~ msgid "Desktop navi&gation wraps around"
+#~ msgstr "Ta&gasihüpe töölaual liikumisel"
+
+#~ msgid ""
+#~ "Enable this option if you want keyboard or active desktop border "
+#~ "navigation beyond the edge of a desktop to take you to the opposite edge "
+#~ "of the new desktop."
+#~ msgstr ""
+#~ "Lülita see sisse, kui soovid, et klaviatuuri või magnetiliste piirete "
+#~ "vahendusel üle töölaua ääre liikudes jõuaksid uue töölaua vastaskülge."
+
+#~ msgid "Popup desktop name on desktop &switch"
+#~ msgstr "Töölaua vahetamisel näidatakse korraks &selle nime"
+
+#~ msgid ""
+#~ "Enable this option if you wish to see the current desktop name popup "
+#~ "whenever the current desktop is changed."
+#~ msgstr ""
+#~ "Lülita see sisse, kui soovid, et iga kord, kui töölauda vahetad, "
+#~ "näidataks hüpikaknas uue töölaua nime."
+
+#~ msgctxt "Focus Stealing Prevention Level"
+#~ msgid "Normal"
+#~ msgstr "Tavaline"
+
+#~ msgid "Active Desktop Borders"
+#~ msgstr "Aktiivsed töölaua piirded"
+
+#~ msgid ""
+#~ "If this option is enabled, moving the mouse to a screen border will "
+#~ "change your desktop. This is e.g. useful if you want to drag windows from "
+#~ "one desktop to the other."
+#~ msgstr ""
+#~ "Kui see on sisse lülitatud, vahetatakse töölauda, kui liigutad hiire "
+#~ "ekraani serva. See on abiks juhul, kui soovid aknaid ühelt töölaualt "
+#~ "teisele lohistada."
+
+#~ msgid "D&isabled"
+#~ msgstr "Keelatu&d"
+
+#~ msgid "Only &when moving windows"
+#~ msgstr "&Ainult akende liigutamisel"
+
+#~ msgid "A&lways enabled"
+#~ msgstr "A&lati lubatud"
+
+#~ msgid ""
+#~ "Here you can set a delay for switching desktops using the active borders "
+#~ "feature. Desktops will be switched after the mouse has been pushed "
+#~ "against a screen border for the specified number of milliseconds."
+#~ msgstr ""
+#~ "Siin saad määrata viivituse töölaudade vahetamisel, kui sisse on "
+#~ "lülitatud aktiivsete piirete võimalus. Töölaud vahetatakse pärast seda, "
+#~ "kui hiir on surutud vastu ekraaniserva, siin määratud millisekundite "
+#~ "jooksul."
+
+#~ msgid "Desktop &switch delay:"
+#~ msgstr "Töölaua lülitami&se viivitus:"
+
+#~ msgid ""
+#~ "Here you can customize KDE's behavior when middle clicking into a window "
+#~ "while pressing the modifier key."
+#~ msgstr ""
+#~ "Siin saab kohandada KDE käitumist juhul, kui klõpsatakse keskmise "
+#~ "hiireklahviga aknas samaaegselt muuteklahvi vajutamisega."
+
+#~ msgid ""
+#~ "Here you can customize mouse click behavior when double clicking on the "
+#~ "titlebar of a window."
+#~ msgstr "Siin saab kohandada akna käitumist topeltklõpsu puhul tiitliribal."
+
+#~ msgid "Modifier key + left button:"
+#~ msgstr "Muuteklahv + vasak nupp:"
+
+#~ msgid "Modifier key + right button:"
+#~ msgstr "Muuteklahv + parem nupp:"
+
+#~ msgid "Modifier key + middle button:"
+#~ msgstr "Muuteklahv + keskmine nupp:"
+
+#~ msgid "Focus"
+#~ msgstr "Fookus"
+
+#~ msgid "Auto &raise"
+#~ msgstr "Automaatne t&õstmine"
+
+#~ msgid "Navigation"
+#~ msgstr "Liikumine"
+
+#~ msgid "Active &mouse screen"
+#~ msgstr "Aktiivse &hiire ekraan"
+
+#~ msgid "Anima&te"
+#~ msgstr "Ani&meerimine"
+
+#~ msgid ""
+#~ "Animate the action of reducing the window to its titlebar (shading) as "
+#~ "well as the expansion of a shaded window"
+#~ msgstr ""
+#~ "Animeeritakse akna \"ülesrullimine\" tiitliribaks (varjamine), samuti "
+#~ "varjatud akna \"allarullimine\"."
+
+#~ msgid "Animate minimi&ze and restore"
+#~ msgstr "Minimeerimise ja taa&stamise animeerimine"
+
+#~ msgid "Slow"
+#~ msgstr "Aeglane"
+
+#~ msgid "Fast"
+#~ msgstr "Kiire"
+
+#~ msgid ""
+#~ "Here you can set the speed of the animation shown when windows are "
+#~ "minimized and restored. "
+#~ msgstr ""
+#~ "Siin saad seada akna minimeerimise ja taastamise animatsiooni kiirust."
+
+#~ msgid "&Translucency"
+#~ msgstr "Lä&bipaistvus"
+
+#, fuzzy
+#~ msgid ""
+#~ "<qt><b>It seems that alpha channel support is not available.</"
+#~ "b><br><br>Please make sure you have <a href=\"http://www.freedesktop.org/"
+#~ "\">Xorg &ge; 6.8</a>, and have installed the kompmgr that came with kwin."
+#~ "<br>Also, make sure you have the following entries in your XConfig (e.g. /"
+#~ "etc/X11/xorg.conf):<br><br><i>Section \"Extensions\"<br>Option \"Composite"
+#~ "\" \"Enable\"<br>EndSection</i><br><br>And if your GPU provides hardware-"
+#~ "accelerated Xrender support (mainly nVidia cards):<br><br><i>Option     "
+#~ "\"RenderAccel\" \"true\"</i><br>In <i>Section \"Device\"</i></qt>"
+#~ msgstr ""
+#~ "<qt><b>Paistab, et alfakanali toetus puudub.</b><br><br>Palun kontrolli, "
+#~ "et sul on paigaldatud <a href=\"http://www.freedesktop.org/\">Xorg &ge; "
+#~ "6.8</a> ja kompmgr, mis käib kaasas KWin-iga.<br>Samuti kontrolli, et "
+#~ "XConfig-failis (nt. /etc/X11/xorg.conf) oleks järgmised kirjed:"
+#~ "<br><br><i>Section \"Extensions\"<br>Option \"Composite\" \"Enable"
+#~ "\"<br>EndSection</i><br><br>Ja kui sinu GPU toetab XRender'i "
+#~ "riistvaralist kiirendamist (peamiselt nVidia kaardid):"
+#~ "<br><br><i>Option     \"RenderAccel\" \"true\"</i><br>In <i>Section "
+#~ "\"Device\"</i></qt>"
+
+#~ msgid "Apply translucency only to decoration"
+#~ msgstr "Läbipaistvuse rakendamine ainult dekoratsioonile"
+
+#~ msgid "Dock windows:"
+#~ msgstr "Dokitud aknad:"
+
+#~ msgid "Treat 'keep above' windows as active ones"
+#~ msgstr "Teiste peal hoitavaid aknaid peetakse aktiivseks"
+
+#~ msgid "Disable ARGB windows (ignores window alpha maps, fixes gtk1 apps)"
+#~ msgstr ""
+#~ "ARGB akende keelamine (ignoreerib akna alfakaarti, parandab GTK1 "
+#~ "rakendused)"
+
+#~ msgid "Opacity"
+#~ msgstr "Läbipaistvus"
+
+#~ msgid "Use shadows"
+#~ msgstr "Varjude kasutamine"
+
+#~ msgid "Active window size:"
+#~ msgstr "Varju suurus aktiivsel aknal:"
+
+#~ msgid "Inactive window size:"
+#~ msgstr "Varju suurus mitteaktiivsel aknal:"
+
+#~ msgid "Dock window size:"
+#~ msgstr "Varju suurus dokitud aknal:"
+
+#~ msgid "Vertical offset:"
+#~ msgstr "Püstnihe:"
+
+#~ msgid "Shadow color:"
+#~ msgstr "Varju värv:"
+
+#~ msgid "Remove shadows on move"
+#~ msgstr "Liikumisel varjud eemaldatakse"
+
+#~ msgid "Remove shadows on resize"
+#~ msgstr "Suuruse muutmisel varjud eemaldatakse"
+
+#~ msgid "Shadows"
+#~ msgstr "Varjud"
+
+#~ msgid "Fade-in windows (including popups)"
+#~ msgstr "Hajuvad aknad (sealhulgas hüpikaknad)"
+
+#~ msgid "Fade between opacity changes"
+#~ msgstr "Hajumine läbipaistvuse muutumisel"
+
+#~ msgid "Effects"
+#~ msgstr "Efektid"
+
+#~ msgid "Use translucency/shadows"
+#~ msgstr "Läbipaistvuse/varjude kasutamine"
+
+#~ msgid ""
+#~ "<qt>Translucency support is new and may cause problems<br> including "
+#~ "crashes (sometimes the translucency engine, seldom even X).</qt>"
+#~ msgstr ""
+#~ "<qt>Läbipaistvus on üsna uus omadus ja see võib tekitada probleeme,"
+#~ "<br>isegi krahhe (milles on süüdlaseks enamasti läbipaistvuse seesmine "
+#~ "mootor või haruharva ka X ise).</qt>"
+
+#~ msgid "Fade-in speed:"
+#~ msgstr "Nähtavaleilmumise kiirus:"
+
+#~ msgid "Fade-out speed:"
+#~ msgstr "Ärakadumise kiirus:"

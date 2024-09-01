@@ -1,4 +1,5 @@
 # Translation of kcmkwinscreenedges into Japanese.
+# SPDX-FileCopyrightText: 2023, 2024 Ryuichi Yamada <ryuichi_ya220@outlook.jp>
 # Yukiko Bando <ybando@k6.dion.ne.jp>, 2009, 2010.
 # Jumpei Ogawa <phanective@gmail.com>, 2010.
 # Tomohiro Hyakutake <tomhioo@outlook.jp>, 2020.
@@ -7,98 +8,88 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinscreenedges\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-08 02:22+0200\n"
-"PO-Revision-Date: 2020-01-18 21:57-0800\n"
-"Last-Translator: Fumiaki Okushi <fumiaki.okushi@gmail.com>\n"
+"POT-Creation-Date: 2022-07-15 00:48+0000\n"
+"PO-Revision-Date: 2024-02-17 14:39+0900\n"
+"Last-Translator: Ryuichi Yamada <ryuichi_ya220@outlook.jp>\n"
 "Language-Team: Japanese <kde-jp@kde.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
-"X-Generator: Lokalize 19.12.1\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
+msgstr "Ryuichi Yamada"
 
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
+msgstr "ryuichi_ya220@outlook.jp"
 
-#: main.cpp:123 touch.cpp:122
+#: main.cpp:130 touch.cpp:124
 #, kde-format
 msgid "No Action"
 msgstr "アクションなし"
 
-#: main.cpp:124 touch.cpp:123
+#: main.cpp:131 touch.cpp:125
 #, kde-format
-msgid "Show Desktop"
-msgstr "デスクトップを表示"
+msgid "Peek at Desktop"
+msgstr "ウィンドウを隠す"
 
-#: main.cpp:125 touch.cpp:124
+#: main.cpp:132 touch.cpp:126
 #, kde-format
 msgid "Lock Screen"
 msgstr "スクリーンをロック"
 
-#: main.cpp:126 touch.cpp:125
+#: main.cpp:133 touch.cpp:127
 #, kde-format
 msgid "Show KRunner"
-msgstr ""
+msgstr "KRunner を表示"
 
-#: main.cpp:127 touch.cpp:126
+#: main.cpp:134 touch.cpp:128
 #, kde-format
 msgid "Activity Manager"
-msgstr ""
+msgstr "アクティビティマネージャ"
 
-#: main.cpp:128 touch.cpp:127
+#: main.cpp:135 touch.cpp:129
 #, kde-format
 msgid "Application Launcher"
-msgstr ""
+msgstr "アプリケーションランチャー"
 
-#: main.cpp:132 touch.cpp:131
+#: main.cpp:139 touch.cpp:133
+#, kde-format
+msgid "Present Windows"
+msgstr "ウィンドウを表示"
+
+#: main.cpp:140 touch.cpp:134
 #, kde-format
 msgid "%1 - All Desktops"
 msgstr "%1 - すべてのデスクトップ"
 
-#: main.cpp:133 touch.cpp:132
+#: main.cpp:141 touch.cpp:135
 #, kde-format
 msgid "%1 - Current Desktop"
 msgstr "%1 - 現在のデスクトップ"
 
-#: main.cpp:134 touch.cpp:133
+#: main.cpp:142 touch.cpp:136
 #, kde-format
 msgid "%1 - Current Application"
-msgstr ""
+msgstr "%1 - 現在のアプリケーション"
 
-#: main.cpp:137 touch.cpp:136
-#, kde-format
-msgid "%1 - Cube"
-msgstr "%1 - キューブ"
-
-#: main.cpp:138 touch.cpp:137
-#, kde-format
-msgid "%1 - Cylinder"
-msgstr "%1 - シリンダー"
-
-#: main.cpp:139 touch.cpp:138
-#, kde-format
-msgid "%1 - Sphere"
-msgstr "%1 - 球形"
-
-#: main.cpp:141 touch.cpp:140
+#: main.cpp:144 touch.cpp:138
 #, kde-format
 msgid "Toggle window switching"
-msgstr ""
+msgstr "ウィンドウスイッチャー"
 
-#: main.cpp:142 touch.cpp:141
+#: main.cpp:145 touch.cpp:139
 #, kde-format
 msgid "Toggle alternative window switching"
-msgstr ""
+msgstr "ウィンドウスイッチャー (代替)"
 
 #. i18n: ectx: property (text), widget (QLabel, infoLabel)
 #: main.ui:23
@@ -106,7 +97,7 @@ msgstr ""
 msgid ""
 "You can trigger an action by pushing the mouse cursor against the "
 "corresponding screen edge or corner."
-msgstr "マウスで該当する画面の端に触れることでアクションを実行できます。"
+msgstr "マウスカーソルを画面の端に押し当てることでアクションを起動できます。"
 
 #. i18n: ectx: property (text), widget (QLabel, quickMaximizeLabel)
 #: main.ui:67
@@ -132,65 +123,76 @@ msgstr "タイル化(&T):"
 msgid "Windows dragged to left or right edge"
 msgstr "左右の端へドラッグされたウィンドウ"
 
-#. i18n: ectx: property (text), widget (QLabel, electricBorderCornerRatioLabel)
+#. i18n: ectx: property (text), widget (QLabel, label)
 #: main.ui:101
+#, kde-format
+msgid "Behavior:"
+msgstr "挙動:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, remainActiveOnFullscreen)
+#: main.ui:108
+#, kde-format
+msgid "Remain active when windows are fullscreen"
+msgstr "ウィンドウがフルスクリーン表示のときも有効"
+
+#. i18n: ectx: property (text), widget (QLabel, electricBorderCornerRatioLabel)
+#: main.ui:115
 #, kde-format
 msgid "Trigger &quarter tiling in:"
 msgstr "4分割のタイル化を有効にする範囲(&Q):"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, electricBorderCornerRatioSpin)
-#: main.ui:116
+#: main.ui:130
 #, no-c-format, kde-format
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #. i18n: ectx: property (prefix), widget (QSpinBox, electricBorderCornerRatioSpin)
-#: main.ui:119
+#: main.ui:133
 #, kde-format
 msgid "Outer "
-msgstr "外側"
+msgstr "外側 "
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
-#: main.ui:135
+#: main.ui:149
 #, kde-format
 msgid "of the screen"
-msgstr ""
+msgstr " "
 
 #. i18n: ectx: property (toolTip), widget (QLabel, desktopSwitchLabel)
-#: main.ui:144
+#: main.ui:174
 #, kde-format
 msgid ""
 "Change desktop when the mouse cursor is pushed against the edge of the screen"
-msgstr ""
-"マウスカーソルがスクリーンエッジに当てられたときにデスクトップを切り替えます"
+msgstr "マウスカーソルが画面の端に当てられたときにデスクトップを切り替えます"
 
 #. i18n: ectx: property (text), widget (QLabel, desktopSwitchLabel)
-#: main.ui:147
+#: main.ui:177
 #, kde-format
 msgid "&Switch desktop on edge:"
 msgstr "エッジでのデスクトップの切り替え(&S):"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:158
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:188
 #, kde-format
 msgctxt "Switch desktop on edge"
 msgid "Disabled"
 msgstr "無効"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:163
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:193
 #, kde-format
 msgid "Only When Moving Windows"
 msgstr "ウィンドウの移動時のみ"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:168
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:198
 #, kde-format
 msgid "Always Enabled"
 msgstr "常に有効"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, activationDelayLabel)
-#: main.ui:176
+#: main.ui:206
 #, kde-format
 msgid ""
 "Amount of time required for the mouse cursor to be pushed against the edge "
@@ -200,20 +202,20 @@ msgstr ""
 "時間を設定します"
 
 #. i18n: ectx: property (text), widget (QLabel, activationDelayLabel)
-#: main.ui:179
+#: main.ui:209
 #, kde-format
 msgid "Activation &delay:"
 msgstr "起動の遅延(&D):"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ElectricBorderDelay)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ElectricBorderCooldown)
-#: main.ui:189 main.ui:224
+#: main.ui:219 main.ui:254
 #, kde-format
 msgid " ms"
 msgstr " ミリ秒"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, triggerCooldownLabel)
-#: main.ui:208
+#: main.ui:238
 #, kde-format
 msgid ""
 "Amount of time required after triggering an action until the next trigger "
@@ -221,20 +223,15 @@ msgid ""
 msgstr "一つのアクションを起動してから次に起動するまでに必要な時間を設定します"
 
 #. i18n: ectx: property (text), widget (QLabel, triggerCooldownLabel)
-#: main.ui:211
+#: main.ui:241
 #, kde-format
 msgid "&Reactivation delay:"
 msgstr "次の起動までの時間(&R):"
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
 #: touch.ui:17
-#, fuzzy, kde-format
-#| msgid ""
-#| "To trigger an action push your mouse cursor against the edge of the "
-#| "screen in the action's direction."
+#, kde-format
 msgid ""
 "You can trigger an action by swiping from the screen edge towards the center "
 "of the screen."
-msgstr ""
-"<p align=\"left\">アクションを起動するには、アクションを割り当てたスクリーン"
-"エッジにマウスカーソルを当てます。</p>"
+msgstr "画面の端から中心までスワイプすることでアクションを起動できます。"

@@ -16,8 +16,11 @@
 #include <QVector>
 
 #include <array>
+#include <chrono>
 
-struct libinput_device {
+struct libinput_device
+{
+    void *userData = nullptr;
     bool keyboard = false;
     bool pointer = false;
     bool touch = false;
@@ -87,6 +90,7 @@ struct libinput_device {
     std::array<float, 6> calibrationMatrix{{1.0f, 0.0f, 0.0f,
                                             0.0f, 1.0f, 0.0f}};
     bool defaultCalibrationMatrixIsIdentity = true;
+    bool calibrationMatrixIsIdentity = true;
 
     bool lidSwitch = false;
     bool tabletModeSwitch = false;
@@ -99,57 +103,66 @@ struct libinput_device {
     uint32_t ringCount = 0;
 };
 
-struct libinput_event {
+struct libinput_event
+{
+    virtual ~libinput_event()
+    {
+    }
     libinput_device *device = nullptr;
     libinput_event_type type = LIBINPUT_EVENT_NONE;
-    quint32 time = 0;
+    std::chrono::microseconds time = std::chrono::microseconds::zero();
 };
 
-struct libinput_event_keyboard : libinput_event {
-    libinput_event_keyboard() {
+struct libinput_event_keyboard : libinput_event
+{
+    libinput_event_keyboard()
+    {
         type = LIBINPUT_EVENT_KEYBOARD_KEY;
     }
     libinput_key_state state = LIBINPUT_KEY_STATE_RELEASED;
     quint32 key = 0;
 };
 
-struct libinput_event_pointer : libinput_event {
+struct libinput_event_pointer : libinput_event
+{
     libinput_button_state buttonState = LIBINPUT_BUTTON_STATE_RELEASED;
     quint32 button = 0;
     bool verticalAxis = false;
     bool horizontalAxis = false;
-    qreal horizontalAxisValue = 0.0;
-    qreal verticalAxisValue = 0.0;
-    qreal horizontalDiscreteAxisValue = 0.0;
-    qreal verticalDiscreteAxisValue = 0.0;
-    libinput_pointer_axis_source axisSource = {};
-    QSizeF delta;
+    qreal horizontalScrollValue = 0.0;
+    qreal verticalScrollValue = 0.0;
+    qreal horizontalScrollValueV120 = 0.0;
+    qreal verticalScrollValueV120 = 0.0;
+    QPointF delta;
     QPointF absolutePos;
 };
 
-struct libinput_event_touch : libinput_event {
+struct libinput_event_touch : libinput_event
+{
     qint32 slot = -1;
     QPointF absolutePos;
 };
 
-struct libinput_event_gesture : libinput_event {
+struct libinput_event_gesture : libinput_event
+{
     int fingerCount = 0;
     bool cancelled = false;
-    QSizeF delta = QSizeF(0, 0);
+    QPointF delta = QPointF(0, 0);
     qreal scale = 0.0;
     qreal angleDelta = 0.0;
 };
 
-struct libinput_event_switch : libinput_event {
+struct libinput_event_switch : libinput_event
+{
     enum class State {
         Off,
         On
     };
     State state = State::Off;
-    quint64 timeMicroseconds = 0;
 };
 
-struct libinput {
+struct libinput
+{
     int refCount = 1;
     QByteArray seat;
     int assignSeatRetVal = 0;

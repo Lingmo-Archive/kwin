@@ -2,20 +2,20 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2009, 2010.
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020.
+# SPDX-FileCopyrightText: 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kcmkwinscreenedges\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-08-08 02:22+0200\n"
-"PO-Revision-Date: 2020-05-16 08:42+0200\n"
+"POT-Creation-Date: 2022-07-15 00:48+0000\n"
+"PO-Revision-Date: 2024-01-07 12:14+0100\n"
 "Last-Translator: Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.07.70\n"
+"X-Generator: Lokalize 23.08.4\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
@@ -29,75 +29,65 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "lukasz.wojnilowicz@gmail.com"
 
-#: main.cpp:123 touch.cpp:122
+#: main.cpp:130 touch.cpp:124
 #, kde-format
 msgid "No Action"
-msgstr "Brak działania"
+msgstr "Nic nie rób"
 
-#: main.cpp:124 touch.cpp:123
+#: main.cpp:131 touch.cpp:125
 #, kde-format
-msgid "Show Desktop"
-msgstr "Pokaż pulpit"
+msgid "Peek at Desktop"
+msgstr "Podejrzyj pulpit"
 
-#: main.cpp:125 touch.cpp:124
+#: main.cpp:132 touch.cpp:126
 #, kde-format
 msgid "Lock Screen"
 msgstr "Zablokuj ekran"
 
-#: main.cpp:126 touch.cpp:125
+#: main.cpp:133 touch.cpp:127
 #, kde-format
 msgid "Show KRunner"
 msgstr "Pokaż KRunnera"
 
-#: main.cpp:127 touch.cpp:126
+#: main.cpp:134 touch.cpp:128
 #, kde-format
 msgid "Activity Manager"
-msgstr "Zarządzanie aktywnościami"
+msgstr "Zarządzaj aktywnościami"
 
-#: main.cpp:128 touch.cpp:127
+#: main.cpp:135 touch.cpp:129
 #, kde-format
 msgid "Application Launcher"
-msgstr "Skróty do programów"
+msgstr "Pokaż uruchamiacza programów"
 
-#: main.cpp:132 touch.cpp:131
+#: main.cpp:139 touch.cpp:133
+#, kde-format
+msgid "Present Windows"
+msgstr "Przedstaw okna"
+
+#: main.cpp:140 touch.cpp:134
 #, kde-format
 msgid "%1 - All Desktops"
-msgstr "%1 - Wszystkie pulpity"
+msgstr "%1 - ze wszystkich pulpitów"
 
-#: main.cpp:133 touch.cpp:132
+#: main.cpp:141 touch.cpp:135
 #, kde-format
 msgid "%1 - Current Desktop"
-msgstr "%1 - Bieżący pulpit"
+msgstr "%1 - z bieżącego pulpitu"
 
-#: main.cpp:134 touch.cpp:133
+#: main.cpp:142 touch.cpp:136
 #, kde-format
 msgid "%1 - Current Application"
-msgstr "%1 - Bieżący program"
+msgstr "%1 - z bieżącego programu"
 
-#: main.cpp:137 touch.cpp:136
-#, kde-format
-msgid "%1 - Cube"
-msgstr "%1 - Kostka"
-
-#: main.cpp:138 touch.cpp:137
-#, kde-format
-msgid "%1 - Cylinder"
-msgstr "%1 - Walec"
-
-#: main.cpp:139 touch.cpp:138
-#, kde-format
-msgid "%1 - Sphere"
-msgstr "%1 - Kula"
-
-#: main.cpp:141 touch.cpp:140
+#: main.cpp:144 touch.cpp:138
 #, kde-format
 msgid "Toggle window switching"
-msgstr "Przełącznik okien"
+msgstr "Rozpocznij przełączanie okien głównym sposobem"
 
-#: main.cpp:142 touch.cpp:141
+#: main.cpp:145 touch.cpp:139
 #, kde-format
 msgid "Toggle alternative window switching"
-msgstr "Zamienny przełącznik okien"
+msgstr "Rozpocznij przełączanie okien drugim sposobem"
 
 #. i18n: ectx: property (text), widget (QLabel, infoLabel)
 #: main.ui:23
@@ -105,9 +95,7 @@ msgstr "Zamienny przełącznik okien"
 msgid ""
 "You can trigger an action by pushing the mouse cursor against the "
 "corresponding screen edge or corner."
-msgstr ""
-"Wyzwala działanie, przy napieraniu wskaźnikiem myszy na daną krawędź lub "
-"narożnik ekranu"
+msgstr "Wykona działanie po najechaniu na krawędź ekranu lub w jego narożnik."
 
 #. i18n: ectx: property (text), widget (QLabel, quickMaximizeLabel)
 #: main.ui:67
@@ -133,64 +121,76 @@ msgstr "&Kafelek:"
 msgid "Windows dragged to left or right edge"
 msgstr "Okno przeciągnięte do lewej lub prawej krawędzi"
 
-#. i18n: ectx: property (text), widget (QLabel, electricBorderCornerRatioLabel)
+#. i18n: ectx: property (text), widget (QLabel, label)
 #: main.ui:101
 #, kde-format
+msgid "Behavior:"
+msgstr "Zachowanie:"
+
+#. i18n: ectx: property (text), widget (QCheckBox, remainActiveOnFullscreen)
+#: main.ui:108
+#, kde-format
+msgid "Remain active when windows are fullscreen"
+msgstr "Pozostań aktywnym, gdy okna zajmują cały ekran"
+
+#. i18n: ectx: property (text), widget (QLabel, electricBorderCornerRatioLabel)
+#: main.ui:115
+#, kde-format
 msgid "Trigger &quarter tiling in:"
-msgstr "&Wyzwala kafelek na ćwiartce:"
+msgstr "&Kształtuj kafelek na ćwiartce na:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, electricBorderCornerRatioSpin)
-#: main.ui:116
+#: main.ui:130
 #, no-c-format, kde-format
 msgid "%"
 msgstr "%"
 
 #. i18n: ectx: property (prefix), widget (QSpinBox, electricBorderCornerRatioSpin)
-#: main.ui:119
+#: main.ui:133
 #, kde-format
 msgid "Outer "
-msgstr "Zewnętrzna "
+msgstr "Zewnętrznych "
 
 #. i18n: ectx: property (text), widget (QLabel, label_1)
-#: main.ui:135
+#: main.ui:149
 #, kde-format
 msgid "of the screen"
 msgstr "ekranu"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, desktopSwitchLabel)
-#: main.ui:144
+#: main.ui:174
 #, kde-format
 msgid ""
 "Change desktop when the mouse cursor is pushed against the edge of the screen"
 msgstr "Zmień pulpit, gdy kursor najedzie na krawędź ekranu"
 
 #. i18n: ectx: property (text), widget (QLabel, desktopSwitchLabel)
-#: main.ui:147
+#: main.ui:177
 #, kde-format
 msgid "&Switch desktop on edge:"
-msgstr "Przełączanie pulpitu na &krawędzi:"
+msgstr "Przełączaj pulpit na &krawędzi:"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:158
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:188
 #, kde-format
 msgctxt "Switch desktop on edge"
 msgid "Disabled"
-msgstr "Wyłączone"
+msgstr "Nie przełączaj"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:163
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:193
 #, kde-format
 msgid "Only When Moving Windows"
-msgstr "Tylko przy przesuwaniu okien"
+msgstr "Tylko gdy przesuwam okna"
 
-#. i18n: ectx: property (text), item, widget (KComboBox, kcfg_ElectricBorders)
-#: main.ui:168
+#. i18n: ectx: property (text), item, widget (QComboBox, kcfg_ElectricBorders)
+#: main.ui:198
 #, kde-format
 msgid "Always Enabled"
-msgstr "Zawsze włączone"
+msgstr "Zawsze"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, activationDelayLabel)
-#: main.ui:176
+#: main.ui:206
 #, kde-format
 msgid ""
 "Amount of time required for the mouse cursor to be pushed against the edge "
@@ -200,20 +200,20 @@ msgstr ""
 "myszy na krawędź ekranu"
 
 #. i18n: ectx: property (text), widget (QLabel, activationDelayLabel)
-#: main.ui:179
+#: main.ui:209
 #, kde-format
 msgid "Activation &delay:"
 msgstr "Opóźnienie &wywołania:"
 
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ElectricBorderDelay)
 #. i18n: ectx: property (suffix), widget (QSpinBox, kcfg_ElectricBorderCooldown)
-#: main.ui:189 main.ui:224
+#: main.ui:219 main.ui:254
 #, kde-format
 msgid " ms"
 msgstr " ms"
 
 #. i18n: ectx: property (toolTip), widget (QLabel, triggerCooldownLabel)
-#: main.ui:208
+#: main.ui:238
 #, kde-format
 msgid ""
 "Amount of time required after triggering an action until the next trigger "
@@ -222,7 +222,7 @@ msgstr ""
 "Czasu potrzebny na wywołanie kolejnego działania po wywołaniu poprzedniego"
 
 #. i18n: ectx: property (text), widget (QLabel, triggerCooldownLabel)
-#: main.ui:211
+#: main.ui:241
 #, kde-format
 msgid "&Reactivation delay:"
 msgstr "Opóźnienie &nowego wywołania:"
@@ -235,3 +235,46 @@ msgid ""
 "of the screen."
 msgstr ""
 "Wyzwala działanie, przy przesuwaniu z krawędzi ekranu w kierunku jego środka."
+
+#~ msgid "Show Desktop"
+#~ msgstr "Pokaż pulpit"
+
+#~ msgid "Desktop Grid"
+#~ msgstr "Siatka pulpitu"
+
+#~ msgid "Toggle Overview"
+#~ msgstr "Przestaw widok przeglądu"
+
+#~ msgid "%1 - Cube"
+#~ msgstr "%1 - Kostka"
+
+#~ msgid "%1 - Cylinder"
+#~ msgstr "%1 - Walec"
+
+#~ msgid "%1 - Sphere"
+#~ msgstr "%1 - Kula"
+
+#~ msgid "Active Screen Corners and Edges"
+#~ msgstr "Narożniki i krawędzie aktywnego ekranu"
+
+#~ msgid "Window Management"
+#~ msgstr "Zarządzanie oknami"
+
+#~ msgid "Maximize windows by dragging them to the top edge of the screen"
+#~ msgstr "Okno zajmie cały ekran po przeciągnięciu go do górnej krawędzi"
+
+#~ msgid "Quarter tiling triggered in the outer"
+#~ msgstr "Okno zajmie ćwierć ekranu po przeciągnięciu go do zewnętrznych"
+
+#~ msgid "Other Settings"
+#~ msgstr "Inne ustawienia"
+
+#~ msgctxt "Open krunner"
+#~ msgid "Run Command"
+#~ msgstr "Wykonaj polecenie"
+
+#~ msgid "Show Dashboard"
+#~ msgstr "Pokaż tablicę"
+
+#~ msgid "Prevent Screen Locking"
+#~ msgstr "Powstrzymaj blokowanie ekranu"

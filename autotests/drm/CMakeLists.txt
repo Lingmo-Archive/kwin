@@ -1,26 +1,62 @@
-include_directories(${Libdrm_INCLUDE_DIRS})
-
 set(mockDRM_SRCS
     mock_drm.cpp
-    ../../plugins/platforms/drm/drm_buffer.cpp
-    ../../plugins/platforms/drm/drm_object.cpp
-    ../../plugins/platforms/drm/drm_object_connector.cpp
-    ../../plugins/platforms/drm/drm_object_plane.cpp
-    ../../plugins/platforms/drm/logging.cpp
+    ../../src/backends/drm/drm_abstract_output.cpp
+    ../../src/backends/drm/drm_backend.cpp
+    ../../src/backends/drm/drm_buffer.cpp
+    ../../src/backends/drm/drm_buffer_gbm.cpp
+    ../../src/backends/drm/drm_dmabuf_feedback.cpp
+    ../../src/backends/drm/drm_dumb_buffer.cpp
+    ../../src/backends/drm/drm_dumb_swapchain.cpp
+    ../../src/backends/drm/drm_egl_backend.cpp
+    ../../src/backends/drm/drm_egl_cursor_layer.cpp
+    ../../src/backends/drm/drm_egl_layer.cpp
+    ../../src/backends/drm/drm_egl_layer_surface.cpp
+    ../../src/backends/drm/drm_gbm_surface.cpp
+    ../../src/backends/drm/drm_gpu.cpp
+    ../../src/backends/drm/drm_layer.cpp
+    ../../src/backends/drm/drm_logging.cpp
+    ../../src/backends/drm/drm_connector.cpp
+    ../../src/backends/drm/drm_object.cpp
+    ../../src/backends/drm/drm_crtc.cpp
+    ../../src/backends/drm/drm_plane.cpp
+    ../../src/backends/drm/drm_output.cpp
+    ../../src/backends/drm/drm_pipeline.cpp
+    ../../src/backends/drm/drm_pipeline_legacy.cpp
+    ../../src/backends/drm/drm_property.cpp
+    ../../src/backends/drm/drm_qpainter_backend.cpp
+    ../../src/backends/drm/drm_qpainter_layer.cpp
+    ../../src/backends/drm/drm_shadow_buffer.cpp
+    ../../src/backends/drm/drm_virtual_egl_layer.cpp
+    ../../src/backends/drm/drm_virtual_output.cpp
 )
 
-add_library(mockDrm STATIC ${mockDRM_SRCS})
-target_link_libraries(mockDrm Qt5::Gui)
-ecm_mark_as_test(mockDrm)
+include_directories(${Libdrm_INCLUDE_DIRS})
 
-function(drmTest)
-    set(oneValueArgs NAME)
-    set(multiValueArgs SRCS )
-    cmake_parse_arguments(ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-    add_executable(${ARGS_NAME} ${ARGS_SRCS})
-    target_link_libraries(${ARGS_NAME} mockDrm Qt5::Test)
-    add_test(NAME kwin-drm-${ARGS_NAME} COMMAND ${ARGS_NAME})
-    ecm_mark_as_test(${ARGS_NAME})
-endfunction()
+add_library(LibDrmTest STATIC ${mockDRM_SRCS})
+target_link_libraries(LibDrmTest
+    Qt::Gui
+    Qt::Widgets
+    KF5::ConfigCore
+    KF5::WindowSystem
+    KF5::CoreAddons
+    KF5::I18n
+    XCB::XCB
+    PkgConfig::Libxcvt
+    gbm::gbm
+    kwin
+)
+target_include_directories(LibDrmTest
+    PUBLIC
+        ../../src
+        ../../src/platformsupport/scenes/opengl
+        ../../src/platformsupport/scenes/qpainter
+        ../../src/backends/drm/
+)
 
-drmTest(NAME objecttest SRCS objecttest.cpp)
+########################################################
+# Tests
+########################################################
+add_executable(testDrm drmTest.cpp)
+target_link_libraries(testDrm LibDrmTest Qt::Test)
+add_test(NAME kwin-testDrm COMMAND testDrm)
+ecm_mark_as_test(testDrm)

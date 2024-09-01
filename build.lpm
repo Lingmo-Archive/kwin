@@ -3,12 +3,12 @@
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 
 pkgname=kwin
-pkgver=5.20.5
+pkgver=5.27.11
 _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
 pkgdesc='An easy to use, but flexible, composited Window Manager'
 arch=(x86_64)
-url='https://github.com/LingmoOS/kwin'
+url='https://github.com/LingmoOS/kwin
 license=(LGPL-2.0-or-later)
 depends=(gcc-libs
          glibc
@@ -23,6 +23,8 @@ depends=(gcc-libs
          kdbusaddons
          kdeclarative
          kdecoration
+	 kf5
+	 kf5-kwayland-server
          kglobalaccel
          kglobalacceld
          kguiaddons
@@ -59,6 +61,8 @@ depends=(gcc-libs
          libplasma
          qt6-5compat
 	 qt5-graphicaleffects
+	 qt5-script
+	 qt5-x11extras
          qt5-base
          qt5-declarative
          qt5-multimedia
@@ -84,7 +88,7 @@ install=$pkgname.install
 sha256sums=('SKIP')
 
 build() {
-  cmake -B build  -S $pkgname-$pkgver \
+  cmake -B build  -S $pkgname \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DBUILD_TESTING=OFF
   cmake --build build

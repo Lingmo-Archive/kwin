@@ -8,13 +8,14 @@
 */
 
 #include <QTest>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <private/qtx11extras_p.h>
+#else
 #include <QX11Info>
-
-#include <KPluginLoader>
-#include <KPluginMetaData>
+#endif
 
 #include "main.h"
-#include "utils.h"
+#include "utils/common.h"
 
 namespace KWin
 {
@@ -28,7 +29,6 @@ public:
 
 protected:
     void performStartup() override;
-
 };
 
 X11TestApplication::X11TestApplication(int &argc, char **argv)
@@ -36,20 +36,6 @@ X11TestApplication::X11TestApplication(int &argc, char **argv)
 {
     setX11Connection(QX11Info::connection());
     setX11RootWindow(QX11Info::appRootWindow());
-
-    // move directory containing executable to front, so that KPluginLoader prefers the plugins in
-    // the build dir over system installed ones
-    const auto ownPath = libraryPaths().last();
-    removeLibraryPath(ownPath);
-    addLibraryPath(ownPath);
-
-    const auto plugins = KPluginLoader::findPluginsById(QStringLiteral("org.kde.kwin.platforms"),
-                                                        QStringLiteral("KWinX11Platform"));
-    if (plugins.empty()) {
-        quit();
-        return;
-    }
-    initPlatform(plugins.first());
 }
 
 X11TestApplication::~X11TestApplication()
@@ -75,7 +61,7 @@ void X11TimestampUpdateTest::testGrabAfterServerTime()
     // this test tries to grab the X keyboard with a timestamp in future
     // that should fail, but after updating the X11 timestamp, it should
     // work again
-    KWin::updateXTime();
+    KWin::kwinApp()->updateXTime();
     QCOMPARE(KWin::grabXKeyboard(), true);
     KWin::ungrabXKeyboard();
 
@@ -86,7 +72,7 @@ void X11TimestampUpdateTest::testGrabAfterServerTime()
     QCOMPARE(KWin::grabXKeyboard(), false);
 
     // let's update timestamp, now it should work again
-    KWin::updateXTime();
+    KWin::kwinApp()->updateXTime();
     QCOMPARE(KWin::grabXKeyboard(), true);
     KWin::ungrabXKeyboard();
 }
@@ -98,7 +84,7 @@ void X11TimestampUpdateTest::testBeforeLastGrabTime()
     // timestamp it should work again
 
     // first set the grab timestamp
-    KWin::updateXTime();
+    KWin::kwinApp()->updateXTime();
     QCOMPARE(KWin::grabXKeyboard(), true);
     KWin::ungrabXKeyboard();
 
@@ -111,7 +97,7 @@ void X11TimestampUpdateTest::testBeforeLastGrabTime()
     QCOMPARE(KWin::grabXKeyboard(), false);
 
     // let's update timestamp, now it should work again
-    KWin::updateXTime();
+    KWin::kwinApp()->updateXTime();
     QVERIFY(KWin::xTime() >= timestamp);
     QCOMPARE(KWin::grabXKeyboard(), true);
     KWin::ungrabXKeyboard();

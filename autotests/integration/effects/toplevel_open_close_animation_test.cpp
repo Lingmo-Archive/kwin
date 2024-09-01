@@ -9,17 +9,15 @@
 
 #include "kwin_wayland_test.h"
 
-#include "abstract_client.h"
 #include "composite.h"
+#include "core/outputbackend.h"
+#include "core/renderbackend.h"
 #include "deleted.h"
 #include "effectloader.h"
 #include "effects.h"
-#include "platform.h"
-#include "scene.h"
 #include "wayland_server.h"
+#include "window.h"
 #include "workspace.h"
-
-#include "effect_builtins.h"
 
 #include <KWayland/Client/surface.h>
 
@@ -46,17 +44,15 @@ void ToplevelOpenCloseAnimationTest::initTestCase()
 {
     qputenv("XDG_DATA_DIRS", QCoreApplication::applicationDirPath().toUtf8());
 
-    qRegisterMetaType<KWin::AbstractClient *>();
+    qRegisterMetaType<KWin::Window *>();
     qRegisterMetaType<KWin::Deleted *>();
     QSignalSpy applicationStartedSpy(kwinApp(), &Application::started);
-    QVERIFY(applicationStartedSpy.isValid());
-    kwinApp()->platform()->setInitialWindowSize(QSize(1280, 1024));
-    QVERIFY(waylandServer()->init(s_socketName.toLocal8Bit()));
+    QVERIFY(waylandServer()->init(s_socketName));
+    QMetaObject::invokeMethod(kwinApp()->outputBackend(), "setVirtualOutputs", Qt::DirectConnection, Q_ARG(QVector<QRect>, QVector<QRect>() << QRect(0, 0, 1280, 1024) << QRect(1280, 0, 1280, 1024)));
 
     auto config = KSharedConfig::openConfig(QString(), KConfig::SimpleConfig);
     KConfigGroup plugins(config, QStringLiteral("Plugins"));
-    ScriptedEffectLoader loader;
-    const auto builtinNames = BuiltInEffects::availableEffectNames() << loader.listOfKnownEffects();
+    const auto builtinNames = EffectLoader().listOfKnownEffects();
     for (const QString &name : builtinNames) {
         plugins.writeEntry(name + QStringLiteral("Enabled"), false);
     }
@@ -68,11 +64,8 @@ void ToplevelOpenCloseAnimationTest::initTestCase()
 
     kwinApp()->start();
     QVERIFY(applicationStartedSpy.wait());
-    waylandServer()->initWorkspace();
 
-    auto scene = KWin::Compositor::self()->scene();
-    QVERIFY(scene);
-    QCOMPARE(scene->compositingType(), KWin::OpenGL2Compositing);
+    QCOMPARE(Compositor::self()->backend()->compositingType(), KWin::OpenGLCompositing);
 }
 
 void ToplevelOpenCloseAnimationTest::init()
@@ -94,9 +87,9 @@ void ToplevelOpenCloseAnimationTest::testAnimateToplevels_data()
 {
     QTest::addColumn<QString>("effectName");
 
-    QTest::newRow("Fade")   << QStringLiteral("kwin4_effect_fade");
-    QTest::newRow("Glide")  << QStringLiteral("glide");
-    QTest::newRow("Scale")  << QStringLiteral("kwin4_effect_scale");
+    QTest::newRow("Fade") << QStringLiteral("kwin4_effect_fade");
+    QTest::newRow("Glide") << QStringLiteral("glide");
+    QTest::newRow("Scale") << QStringLiteral("kwin4_effect_scale");
 }
 
 void ToplevelOpenCloseAnimationTest::testAnimateToplevels()
@@ -117,23 +110,21 @@ void ToplevelOpenCloseAnimationTest::testAnimateToplevels()
     QVERIFY(effect);
     QVERIFY(!effect->isActive());
 
-    // Create the test client.
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> surface(Test::createSurface());
-    QVERIFY(!surface.isNull());
-    QScopedPointer<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.data()));
-    QVERIFY(!shellSurface.isNull());
-    AbstractClient *client = Test::renderAndWaitForShown(surface.data(), QSize(100, 50), Qt::blue);
-    QVERIFY(client);
+    // Create the test window.
+    std::unique_ptr<KWayland::Client::Surface> surface(Test::createSurface());
+    QVERIFY(surface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> shellSurface(Test::createXdgToplevelSurface(surface.get()));
+    QVERIFY(shellSurface != nullptr);
+    Window *window = Test::renderAndWaitForShown(surface.get(), QSize(100, 50), Qt::blue);
+    QVERIFY(window);
     QVERIFY(effect->isActive());
 
     // Eventually, the animation will be complete.
     QTRY_VERIFY(!effect->isActive());
 
-    // Close the test client, the effect should start animating the disappearing
-    // of the client.
-    QSignalSpy windowClosedSpy(client, &AbstractClient::windowClosed);
-    QVERIFY(windowClosedSpy.isValid());
+    // Close the test window, the effect should start animating the disappearing
+    // of the window.
+    QSignalSpy windowClosedSpy(window, &Window::windowClosed);
     shellSurface.reset();
     surface.reset();
     QVERIFY(windowClosedSpy.wait());
@@ -147,9 +138,9 @@ void ToplevelOpenCloseAnimationTest::testDontAnimatePopups_data()
 {
     QTest::addColumn<QString>("effectName");
 
-    QTest::newRow("Fade")   << QStringLiteral("kwin4_effect_fade");
-    QTest::newRow("Glide")  << QStringLiteral("glide");
-    QTest::newRow("Scale")  << QStringLiteral("kwin4_effect_scale");
+    QTest::newRow("Fade") << QStringLiteral("kwin4_effect_fade");
+    QTest::newRow("Glide") << QStringLiteral("glide");
+    QTest::newRow("Scale") << QStringLiteral("kwin4_effect_scale");
 }
 
 void ToplevelOpenCloseAnimationTest::testDontAnimatePopups()
@@ -162,12 +153,11 @@ void ToplevelOpenCloseAnimationTest::testDontAnimatePopups()
     QVERIFY(effectsImpl);
 
     // Create the main window.
-    using namespace KWayland::Client;
-    QScopedPointer<Surface> mainWindowSurface(Test::createSurface());
-    QVERIFY(!mainWindowSurface.isNull());
-    QScopedPointer<Test::XdgToplevel> mainWindowShellSurface(Test::createXdgToplevelSurface(mainWindowSurface.data()));
-    QVERIFY(!mainWindowShellSurface.isNull());
-    AbstractClient *mainWindow = Test::renderAndWaitForShown(mainWindowSurface.data(), QSize(100, 50), Qt::blue);
+    std::unique_ptr<KWayland::Client::Surface> mainWindowSurface(Test::createSurface());
+    QVERIFY(mainWindowSurface != nullptr);
+    std::unique_ptr<Test::XdgToplevel> mainWindowShellSurface(Test::createXdgToplevelSurface(mainWindowSurface.get()));
+    QVERIFY(mainWindowShellSurface != nullptr);
+    Window *mainWindow = Test::renderAndWaitForShown(mainWindowSurface.get(), QSize(100, 50), Qt::blue);
     QVERIFY(mainWindow);
 
     // Load effect that will be tested.
@@ -180,25 +170,24 @@ void ToplevelOpenCloseAnimationTest::testDontAnimatePopups()
     QVERIFY(!effect->isActive());
 
     // Create a popup, it should not be animated.
-    QScopedPointer<Surface> popupSurface(Test::createSurface());
-    QVERIFY(!popupSurface.isNull());
-    QScopedPointer<Test::XdgPositioner> positioner(Test::createXdgPositioner());
+    std::unique_ptr<KWayland::Client::Surface> popupSurface(Test::createSurface());
+    QVERIFY(popupSurface != nullptr);
+    std::unique_ptr<Test::XdgPositioner> positioner(Test::createXdgPositioner());
     QVERIFY(positioner);
     positioner->set_size(20, 20);
     positioner->set_anchor_rect(0, 0, 10, 10);
     positioner->set_gravity(Test::XdgPositioner::gravity_bottom_right);
     positioner->set_anchor(Test::XdgPositioner::anchor_bottom_left);
-    QScopedPointer<Test::XdgPopup> popupShellSurface(Test::createXdgPopupSurface(popupSurface.data(), mainWindowShellSurface->xdgSurface(), positioner.data()));
-    QVERIFY(!popupShellSurface.isNull());
-    AbstractClient *popup = Test::renderAndWaitForShown(popupSurface.data(), QSize(20, 20), Qt::red);
+    std::unique_ptr<Test::XdgPopup> popupShellSurface(Test::createXdgPopupSurface(popupSurface.get(), mainWindowShellSurface->xdgSurface(), positioner.get()));
+    QVERIFY(popupShellSurface != nullptr);
+    Window *popup = Test::renderAndWaitForShown(popupSurface.get(), QSize(20, 20), Qt::red);
     QVERIFY(popup);
     QVERIFY(popup->isPopupWindow());
     QCOMPARE(popup->transientFor(), mainWindow);
     QVERIFY(!effect->isActive());
 
     // Destroy the popup, it should not be animated.
-    QSignalSpy popupClosedSpy(popup, &AbstractClient::windowClosed);
-    QVERIFY(popupClosedSpy.isValid());
+    QSignalSpy popupClosedSpy(popup, &Window::windowClosed);
     popupShellSurface.reset();
     popupSurface.reset();
     QVERIFY(popupClosedSpy.wait());

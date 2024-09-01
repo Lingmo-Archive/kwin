@@ -6,34 +6,32 @@
 
     SPDX-License-Identifier: GPL-2.0-or-later
 */
-#include "../virtualdesktops.h"
-#include "../input.h"
+#include "input.h"
+#include "virtualdesktops.h"
 // KDE
 #include <KConfigGroup>
 
 #include <QAction>
 #include <QtTest>
 
-namespace KWin {
-
-int screen_number = 0;
+namespace KWin
+{
 
 InputRedirection *InputRedirection::s_self = nullptr;
 
-void InputRedirection::registerShortcut(const QKeySequence &shortcut, QAction *action)
-{
-    Q_UNUSED(shortcut)
-    Q_UNUSED(action)
-}
-
 void InputRedirection::registerAxisShortcut(Qt::KeyboardModifiers modifiers, PointerAxisDirection axis, QAction *action)
 {
-   Q_UNUSED(modifiers)
-   Q_UNUSED(axis)
-   Q_UNUSED(action)
 }
 
-void InputRedirection::registerTouchpadSwipeShortcut(SwipeDirection, QAction*)
+void InputRedirection::registerTouchpadSwipeShortcut(SwipeDirection, uint fingerCount, QAction *)
+{
+}
+
+void InputRedirection::registerRealtimeTouchpadSwipeShortcut(SwipeDirection, uint fingerCount, QAction *, std::function<void(qreal)> progressCallback)
+{
+}
+
+void InputRedirection::registerTouchscreenSwipeShortcut(SwipeDirection, uint, QAction *, std::function<void(qreal)>)
 {
 }
 
@@ -82,14 +80,12 @@ private Q_SLOTS:
 
 private:
     void addDirectionColumns();
-    template<typename T>
-    void testDirection(const QString &actionName);
+    void testDirection(const QString &actionName, VirtualDesktopManager::Direction direction);
 };
 
 void TestVirtualDesktops::init()
 {
     VirtualDesktopManager::create();
-    screen_number = 0;
 }
 
 void TestVirtualDesktops::cleanup()
@@ -106,12 +102,12 @@ void TestVirtualDesktops::count_data()
     QTest::addColumn<bool>("signal");
     QTest::addColumn<bool>("removedSignal");
 
-    QTest::newRow("Minimum")       << (uint)1 << (uint)1 << true << true;
+    QTest::newRow("Minimum") << (uint)1 << (uint)1 << true << true;
     QTest::newRow("Below Minimum") << (uint)0 << (uint)1 << true << true;
-    QTest::newRow("Normal Value")  << (uint)10 << (uint)10 << true << false;
-    QTest::newRow("Maximum")       << VirtualDesktopManager::maximum() << VirtualDesktopManager::maximum() << true << false;
+    QTest::newRow("Normal Value") << (uint)10 << (uint)10 << true << false;
+    QTest::newRow("Maximum") << VirtualDesktopManager::maximum() << VirtualDesktopManager::maximum() << true << false;
     QTest::newRow("Above Maximum") << VirtualDesktopManager::maximum() + 1 << VirtualDesktopManager::maximum() << true << false;
-    QTest::newRow("Unchanged")     << s_countInitValue << s_countInitValue << false << false;
+    QTest::newRow("Unchanged") << s_countInitValue << s_countInitValue << false << false;
 }
 
 void TestVirtualDesktops::count()
@@ -145,7 +141,7 @@ void TestVirtualDesktops::count()
     if (!desktopsRemoved.isEmpty()) {
         QList<QVariant> arguments = desktopsRemoved.takeFirst();
         QCOMPARE(arguments.count(), 1);
-        QCOMPARE(arguments.at(0).value<KWin::VirtualDesktop*>(), vdToRemove);
+        QCOMPARE(arguments.at(0).value<KWin::VirtualDesktop *>(), vdToRemove);
     }
 }
 
@@ -156,9 +152,9 @@ void TestVirtualDesktops::navigationWrapsAround_data()
     QTest::addColumn<bool>("result");
     QTest::addColumn<bool>("signal");
 
-    QTest::newRow("enable")        << false << true  << true  << true;
-    QTest::newRow("disable")       << true  << false << false << true;
-    QTest::newRow("keep enabled")  << true  << true  << true  << false;
+    QTest::newRow("enable") << false << true << true << true;
+    QTest::newRow("disable") << true << false << false << true;
+    QTest::newRow("keep enabled") << true << true << true << false;
     QTest::newRow("keep disabled") << false << false << false << false;
 }
 
@@ -189,13 +185,13 @@ void TestVirtualDesktops::current_data()
     QTest::addColumn<uint>("result");
     QTest::addColumn<bool>("signal");
 
-    QTest::newRow("lower")         << (uint)4 << (uint)3 << (uint)2 << (uint)2 << true;
-    QTest::newRow("higher")        << (uint)4 << (uint)1 << (uint)2 << (uint)2 << true;
-    QTest::newRow("maximum")       << (uint)4 << (uint)1 << (uint)4 << (uint)4 << true;
+    QTest::newRow("lower") << (uint)4 << (uint)3 << (uint)2 << (uint)2 << true;
+    QTest::newRow("higher") << (uint)4 << (uint)1 << (uint)2 << (uint)2 << true;
+    QTest::newRow("maximum") << (uint)4 << (uint)1 << (uint)4 << (uint)4 << true;
     QTest::newRow("above maximum") << (uint)4 << (uint)1 << (uint)5 << (uint)1 << false;
-    QTest::newRow("minimum")       << (uint)4 << (uint)2 << (uint)1 << (uint)1 << true;
+    QTest::newRow("minimum") << (uint)4 << (uint)2 << (uint)1 << (uint)1 << true;
     QTest::newRow("below minimum") << (uint)4 << (uint)2 << (uint)0 << (uint)2 << false;
-    QTest::newRow("unchanged")     << (uint)4 << (uint)2 << (uint)2 << (uint)2 << false;
+    QTest::newRow("unchanged") << (uint)4 << (uint)2 << (uint)2 << (uint)2 << false;
 }
 
 void TestVirtualDesktops::current()
@@ -234,12 +230,12 @@ void TestVirtualDesktops::currentChangeOnCountChange_data()
     QTest::addColumn<uint>("current");
     QTest::addColumn<bool>("signal");
 
-    QTest::newRow("increment")                << (uint)4 << (uint)2 << (uint)5 << (uint)2 << false;
-    QTest::newRow("increment on last")        << (uint)4 << (uint)4 << (uint)5 << (uint)4 << false;
-    QTest::newRow("decrement")                << (uint)4 << (uint)2 << (uint)3 << (uint)2 << false;
+    QTest::newRow("increment") << (uint)4 << (uint)2 << (uint)5 << (uint)2 << false;
+    QTest::newRow("increment on last") << (uint)4 << (uint)4 << (uint)5 << (uint)4 << false;
+    QTest::newRow("decrement") << (uint)4 << (uint)2 << (uint)3 << (uint)2 << false;
     QTest::newRow("decrement on second last") << (uint)4 << (uint)3 << (uint)3 << (uint)3 << false;
-    QTest::newRow("decrement on last")        << (uint)4 << (uint)4 << (uint)3 << (uint)3 << true;
-    QTest::newRow("multiple decrement")       << (uint)4 << (uint)2 << (uint)1 << (uint)1 << true;
+    QTest::newRow("decrement on last") << (uint)4 << (uint)4 << (uint)3 << (uint)3 << true;
+    QTest::newRow("multiple decrement") << (uint)4 << (uint)2 << (uint)1 << (uint)1 << true;
 }
 
 void TestVirtualDesktops::currentChangeOnCountChange()
@@ -269,8 +265,7 @@ void TestVirtualDesktops::addDirectionColumns()
     QTest::addColumn<uint>("result");
 }
 
-template <typename T>
-void TestVirtualDesktops::testDirection(const QString &actionName)
+void TestVirtualDesktops::testDirection(const QString &actionName, VirtualDesktopManager::Direction direction)
 {
     VirtualDesktopManager *vds = VirtualDesktopManager::self();
     QFETCH(uint, initCount);
@@ -280,65 +275,64 @@ void TestVirtualDesktops::testDirection(const QString &actionName)
 
     QFETCH(bool, wrap);
     QFETCH(uint, result);
-    T functor;
-    QCOMPARE(functor(nullptr, wrap)->x11DesktopNumber(), result);
+    QCOMPARE(vds->inDirection(nullptr, direction, wrap)->x11DesktopNumber(), result);
 
     vds->setNavigationWrappingAround(wrap);
     vds->initShortcuts();
-    QAction *action = vds->findChild<QAction*>(actionName);
+    QAction *action = vds->findChild<QAction *>(actionName);
     QVERIFY(action);
     action->trigger();
     QCOMPARE(vds->current(), result);
-    QCOMPARE(functor(initCurrent, wrap), result);
+    QCOMPARE(vds->inDirection(initCurrent, direction, wrap), result);
 }
 
 void TestVirtualDesktops::next_data()
 {
     addDirectionColumns();
 
-    QTest::newRow("one desktop, wrap")        << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")     << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap")           << (uint)4 << (uint)1 << true  << (uint)2;
-    QTest::newRow("desktops, no wrap")        << (uint)4 << (uint)1 << false << (uint)2;
-    QTest::newRow("desktops at end, wrap")    << (uint)4 << (uint)4 << true  << (uint)1;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap") << (uint)4 << (uint)1 << true << (uint)2;
+    QTest::newRow("desktops, no wrap") << (uint)4 << (uint)1 << false << (uint)2;
+    QTest::newRow("desktops at end, wrap") << (uint)4 << (uint)4 << true << (uint)1;
     QTest::newRow("desktops at end, no wrap") << (uint)4 << (uint)4 << false << (uint)4;
 }
 
 void TestVirtualDesktops::next()
 {
-    testDirection<DesktopNext>(QStringLiteral("Switch to Next Desktop"));
+    testDirection(QStringLiteral("Switch to Next Desktop"), VirtualDesktopManager::Direction::Next);
 }
 
 void TestVirtualDesktops::previous_data()
 {
     addDirectionColumns();
 
-    QTest::newRow("one desktop, wrap")          << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")       << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap")             << (uint)4 << (uint)3 << true  << (uint)2;
-    QTest::newRow("desktops, no wrap")          << (uint)4 << (uint)3 << false << (uint)2;
-    QTest::newRow("desktops at start, wrap")    << (uint)4 << (uint)1 << true  << (uint)4;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap") << (uint)4 << (uint)3 << true << (uint)2;
+    QTest::newRow("desktops, no wrap") << (uint)4 << (uint)3 << false << (uint)2;
+    QTest::newRow("desktops at start, wrap") << (uint)4 << (uint)1 << true << (uint)4;
     QTest::newRow("desktops at start, no wrap") << (uint)4 << (uint)1 << false << (uint)1;
 }
 
 void TestVirtualDesktops::previous()
 {
-    testDirection<DesktopPrevious>(QStringLiteral("Switch to Previous Desktop"));
+    testDirection(QStringLiteral("Switch to Previous Desktop"), VirtualDesktopManager::Direction::Previous);
 }
 
 void TestVirtualDesktops::left_data()
 {
     addDirectionColumns();
-    QTest::newRow("one desktop, wrap")          << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")       << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 1st row")    << (uint)4 << (uint)2 << true  << (uint)1;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap, 1st row") << (uint)4 << (uint)2 << true << (uint)1;
     QTest::newRow("desktops, no wrap, 1st row") << (uint)4 << (uint)2 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 2nd row")    << (uint)4 << (uint)4 << true  << (uint)3;
+    QTest::newRow("desktops, wrap, 2nd row") << (uint)4 << (uint)4 << true << (uint)3;
     QTest::newRow("desktops, no wrap, 2nd row") << (uint)4 << (uint)4 << false << (uint)3;
 
-    QTest::newRow("desktops at start, wrap, 1st row")    << (uint)4 << (uint)1 << true  << (uint)2;
+    QTest::newRow("desktops at start, wrap, 1st row") << (uint)4 << (uint)1 << true << (uint)2;
     QTest::newRow("desktops at start, no wrap, 1st row") << (uint)4 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops at start, wrap, 2nd row")    << (uint)4 << (uint)3 << true  << (uint)4;
+    QTest::newRow("desktops at start, wrap, 2nd row") << (uint)4 << (uint)3 << true << (uint)4;
     QTest::newRow("desktops at start, no wrap, 2nd row") << (uint)4 << (uint)3 << false << (uint)3;
 
     QTest::newRow("non symmetric, start") << (uint)5 << (uint)5 << false << (uint)4;
@@ -348,22 +342,22 @@ void TestVirtualDesktops::left_data()
 
 void TestVirtualDesktops::left()
 {
-    testDirection<DesktopLeft>(QStringLiteral("Switch One Desktop to the Left"));
+    testDirection(QStringLiteral("Switch One Desktop to the Left"), VirtualDesktopManager::Direction::Left);
 }
 
 void TestVirtualDesktops::right_data()
 {
     addDirectionColumns();
-    QTest::newRow("one desktop, wrap")          << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")       << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 1st row")    << (uint)4 << (uint)1 << true  << (uint)2;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap, 1st row") << (uint)4 << (uint)1 << true << (uint)2;
     QTest::newRow("desktops, no wrap, 1st row") << (uint)4 << (uint)1 << false << (uint)2;
-    QTest::newRow("desktops, wrap, 2nd row")    << (uint)4 << (uint)3 << true  << (uint)4;
+    QTest::newRow("desktops, wrap, 2nd row") << (uint)4 << (uint)3 << true << (uint)4;
     QTest::newRow("desktops, no wrap, 2nd row") << (uint)4 << (uint)3 << false << (uint)4;
 
-    QTest::newRow("desktops at start, wrap, 1st row")    << (uint)4 << (uint)2 << true  << (uint)1;
+    QTest::newRow("desktops at start, wrap, 1st row") << (uint)4 << (uint)2 << true << (uint)1;
     QTest::newRow("desktops at start, no wrap, 1st row") << (uint)4 << (uint)2 << false << (uint)2;
-    QTest::newRow("desktops at start, wrap, 2nd row")    << (uint)4 << (uint)4 << true  << (uint)3;
+    QTest::newRow("desktops at start, wrap, 2nd row") << (uint)4 << (uint)4 << true << (uint)3;
     QTest::newRow("desktops at start, no wrap, 2nd row") << (uint)4 << (uint)4 << false << (uint)4;
 
     QTest::newRow("non symmetric, start") << (uint)5 << (uint)4 << false << (uint)5;
@@ -373,49 +367,49 @@ void TestVirtualDesktops::right_data()
 
 void TestVirtualDesktops::right()
 {
-    testDirection<DesktopRight>(QStringLiteral("Switch One Desktop to the Right"));
+    testDirection(QStringLiteral("Switch One Desktop to the Right"), VirtualDesktopManager::Direction::Right);
 }
 
 void TestVirtualDesktops::above_data()
 {
     addDirectionColumns();
-    QTest::newRow("one desktop, wrap")             << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")          << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 1st column")    << (uint)4 << (uint)3 << true  << (uint)1;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap, 1st column") << (uint)4 << (uint)3 << true << (uint)1;
     QTest::newRow("desktops, no wrap, 1st column") << (uint)4 << (uint)3 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 2nd column")    << (uint)4 << (uint)4 << true  << (uint)2;
+    QTest::newRow("desktops, wrap, 2nd column") << (uint)4 << (uint)4 << true << (uint)2;
     QTest::newRow("desktops, no wrap, 2nd column") << (uint)4 << (uint)4 << false << (uint)2;
 
-    QTest::newRow("desktops at start, wrap, 1st column")    << (uint)4 << (uint)1 << true  << (uint)3;
+    QTest::newRow("desktops at start, wrap, 1st column") << (uint)4 << (uint)1 << true << (uint)3;
     QTest::newRow("desktops at start, no wrap, 1st column") << (uint)4 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops at start, wrap, 2nd column")    << (uint)4 << (uint)2 << true  << (uint)4;
+    QTest::newRow("desktops at start, wrap, 2nd column") << (uint)4 << (uint)2 << true << (uint)4;
     QTest::newRow("desktops at start, no wrap, 2nd column") << (uint)4 << (uint)2 << false << (uint)2;
 }
 
 void TestVirtualDesktops::above()
 {
-    testDirection<DesktopAbove>(QStringLiteral("Switch One Desktop Up"));
+    testDirection(QStringLiteral("Switch One Desktop Up"), VirtualDesktopManager::Direction::Up);
 }
 
 void TestVirtualDesktops::below_data()
 {
     addDirectionColumns();
-    QTest::newRow("one desktop, wrap")             << (uint)1 << (uint)1 << true  << (uint)1;
-    QTest::newRow("one desktop, no wrap")          << (uint)1 << (uint)1 << false << (uint)1;
-    QTest::newRow("desktops, wrap, 1st column")    << (uint)4 << (uint)1 << true  << (uint)3;
+    QTest::newRow("one desktop, wrap") << (uint)1 << (uint)1 << true << (uint)1;
+    QTest::newRow("one desktop, no wrap") << (uint)1 << (uint)1 << false << (uint)1;
+    QTest::newRow("desktops, wrap, 1st column") << (uint)4 << (uint)1 << true << (uint)3;
     QTest::newRow("desktops, no wrap, 1st column") << (uint)4 << (uint)1 << false << (uint)3;
-    QTest::newRow("desktops, wrap, 2nd column")    << (uint)4 << (uint)2 << true  << (uint)4;
+    QTest::newRow("desktops, wrap, 2nd column") << (uint)4 << (uint)2 << true << (uint)4;
     QTest::newRow("desktops, no wrap, 2nd column") << (uint)4 << (uint)2 << false << (uint)4;
 
-    QTest::newRow("desktops at start, wrap, 1st column")    << (uint)4 << (uint)3 << true  << (uint)1;
+    QTest::newRow("desktops at start, wrap, 1st column") << (uint)4 << (uint)3 << true << (uint)1;
     QTest::newRow("desktops at start, no wrap, 1st column") << (uint)4 << (uint)3 << false << (uint)3;
-    QTest::newRow("desktops at start, wrap, 2nd column")    << (uint)4 << (uint)4 << true  << (uint)2;
+    QTest::newRow("desktops at start, wrap, 2nd column") << (uint)4 << (uint)4 << true << (uint)2;
     QTest::newRow("desktops at start, no wrap, 2nd column") << (uint)4 << (uint)4 << false << (uint)4;
 }
 
 void TestVirtualDesktops::below()
 {
-    testDirection<DesktopBelow>(QStringLiteral("Switch One Desktop Down"));
+    testDirection(QStringLiteral("Switch One Desktop Down"), VirtualDesktopManager::Direction::Down);
 }
 
 void TestVirtualDesktops::updateGrid_data()
@@ -428,8 +422,8 @@ void TestVirtualDesktops::updateGrid_data()
     const Qt::Orientation h = Qt::Horizontal;
     const Qt::Orientation v = Qt::Vertical;
 
-    QTest::newRow("one desktop, h")    << (uint)1 << QSize(1, 1) << h << QPoint(0, 0) << (uint)1;
-    QTest::newRow("one desktop, v")    << (uint)1 << QSize(1, 1) << v << QPoint(0, 0) << (uint)1;
+    QTest::newRow("one desktop, h") << (uint)1 << QSize(1, 1) << h << QPoint(0, 0) << (uint)1;
+    QTest::newRow("one desktop, v") << (uint)1 << QSize(1, 1) << v << QPoint(0, 0) << (uint)1;
     QTest::newRow("one desktop, h, 0") << (uint)1 << QSize(1, 1) << h << QPoint(1, 0) << (uint)0;
     QTest::newRow("one desktop, v, 0") << (uint)1 << QSize(1, 1) << v << QPoint(0, 1) << (uint)0;
 
@@ -492,15 +486,15 @@ void TestVirtualDesktops::updateLayout_data()
     QTest::addColumn<uint>("desktop");
     QTest::addColumn<QSize>("result");
 
-    QTest::newRow("01") << (uint)1  << QSize(1, 1);
-    QTest::newRow("02") << (uint)2  << QSize(1, 2);
-    QTest::newRow("03") << (uint)3  << QSize(2, 2);
-    QTest::newRow("04") << (uint)4  << QSize(2, 2);
-    QTest::newRow("05") << (uint)5  << QSize(3, 2);
-    QTest::newRow("06") << (uint)6  << QSize(3, 2);
-    QTest::newRow("07") << (uint)7  << QSize(4, 2);
-    QTest::newRow("08") << (uint)8  << QSize(4, 2);
-    QTest::newRow("09") << (uint)9  << QSize(5, 2);
+    QTest::newRow("01") << (uint)1 << QSize(1, 1);
+    QTest::newRow("02") << (uint)2 << QSize(1, 2);
+    QTest::newRow("03") << (uint)3 << QSize(2, 2);
+    QTest::newRow("04") << (uint)4 << QSize(2, 2);
+    QTest::newRow("05") << (uint)5 << QSize(3, 2);
+    QTest::newRow("06") << (uint)6 << QSize(3, 2);
+    QTest::newRow("07") << (uint)7 << QSize(4, 2);
+    QTest::newRow("08") << (uint)8 << QSize(4, 2);
+    QTest::newRow("09") << (uint)9 << QSize(5, 2);
     QTest::newRow("10") << (uint)10 << QSize(5, 2);
     QTest::newRow("11") << (uint)11 << QSize(6, 2);
     QTest::newRow("12") << (uint)12 << QSize(6, 2);
@@ -542,11 +536,11 @@ void TestVirtualDesktops::name_data()
     QTest::addColumn<uint>("desktop");
     QTest::addColumn<QString>("desktopName");
 
-    QTest::newRow("desktop 1") << (uint)4 << (uint)1 << "Desktop 1";
-    QTest::newRow("desktop 2") << (uint)4 << (uint)2 << "Desktop 2";
-    QTest::newRow("desktop 3") << (uint)4 << (uint)3 << "Desktop 3";
-    QTest::newRow("desktop 4") << (uint)4 << (uint)4 << "Desktop 4";
-    QTest::newRow("desktop 5") << (uint)4 << (uint)5 << "Desktop 5";
+    QTest::newRow("desktop 1") << (uint)5 << (uint)1 << "Desktop 1";
+    QTest::newRow("desktop 2") << (uint)5 << (uint)2 << "Desktop 2";
+    QTest::newRow("desktop 3") << (uint)5 << (uint)3 << "Desktop 3";
+    QTest::newRow("desktop 4") << (uint)5 << (uint)4 << "Desktop 4";
+    QTest::newRow("desktop 5") << (uint)5 << (uint)5 << "Desktop 5";
 }
 
 void TestVirtualDesktops::name()
@@ -556,7 +550,8 @@ void TestVirtualDesktops::name()
     vds->setCount(initCount);
     QFETCH(uint, desktop);
 
-    QTEST(vds->name(desktop), "desktopName");
+    const VirtualDesktop *vd = vds->desktopForX11Id(desktop);
+    QTEST(vd->name(), "desktopName");
 }
 
 void TestVirtualDesktops::switchToShortcuts()
@@ -567,9 +562,9 @@ void TestVirtualDesktops::switchToShortcuts()
     QCOMPARE(vds->current(), vds->maximum());
     vds->initShortcuts();
     const QString toDesktop = QStringLiteral("Switch to Desktop %1");
-    for (uint i=1; i<=vds->maximum(); ++i) {
+    for (uint i = 1; i <= vds->maximum(); ++i) {
         const QString desktop(toDesktop.arg(i));
-        QAction *action = vds->findChild<QAction*>(desktop);
+        QAction *action = vds->findChild<QAction *>(desktop);
         QVERIFY2(action, desktop.toUtf8().constData());
         action->trigger();
         QCOMPARE(vds->current(), i);

@@ -33,7 +33,6 @@ Window::~Window() = default;
 
 void Window::paintEvent(QPaintEvent *event)
 {
-    Q_UNUSED(event)
     QPainter p(this);
     p.fillRect(0, 0, width(), height(), Qt::red);
 }
@@ -42,7 +41,7 @@ void Window::focusInEvent(QFocusEvent *event)
 {
     QRasterWindow::focusInEvent(event);
     // TODO: make it work without singleshot
-    QTimer::singleShot(100,[] {
+    QTimer::singleShot(100, [] {
         qApp->clipboard()->setText(QStringLiteral("test"));
     });
 }
@@ -50,7 +49,7 @@ void Window::focusInEvent(QFocusEvent *event)
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
-    QScopedPointer<Window> w(new Window);
+    std::unique_ptr<Window> w(new Window);
     w->setGeometry(QRect(0, 0, 100, 200));
     w->show();
 
