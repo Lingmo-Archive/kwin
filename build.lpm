@@ -8,7 +8,7 @@ _dirver=$(echo $pkgver | cut -d. -f1-3)
 pkgrel=1
 pkgdesc='An easy to use, but flexible, composited Window Manager'
 arch=(x86_64)
-url='https://kde.org/plasma-desktop/'
+url='https://github.com/LingmoOS/kwin'
 license=(LGPL-2.0-or-later)
 depends=(gcc-libs
          glibc
@@ -57,7 +57,7 @@ depends=(gcc-libs
          mesa
          pipewire-session-manager
          libplasma
-         qt5-5compat
+         qt6-5compat
 	 qt5-graphicaleffects
          qt5-base
          qt5-declarative
@@ -79,7 +79,7 @@ makedepends=(extra-cmake-modules
              xorg-xwayland)
 optdepends=('maliit-keyboard: virtual keyboard for kwin-wayland')
 groups=(lingmo)
-source=(./*)
+source=(git+$url)
 install=$pkgname.install
 sha256sums=('SKIP')
 
